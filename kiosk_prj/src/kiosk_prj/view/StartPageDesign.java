@@ -1,9 +1,60 @@
 package kiosk_prj.view;
 
-public class StartPageDesign {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import kiosk_prj.controller.StartPageEvent;
+
+@SuppressWarnings("serial")
+public class StartPageDesign extends JFrame{
+
+	private JButton store, takeOut;
+	private JLabel logo;
+	
+	public StartPageDesign() {
+		design();
+	}//StartPageDesign
+	
+	private void design() {
+		store = new JButton("매장");
+		takeOut = new JButton("포장");
+		
+		//logo 추가
+		logo = new JLabel(new ImageIcon(getClass().getResource("/kiosk_prj/image/login_logo.png")));
+        
+		setLayout(null);
+		
+		add(store);
+		add(takeOut);
+		add(logo);
+		
+		store.setBounds(100, 480, 150, 100);
+		takeOut.setBounds(330, 480, 150, 100);
+		logo.setBounds(140, 110, 300, 300);
+		
+		StartPageEvent spe = new StartPageEvent(this);
+		store.addActionListener(spe);
+		takeOut.addActionListener(spe);
+		
+		addWindowListener(spe);
+		
+		setVisible(true);
+		setResizable(false);
+		setBounds(100,0,600,800);
+	}//design
 
 	public static void main(String[] args) {
+		new StartPageDesign();
+	}//main
 
+	public JButton getStore() {
+		return store;
 	}
 
-}
+	public JButton getTakeOut() {
+		return takeOut;
+	}
+
+}//class
