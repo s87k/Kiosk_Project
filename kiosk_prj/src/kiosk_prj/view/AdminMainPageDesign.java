@@ -1,11 +1,11 @@
 package kiosk_prj.view;
 
-import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +19,6 @@ public class AdminMainPageDesign extends JFrame {
 	private JButton[] arrJbMenuFilter;
 	private JButton jbMeniInfo, jbOrderStatus, jbSales, jbOpen, jbClosd,
 					jbUserManagement, jbOperate, jbCoupon, jbTrends;
-	private JPanel jpSalesPanel,		//
-					jpOrderStatusPanel,	//주문현황
-					jpCouponPanel;		//쿠폰관리
 	
 	private DefaultTableModel dtmStatus;
 	
@@ -29,6 +26,10 @@ public class AdminMainPageDesign extends JFrame {
 		super("main");
 		
 		//이미지
+		ImageIcon imgBackground =
+				new ImageIcon("C:/Users/user/git/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
+//		ImageIcon imgBackground =
+//				new ImageIcon("D:/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
 		
 		//컴포넌트
 		String[] coluumnName = {"종류","상품명","가격"};
@@ -42,7 +43,6 @@ public class AdminMainPageDesign extends JFrame {
 		arrJbMenuFilter[2] = new JButton("Tea");
 		arrJbMenuFilter[3] = new JButton("Smoothie");
 		arrJbMenuFilter[4] = new JButton("전체");
-		
 		jbMeniInfo = new JButton("메뉴정보");
 		jbOrderStatus = new JButton("주문현황");
 		jbSales = new JButton("매출");
@@ -52,6 +52,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbOperate = new JButton("운영");
 		jbCoupon = new JButton("쿠폰 관리");
 		jbTrends = new JButton("소비 트렌드");
+		JLabel lbBackground = new JLabel(imgBackground);
 		
 		//테이블 컬럼 넓이 변경
 		jtStatus.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -69,27 +70,25 @@ public class AdminMainPageDesign extends JFrame {
 		setLayout(null);
 		
 		//컴포넌트 배치
-		jspJtOrderResult.setBounds(60,50,500,600);
-		
 		int buttonX1 = 600;
 		int buttonX2 = 780;
 		
-		arrJbMenuFilter[0].setBounds(buttonX1,50,170,60);	//Coffee
-		arrJbMenuFilter[1].setBounds(buttonX2,50,170,60);	//Non Coffee
-		arrJbMenuFilter[2].setBounds(buttonX1,120,170,60);	//Tea
-		arrJbMenuFilter[3].setBounds(buttonX2,120,170,60);	//Smoothie
-		arrJbMenuFilter[4].setBounds(buttonX1,190,170,60);	//전체
-		
-		jbMeniInfo.setBounds(buttonX2,190,170,60);
-		jbOrderStatus.setBounds(buttonX1,260,170,60);
-		jbSales.setBounds(buttonX2,260,170,60);
-		jbOpen.setBounds(buttonX1,330,170,60);
-		jbClosd.setBounds(buttonX2,330,170,60);
-		jbUserManagement.setBounds(buttonX1,400,170,60);
-		jbOperate.setBounds(buttonX2,400,170,60);
-		jbCoupon.setBounds(buttonX1,470,170,60);
-		jbTrends.setBounds(buttonX2,470,170,60);
-		
+		jspJtOrderResult.setBounds(60,90,500,600);
+		arrJbMenuFilter[0].setBounds(buttonX1,90,170,60);	//Coffee
+		arrJbMenuFilter[1].setBounds(buttonX2,90,170,60);	//Non Coffee
+		arrJbMenuFilter[2].setBounds(buttonX1,160,170,60);	//Tea
+		arrJbMenuFilter[3].setBounds(buttonX2,160,170,60);	//Smoothie
+		arrJbMenuFilter[4].setBounds(buttonX1,230,170,60);	//전체
+		jbMeniInfo.setBounds(buttonX2,230,170,60);
+		jbOrderStatus.setBounds(buttonX1,300,170,60);
+		jbSales.setBounds(buttonX2,300,170,60);
+		jbOpen.setBounds(buttonX1,370,170,60);
+		jbClosd.setBounds(buttonX2,370,170,60);
+		jbUserManagement.setBounds(buttonX1,440,170,60);
+		jbOperate.setBounds(buttonX2,440,170,60);
+		jbCoupon.setBounds(buttonX1,510,170,60);
+		jbTrends.setBounds(buttonX2,510,170,60);
+		lbBackground.setBounds(0,0,1024,768);
 		
 		//컴포넌트 등록
 		add(jspJtOrderResult);
@@ -107,143 +106,148 @@ public class AdminMainPageDesign extends JFrame {
 		add(jbOperate);
 		add(jbCoupon);
 		add(jbTrends);
-		
-		
-		//배경 색
-		Color backgroundColor = new Color(0xECEDFA);
-		getContentPane().setBackground(backgroundColor);
+		add(lbBackground);
 		
 		//이벤트 등록
-		AdminMainPageEvent le = new AdminMainPageEvent(this);
-		
-		jbUserManagement.addActionListener(le);
-		
-		
-		
-		
-		//기타 설정 등등등드읃으등ㄷ
-		setVisible(true);
-		setResizable(false);//창 크기 변경 불가능
-		setBounds(455,130,1024,768);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-	}//AdminMainPageDesign
 
-	public JTable getJtStatus() {
-		return jtStatus;
+		AdminMainPageEvent ampe = new AdminMainPageEvent(this);
+		arrJbMenuFilter[0].addActionListener(ampe);	//Coffee
+		arrJbMenuFilter[1].addActionListener(ampe);	//Non Coffee
+		arrJbMenuFilter[2].addActionListener(ampe);	//Tea
+		arrJbMenuFilter[3].addActionListener(ampe);	//Smoothie
+		arrJbMenuFilter[4].addActionListener(ampe);	//전체
+		jbMeniInfo.addActionListener(ampe);
+		jbOrderStatus.addActionListener(ampe);
+		jbSales.addActionListener(ampe);
+		jbOpen.addActionListener(ampe);
+		jbClosd.addActionListener(ampe);
+		jbUserManagement.addActionListener(ampe);
+		jbOperate.addActionListener(ampe);
+		jbCoupon.addActionListener(ampe);
+		jbTrends.addActionListener(ampe);
+//Management.addActionListener(le);
 	}
 
-	public void setJtStatus(JTable jtStatus) {
-		this.jtStatus = jtStatus;
-	}
 
 	public JButton[] getArrJbMenuFilter() {
 		return arrJbMenuFilter;
-	}
-
-	public void setArrJbMenuFilter(JButton[] arrJbMenuFilter) {
-		this.arrJbMenuFilter = arrJbMenuFilter;
 	}
 
 	public JButton getJbMeniInfo() {
 		return jbMeniInfo;
 	}
 
-	public void setJbMeniInfo(JButton jbMeniInfo) {
-		this.jbMeniInfo = jbMeniInfo;
-	}
-
 	public JButton getJbOrderStatus() {
 		return jbOrderStatus;
-	}
-
-	public void setJbOrderStatus(JButton jbOrderStatus) {
-		this.jbOrderStatus = jbOrderStatus;
 	}
 
 	public JButton getJbSales() {
 		return jbSales;
 	}
 
-	public void setJbSales(JButton jbSales) {
-		this.jbSales = jbSales;
-	}
-
 	public JButton getJbOpen() {
 		return jbOpen;
-	}
-
-	public void setJbOpen(JButton jbOpen) {
-		this.jbOpen = jbOpen;
 	}
 
 	public JButton getJbClosd() {
 		return jbClosd;
 	}
 
-	public void setJbClosd(JButton jbClosd) {
-		this.jbClosd = jbClosd;
-	}
-
 	public JButton getJbUserManagement() {
 		return jbUserManagement;
-	}
-
-	public void setJbUserManagement(JButton jbUserManagement) {
-		this.jbUserManagement = jbUserManagement;
 	}
 
 	public JButton getJbOperate() {
 		return jbOperate;
 	}
 
-	public void setJbOperate(JButton jbOperate) {
-		this.jbOperate = jbOperate;
-	}
-
 	public JButton getJbCoupon() {
 		return jbCoupon;
-	}
-
-	public void setJbCoupon(JButton jbCoupon) {
-		this.jbCoupon = jbCoupon;
 	}
 
 	public JButton getJbTrends() {
 		return jbTrends;
 	}
 
+	public DefaultTableModel getDtmStatus() {
+		return dtmStatus;
+	}
+
+	public JTable getJtStatus() {
+		return jtStatus;
+	}
+
+
+
+
+
+
+
+
+	public void setJtStatus(JTable jtStatus) {
+		this.jtStatus = jtStatus;
+	}
+
+
+
+	public void setArrJbMenuFilter(JButton[] arrJbMenuFilter) {
+		this.arrJbMenuFilter = arrJbMenuFilter;
+	}
+
+
+
+	public void setJbMeniInfo(JButton jbMeniInfo) {
+		this.jbMeniInfo = jbMeniInfo;
+	}
+
+
+
+	public void setJbOrderStatus(JButton jbOrderStatus) {
+		this.jbOrderStatus = jbOrderStatus;
+	}
+
+
+	public void setJbSales(JButton jbSales) {
+		this.jbSales = jbSales;
+	}
+
+
+
+	public void setJbOpen(JButton jbOpen) {
+		this.jbOpen = jbOpen;
+	}
+
+
+
+	public void setJbClosd(JButton jbClosd) {
+		this.jbClosd = jbClosd;
+	}
+
+
+
+	public void setJbUserManagement(JButton jbUserManagement) {
+		this.jbUserManagement = jbUserManagement;
+	}
+
+
+
+	public void setJbOperate(JButton jbOperate) {
+		this.jbOperate = jbOperate;
+	}
+
+
+
+	public void setJbCoupon(JButton jbCoupon) {
+		this.jbCoupon = jbCoupon;
+	}
+
+
+
 	public void setJbTrends(JButton jbTrends) {
 		this.jbTrends = jbTrends;
 	}
 
-	public JPanel getJpSalesPanel() {
-		return jpSalesPanel;
-	}
-
-	public void setJpSalesPanel(JPanel jpSalesPanel) {
-		this.jpSalesPanel = jpSalesPanel;
-	}
-
-	public JPanel getJpOrderStatusPanel() {
-		return jpOrderStatusPanel;
-	}
-
-	public void setJpOrderStatusPanel(JPanel jpOrderStatusPanel) {
-		this.jpOrderStatusPanel = jpOrderStatusPanel;
-	}
-
-	public JPanel getJpCouponPanel() {
-		return jpCouponPanel;
-	}
-
-	public void setJpCouponPanel(JPanel jpCouponPanel) {
-		this.jpCouponPanel = jpCouponPanel;
-	}
-
-	public DefaultTableModel getDtmStatus() {
-		return dtmStatus;
-	}
+	
 
 	public void setDtmStatus(DefaultTableModel dtmStatus) {
 		this.dtmStatus = dtmStatus;
@@ -251,6 +255,4 @@ public class AdminMainPageDesign extends JFrame {
 
 
 
-	
-	
 }//class
