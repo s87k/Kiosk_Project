@@ -7,20 +7,23 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 
 import kiosk_prj.view.AdminMainPageDesign;
+import kiosk_prj.view.MemberShipDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
 	private AdminMainPageDesign amod;
 	
 	public AdminMainPageEvent(AdminMainPageDesign amod) {
-		
+		this.amod = amod;
 		
 		
 	}//AdminMainPageEvent
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if(e.getSource() == amod.getJbUserManagement()) {
+			new MemberShipDesign(amod, null);
+		}
 	}//actionPerformed
 
 	@Override

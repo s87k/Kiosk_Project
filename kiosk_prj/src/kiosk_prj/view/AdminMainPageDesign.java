@@ -116,6 +116,8 @@ public class AdminMainPageDesign extends JFrame {
 		//이벤트 등록
 		AdminMainPageEvent le = new AdminMainPageEvent(this);
 		
+		jbUserManagement.addActionListener(le);
+		
 		
 		
 		
@@ -126,6 +128,129 @@ public class AdminMainPageDesign extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//AdminMainPageDesign
+
+	public JTable getJtStatus() {
+		return jtStatus;
+	}
+
+	public void setJtStatus(JTable jtStatus) {
+		this.jtStatus = jtStatus;
+	}
+
+	public JButton[] getArrJbMenuFilter() {
+		return arrJbMenuFilter;
+	}
+
+	public void setArrJbMenuFilter(JButton[] arrJbMenuFilter) {
+		this.arrJbMenuFilter = arrJbMenuFilter;
+	}
+
+	public JButton getJbMeniInfo() {
+		return jbMeniInfo;
+	}
+
+	public void setJbMeniInfo(JButton jbMeniInfo) {
+		this.jbMeniInfo = jbMeniInfo;
+	}
+
+	public JButton getJbOrderStatus() {
+		return jbOrderStatus;
+	}
+
+	public void setJbOrderStatus(JButton jbOrderStatus) {
+		this.jbOrderStatus = jbOrderStatus;
+	}
+
+	public JButton getJbSales() {
+		return jbSales;
+	}
+
+	public void setJbSales(JButton jbSales) {
+		this.jbSales = jbSales;
+	}
+
+	public JButton getJbOpen() {
+		return jbOpen;
+	}
+
+	public void setJbOpen(JButton jbOpen) {
+		this.jbOpen = jbOpen;
+	}
+
+	public JButton getJbClosd() {
+		return jbClosd;
+	}
+
+	public void setJbClosd(JButton jbClosd) {
+		this.jbClosd = jbClosd;
+	}
+
+	public JButton getJbUserManagement() {
+		return jbUserManagement;
+	}
+
+	public void setJbUserManagement(JButton jbUserManagement) {
+		this.jbUserManagement = jbUserManagement;
+	}
+
+	public JButton getJbOperate() {
+		return jbOperate;
+	}
+
+	public void setJbOperate(JButton jbOperate) {
+		this.jbOperate = jbOperate;
+	}
+
+	public JButton getJbCoupon() {
+		return jbCoupon;
+	}
+
+	public void setJbCoupon(JButton jbCoupon) {
+		this.jbCoupon = jbCoupon;
+	}
+
+	public JButton getJbTrends() {
+		return jbTrends;
+	}
+
+	public void setJbTrends(JButton jbTrends) {
+		this.jbTrends = jbTrends;
+	}
+
+	public JPanel getJpSalesPanel() {
+		return jpSalesPanel;
+	}
+
+	public void setJpSalesPanel(JPanel jpSalesPanel) {
+		this.jpSalesPanel = jpSalesPanel;
+	}
+
+	public JPanel getJpOrderStatusPanel() {
+		return jpOrderStatusPanel;
+	}
+
+	public void setJpOrderStatusPanel(JPanel jpOrderStatusPanel) {
+		this.jpOrderStatusPanel = jpOrderStatusPanel;
+	}
+
+	public JPanel getJpCouponPanel() {
+		return jpCouponPanel;
+	}
+
+	public void setJpCouponPanel(JPanel jpCouponPanel) {
+		this.jpCouponPanel = jpCouponPanel;
+	}
+
+	public DefaultTableModel getDtmStatus() {
+		return dtmStatus;
+	}
+
+	public void setDtmStatus(DefaultTableModel dtmStatus) {
+		this.dtmStatus = dtmStatus;
+	}
+
+
+
 	
 	
 }//class
