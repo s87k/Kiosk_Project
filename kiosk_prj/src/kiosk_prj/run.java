@@ -1,4 +1,4 @@
-package view.kiosk_prj;
+package kiosk_prj;
 
 import kiosk_prj.view.LoginDesign;
 
