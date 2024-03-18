@@ -22,7 +22,7 @@ public class LoginDesign extends JFrame{
 	public LoginDesign() {
 		super("로그인");
 		
-		
+		//이미지
 		ImageIcon iLogin = new ImageIcon(getClass().getClassLoader().getResource("login.png"));
 		ImageIcon logo = new ImageIcon("D:/dev/workspace/java_se/src/kiosk_prj/image/login_logo.png");
 		
