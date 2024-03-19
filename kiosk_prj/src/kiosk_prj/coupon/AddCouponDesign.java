@@ -47,8 +47,22 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		jrbPublishableOk = new JRadioButton("예");
 		jrbPublishableNo = new JRadioButton("아니오");
 		
+		jbtnGoMain = new JButton("메인으로");
+		jbtnAddCoupon = new JButton("등록");
+		jbtnCancel = new JButton("취소");
 		
+		setLayout(null);
 		
+		jlblCouponKindName.setBounds(30, 20, 60, 40);
+		jlblDiscount.setBounds(30, 60, 60, 40);
+		
+		jtfCouponKindName.setBounds(100, 20, 100, 40);
+		jtfDiscount.setBounds(100, 60, 100, 40);
+		
+		add(jlblCouponKindName);
+		add(jlblDiscount);
+		add(jtfCouponKindName);
+		add(jtfDiscount);
 		
 		// 455, 130, 1024, 768
 		setBounds(mcd.getX() + 200, mcd.getY() + 100, 750, 650);
