@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 
 import kiosk_prj.view.AdminMainPageDesign;
+import kiosk_prj.view.OrderStatusDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
@@ -44,10 +46,24 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if(e.getSource() == jbCoffee) {
 			System.out.println("ㅁㄴㅇㄻㄴㅇㄹ");
 		}//end if
+		if(e.getSource() == jbOrderStatus) {
+			OrderStatusDialog();
+		}//end if
 		if(e.getSource() == jbOpen) {
 			System.out.println("open");
 		}//end if
 	}//actionPerformed
+	
+	public void OrderStatusDialog() {
+		new OrderStatusDesign(amod);
+	}//OrderStatusDialog
+
+	
+	
+	@Override
+	public void windowClosing(WindowEvent e) {
+		amod.dispose();
+	}//windowClosing
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -55,7 +71,7 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		
 		
 	}//mouseClicked
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 	}

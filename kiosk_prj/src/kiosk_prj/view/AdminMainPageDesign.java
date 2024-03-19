@@ -19,15 +19,14 @@ public class AdminMainPageDesign extends JFrame {
 	private JButton[] arrJbMenuFilter;
 	private JButton jbMeniInfo, jbOrderStatus, jbSales, jbOpen, jbClosd,
 					jbUserManagement, jbOperate, jbCoupon, jbTrends;
-	
 	private DefaultTableModel dtmStatus;
+	private JLabel jlOpenDate;
 	
 	public AdminMainPageDesign() {
 		super("main");
 		
 		//이미지
-		ImageIcon imgBackground =
-				new ImageIcon("D:/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
+		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/main.png");
 		
 		//컴포넌트
 		String[] coluumnName = {"종류","상품명","가격"};
@@ -51,6 +50,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbCoupon = new JButton("쿠폰 관리");
 		jbTrends = new JButton("소비 트렌드");
 		JLabel lbBackground = new JLabel(imgBackground);
+		jlOpenDate = new JLabel("영업일자 : 2024-03-09(토)");	//영업일자 바뀔때마다 업데이트되어야함.
 		
 		//테이블 컬럼 넓이 변경
 		jtStatus.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -63,6 +63,7 @@ public class AdminMainPageDesign extends JFrame {
 		//폰트
 		Font font = new Font("맑은 고딕", Font.BOLD, 21);
 		jtStatus.setFont(font);
+		jlOpenDate.setFont(font);
 		
 		//배치관리자 해제
 		setLayout(null);
@@ -86,6 +87,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbOperate.setBounds(buttonX2,440,170,60);
 		jbCoupon.setBounds(buttonX1,510,170,60);
 		jbTrends.setBounds(buttonX2,510,170,60);
+		jlOpenDate.setBounds(740,30,300,30);
 		lbBackground.setBounds(0,0,1024,768);
 		
 		//컴포넌트 등록
@@ -104,6 +106,7 @@ public class AdminMainPageDesign extends JFrame {
 		add(jbOperate);
 		add(jbCoupon);
 		add(jbTrends);
+		add(jlOpenDate);
 		add(lbBackground);
 		
 		//이벤트 등록
@@ -177,6 +180,10 @@ public class AdminMainPageDesign extends JFrame {
 
 	public DefaultTableModel getDtmStatus() {
 		return dtmStatus;
+	}
+
+	public JLabel getJlOpenDate() {
+		return jlOpenDate;
 	}
 	
 }//class
