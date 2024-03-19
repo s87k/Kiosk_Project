@@ -69,7 +69,7 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		
 		JPanel jpPeriod = new JPanel();
 		jpPeriod.setLayout(null);
-		jrbPeriodDefault.setBounds(30, 20, 100, 80);
+		jrbPeriodDefault.setBounds(30, 30, 100, 80);
 		jrbPeriodDetail.setBounds(30, 140, 100, 80);
 		jbtnMonth1.setBounds(140, 20, 150, 100);
 		jbtnMonth3.setBounds(320, 20, 150, 100);
@@ -84,9 +84,9 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		jpPeriod.setBorder(new TitledBorder("이용 기간"));
 		
 		jlblCouponKindName.setBounds(30, 10, 60, 60);
-		jlblDiscount.setBounds(30, 80, 60, 80);
-		jtfCouponKindName.setBounds(100, 10, 400, 60);
-		jtfDiscount.setBounds(100, 80, 400, 60);
+		jlblDiscount.setBounds(30, 70, 60, 80);
+		jtfCouponKindName.setBounds(125, 10, 600, 60);
+		jtfDiscount.setBounds(125, 80, 600, 60);
 		jpPeriod.setBounds(25, 160, 700, 250);
 		jlblPublishable.setBounds(30, 410, 100, 80);
 		jrbPublishableOk.setBounds(140, 410, 100, 80);
