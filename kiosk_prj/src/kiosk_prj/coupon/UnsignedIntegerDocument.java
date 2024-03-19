@@ -33,7 +33,7 @@ public class UnsignedIntegerDocument extends PlainDocument{
 	 * @param maxVal 최대값
 	 */
 	public UnsignedIntegerDocument(int digit, int minVal, int maxVal) {
-		System.out.println(digit + " " + minVal + " " + maxVal);
+//		System.out.println(digit + " " + minVal + " " + maxVal);
 		if(digit > 10) {
 			digit = 10;
 			flagParamChanged = true;
@@ -52,7 +52,7 @@ public class UnsignedIntegerDocument extends PlainDocument{
 			flagParamChanged = true;
 		} // end if
 				
-		System.out.println(digit + " " + minVal + " " + maxVal);
+//		System.out.println(digit + " " + minVal + " " + maxVal);
 		
 		this.digit = digit;
 		this.minVal = minVal;
