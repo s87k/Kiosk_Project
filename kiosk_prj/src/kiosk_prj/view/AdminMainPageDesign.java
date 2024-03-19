@@ -27,7 +27,9 @@ public class AdminMainPageDesign extends JFrame {
 		
 		//이미지
 		ImageIcon imgBackground =
-				new ImageIcon("D:/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
+				new ImageIcon("C:/Users/user/git/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
+//		ImageIcon imgBackground =
+//				new ImageIcon("D:/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/main.png");
 		
 		//컴포넌트
 		String[] coluumnName = {"종류","상품명","가격"};
@@ -107,6 +109,7 @@ public class AdminMainPageDesign extends JFrame {
 		add(lbBackground);
 		
 		//이벤트 등록
+
 		AdminMainPageEvent ampe = new AdminMainPageEvent(this);
 		arrJbMenuFilter[0].addActionListener(ampe);	//Coffee
 		arrJbMenuFilter[1].addActionListener(ampe);	//Non Coffee
@@ -123,17 +126,12 @@ public class AdminMainPageDesign extends JFrame {
 		jbCoupon.addActionListener(ampe);
 		jbTrends.addActionListener(ampe);
 		
-		//기타 설정 등등등드읃으등ㄷ
 		setVisible(true);
-		setResizable(false);//창 크기 변경 불가능
-		setBounds(455,130,1024,768);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1000, 800);
 		
-	}//AdminMainPageDesign
-
-	public JTable getJtStatus() {
-		return jtStatus;
+//Management.addActionListener(le);
 	}
+
 
 	public JButton[] getArrJbMenuFilter() {
 		return arrJbMenuFilter;
@@ -178,5 +176,86 @@ public class AdminMainPageDesign extends JFrame {
 	public DefaultTableModel getDtmStatus() {
 		return dtmStatus;
 	}
+
+	public JTable getJtStatus() {
+		return jtStatus;
+	}
+
+
+
+
+
+
+
+
+	public void setJtStatus(JTable jtStatus) {
+		this.jtStatus = jtStatus;
+	}
+
+
+
+	public void setArrJbMenuFilter(JButton[] arrJbMenuFilter) {
+		this.arrJbMenuFilter = arrJbMenuFilter;
+	}
+
+
+
+	public void setJbMeniInfo(JButton jbMeniInfo) {
+		this.jbMeniInfo = jbMeniInfo;
+	}
+
+
+
+	public void setJbOrderStatus(JButton jbOrderStatus) {
+		this.jbOrderStatus = jbOrderStatus;
+	}
+
+
+	public void setJbSales(JButton jbSales) {
+		this.jbSales = jbSales;
+	}
+
+
+
+	public void setJbOpen(JButton jbOpen) {
+		this.jbOpen = jbOpen;
+	}
+
+
+
+	public void setJbClosd(JButton jbClosd) {
+		this.jbClosd = jbClosd;
+	}
+
+
+
+	public void setJbUserManagement(JButton jbUserManagement) {
+		this.jbUserManagement = jbUserManagement;
+	}
+
+
+
+	public void setJbOperate(JButton jbOperate) {
+		this.jbOperate = jbOperate;
+	}
+
+
+
+	public void setJbCoupon(JButton jbCoupon) {
+		this.jbCoupon = jbCoupon;
+	}
+
+
+
+	public void setJbTrends(JButton jbTrends) {
+		this.jbTrends = jbTrends;
+	}
+
 	
+
+	public void setDtmStatus(DefaultTableModel dtmStatus) {
+		this.dtmStatus = dtmStatus;
+	}
+
+
 }//class

@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import javax.swing.JButton;
 
 import kiosk_prj.view.AdminMainPageDesign;
+import kiosk_prj.view.MemberShipDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
@@ -47,6 +48,9 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if(e.getSource() == jbOpen) {
 			System.out.println("open");
 		}//end if
+		if(e.getSource() == jbUserManagement) {
+			new MemberShipDesign(amod, null);
+		}
 	}//actionPerformed
 
 	@Override
