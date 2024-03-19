@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import kiosk_prj.view.OrderDesign;
 import kiosk_prj.view.StartPageDesign;
 
 public class StartPageEvent extends WindowAdapter implements ActionListener {
@@ -19,10 +20,12 @@ public class StartPageEvent extends WindowAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == spd.getStore()) {
 			System.out.println("매장주문");
+			OrderDesign od = new OrderDesign();
 		}//end if
 		
 		if(e.getSource() == spd.getTakeOut()) {
 			System.out.println("포장주문");
+			OrderDesign od = new OrderDesign();
 		}//end if
 		
 	}//actionPerformed
