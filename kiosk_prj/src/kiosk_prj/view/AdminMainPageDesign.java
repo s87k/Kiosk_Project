@@ -125,6 +125,10 @@ public class AdminMainPageDesign extends JFrame {
 		jbOperate.addActionListener(ampe);
 		jbCoupon.addActionListener(ampe);
 		jbTrends.addActionListener(ampe);
+		
+		setVisible(true);
+		setSize(1000, 800);
+		
 //Management.addActionListener(le);
 	}
 
@@ -252,7 +256,6 @@ public class AdminMainPageDesign extends JFrame {
 	public void setDtmStatus(DefaultTableModel dtmStatus) {
 		this.dtmStatus = dtmStatus;
 	}
-
 
 
 }//class

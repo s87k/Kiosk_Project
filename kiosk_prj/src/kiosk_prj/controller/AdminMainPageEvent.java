@@ -48,6 +48,9 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if(e.getSource() == jbOpen) {
 			System.out.println("open");
 		}//end if
+		if(e.getSource() == jbUserManagement) {
+			new MemberShipDesign(amod, null);
+		}
 	}//actionPerformed
 
 	@Override
