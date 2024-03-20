@@ -17,6 +17,15 @@ public class ManageCouponEvent extends WindowAdapter implements ActionListener {
 		if(ae.getSource() == mcd.getJbtnAddCoupType()) {
 			new AddCouponDesign(mcd);
 		} // end if
+		if(ae.getSource() == mcd.getJbtnPublishCoup()) {
+			new PublishCouponDesign(mcd);
+		} // end if
+		if(ae.getSource() == mcd.getJbtnSearchCoup()) {
+			new SearchCouponDesign(mcd);
+		} // end if
+		if(ae.getSource() == mcd.getJbtnModifyCoup()) {
+			new ModifyCouponDesign(mcd);
+		} // end if
 	} // actionPerformed
 
 } // class

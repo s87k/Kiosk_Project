@@ -18,6 +18,8 @@ import javax.swing.border.TitledBorder;
 @SuppressWarnings("serial")
 public class AddCouponDesign extends JDialog implements ActionListener {
 	
+	ManageCouponDesign mcd;
+	
 	JTextField jtfCouponKindName, jtfDiscount;
 	JButton jbtnMonth1, jbtnMonth3, jbtnYear1;
 	JComboBox<String> jcbPeriodDetail;
@@ -28,6 +30,8 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 	
 	public AddCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 등록", true);
+		
+		this.mcd = mcd;
 		
 		JLabel jlblCouponKindName = new JLabel("쿠폰 이름");
 		JLabel jlblDiscount = new JLabel("할인 금액");
