@@ -42,10 +42,7 @@ public class ManageCouponDesign extends JDialog {
 		jbtnPublishCoup.addActionListener(mce);
 		jbtnSearchCoup.addActionListener(mce);
 		jbtnModifyCoup.addActionListener(mce);
-		
-		// 메인에서 받아와야
-//		jbtnAddCoupType.addActionListener(mce);
-		
+		jbtnGoToMain.addActionListener(mce);
 		
 		setBounds(ampd.getX(), ampd.getY(), 1024, 768);
 		setVisible(true);

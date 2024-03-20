@@ -46,6 +46,11 @@ public class PublishCouponDesign extends JDialog {
 		jbtnPublish = new JButton("발급");
 		jbtnCancel = new JButton("취소");
 		
+		PublishCouponEvent pce = new PublishCouponEvent(this);
+		jbtnGoMain.addActionListener(pce);
+		jbtnPublish.addActionListener(pce);
+		jbtnCancel.addActionListener(pce);
+		
 		JPanel jpPubCondition = new JPanel();
 		jpPubCondition.setLayout(null);
 		jlblCondition.setBounds(30, 20, 50, 60);
@@ -76,4 +81,41 @@ public class PublishCouponDesign extends JDialog {
 		setBounds(mcd.getX() + 200, mcd.getY() + 100, 750, 650);
 		setVisible(true);
 	} // PublishCouponDesign
+
+	public ManageCouponDesign getMcd() {
+		return mcd;
+	}
+
+	public JTable getJtabCoupType() {
+		return jtabCoupType;
+	}
+
+	public DefaultTableModel getDtmCoupType() {
+		return dtmCoupType;
+	}
+
+	public JComboBox<String> getJcbPubCondition() {
+		return jcbPubCondition;
+	}
+
+	public DefaultComboBoxModel<String> getDcmPubCondition() {
+		return dcmPubCondition;
+	}
+
+	public JTextField getJtfPubConditonVal() {
+		return jtfPubConditonVal;
+	}
+
+	public JButton getJbtnGoMain() {
+		return jbtnGoMain;
+	}
+
+	public JButton getJbtnPublish() {
+		return jbtnPublish;
+	}
+
+	public JButton getJbtnCancel() {
+		return jbtnCancel;
+	}
+	
 }

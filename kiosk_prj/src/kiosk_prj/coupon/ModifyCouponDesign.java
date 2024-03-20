@@ -24,6 +24,8 @@ public class ModifyCouponDesign extends JDialog {
 	JRadioButton jrbPublishableOk, jrbPublishableNo;
 	JButton jbtnOk, jbtnCancel, jbtnDeleteCoup;
 	
+	JButton jbtnGoMain;
+	
 	public ModifyCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 수정", true);
 		

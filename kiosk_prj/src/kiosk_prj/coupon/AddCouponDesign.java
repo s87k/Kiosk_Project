@@ -1,7 +1,5 @@
 package kiosk_prj.coupon;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import static java.lang.String.valueOf;
 
 import javax.swing.ButtonGroup;
@@ -16,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class AddCouponDesign extends JDialog implements ActionListener {
+public class AddCouponDesign extends JDialog{
 	
 	ManageCouponDesign mcd;
 	
@@ -69,6 +67,17 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		jbtnAddCoupon = new JButton("등록");
 		jbtnCancel = new JButton("취소");
 		
+		AddCouponEvent ace = new AddCouponEvent(this);
+		jrbPeriodDefault.addActionListener(ace);
+		jrbPeriodDetail.addActionListener(ace);
+		jcbPeriodDetail.addActionListener(ace);
+		jbtnMonth1.addActionListener(ace);
+		jbtnMonth3.addActionListener(ace);
+		jbtnYear1.addActionListener(ace);
+		jbtnGoMain.addActionListener(ace);
+		jbtnAddCoupon.addActionListener(ace);
+		jbtnCancel.addActionListener(ace);
+		
 		setLayout(null);
 		
 		JPanel jpPeriod = new JPanel();
@@ -117,10 +126,64 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		setVisible(true);
 	} // AddCouponDesign
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public ManageCouponDesign getMcd() {
+		return mcd;
+	}
 
-	} // actionPerformed
+	public JTextField getJtfCouponKindName() {
+		return jtfCouponKindName;
+	}
 
+	public JTextField getJtfDiscount() {
+		return jtfDiscount;
+	}
+
+	public JButton getJbtnMonth1() {
+		return jbtnMonth1;
+	}
+
+	public JButton getJbtnMonth3() {
+		return jbtnMonth3;
+	}
+
+	public JButton getJbtnYear1() {
+		return jbtnYear1;
+	}
+
+	public JComboBox<String> getJcbPeriodDetail() {
+		return jcbPeriodDetail;
+	}
+
+	public DefaultComboBoxModel<String> getDcbmPeriodDetail() {
+		return dcbmPeriodDetail;
+	}
+
+	public JRadioButton getJrbPeriodDefault() {
+		return jrbPeriodDefault;
+	}
+
+	public JRadioButton getJrbPeriodDetail() {
+		return jrbPeriodDetail;
+	}
+
+	public JRadioButton getJrbPublishableOk() {
+		return jrbPublishableOk;
+	}
+
+	public JRadioButton getJrbPublishableNo() {
+		return jrbPublishableNo;
+	}
+
+	public JButton getJbtnGoMain() {
+		return jbtnGoMain;
+	}
+
+	public JButton getJbtnAddCoupon() {
+		return jbtnAddCoupon;
+	}
+
+	public JButton getJbtnCancel() {
+		return jbtnCancel;
+	}
+	
 } // class
