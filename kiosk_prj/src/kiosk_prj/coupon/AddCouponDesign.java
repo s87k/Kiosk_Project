@@ -107,6 +107,7 @@ public class AddCouponDesign extends JDialog implements ActionListener {
 		add(jbtnAddCoupon);
 		add(jbtnCancel);
 		
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		// 455, 130, 1024, 768
 		setBounds(mcd.getX() + 200, mcd.getY() + 100, 750, 650);
 		setVisible(true);
