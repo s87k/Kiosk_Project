@@ -15,14 +15,14 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class PublishCouponDesign extends JDialog {
 	
-	ManageCouponDesign mcd;
+	private ManageCouponDesign mcd;
 	
-	JTable jtabCoupType;
-	DefaultTableModel dtmCoupType;
-	JComboBox<String> jcbPubCondition;
-	DefaultComboBoxModel<String> dcmPubCondition;
-	JTextField jtfPubConditonVal;
-	JButton jbtnGoMain, jbtnPublish, jbtnCancel;
+	private JTable jtabCoupType;
+	private DefaultTableModel dtmCoupType;
+	private JComboBox<String> jcbPubCondition;
+	private DefaultComboBoxModel<String> dcmPubCondition;
+	private JTextField jtfPubConditonVal;
+	private JButton jbtnGoMain, jbtnPublish, jbtnCancel;
 	
 	public PublishCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 발급", true);

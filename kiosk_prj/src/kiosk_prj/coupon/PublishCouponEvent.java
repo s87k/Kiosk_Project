@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 public class PublishCouponEvent extends WindowAdapter implements ActionListener {
 
-	PublishCouponDesign pcd;
+	private PublishCouponDesign pcd;
 	
 	public PublishCouponEvent(PublishCouponDesign pcd) {
 		this.pcd = pcd;

@@ -16,15 +16,15 @@ import javax.swing.border.TitledBorder;
 @SuppressWarnings("serial")
 public class AddCouponDesign extends JDialog{
 	
-	ManageCouponDesign mcd;
+	private ManageCouponDesign mcd;
 	
-	JTextField jtfCouponKindName, jtfDiscount;
-	JButton jbtnMonth1, jbtnMonth3, jbtnYear1;
-	JComboBox<String> jcbPeriodDetail;
-	DefaultComboBoxModel<String> dcbmPeriodDetail;
-	JRadioButton jrbPeriodDefault, jrbPeriodDetail;
-	JRadioButton jrbPublishableOk, jrbPublishableNo;
-	JButton jbtnGoMain, jbtnAddCoupon, jbtnCancel;
+	private JTextField jtfCouponKindName, jtfDiscount;
+	private JButton jbtnMonth1, jbtnMonth3, jbtnYear1;
+	private JComboBox<String> jcbPeriodDetail;
+	private DefaultComboBoxModel<String> dcbmPeriodDetail;
+	private JRadioButton jrbPeriodDefault, jrbPeriodDetail;
+	private JRadioButton jrbPublishableOk, jrbPublishableNo;
+	private JButton jbtnGoMain, jbtnAddCoupon, jbtnCancel;
 	
 	public AddCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 등록", true);

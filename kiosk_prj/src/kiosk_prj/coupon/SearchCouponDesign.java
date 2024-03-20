@@ -9,13 +9,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class SearchCouponDesign extends JDialog {
+public class SearchCouponDesign extends JPanel {
 	
-	ManageCouponDesign mcd;
+	private ManageCouponDesign mcd;
 	
-	JTabbedPane jtbpCoupSearch;
-	JTable jtabCoupType, jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable;
-	DefaultTableModel dtmCoupType, dtmCoupPub, dtmCoupPubUsable, dtmCoupPubUnusable;
+	private JTabbedPane jtbpCoupSearch;
+	private JTable jtabCoupType, jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable;
+	private DefaultTableModel dtmCoupType, dtmCoupPub, dtmCoupPubUsable, dtmCoupPubUnusable;
 	
 	public SearchCouponDesign(ManageCouponDesign mcd) {
 		this(mcd, 0, 1, 2, 3);
@@ -70,11 +70,21 @@ public class SearchCouponDesign extends JDialog {
 			} // end else if
 		} // end for
 		
+//		jtbpCoupSearch.set
+		
+		jtbpCoupSearch.setBounds(170, 100, 830, 620);
+		mcd.add(jtbpCoupSearch);
+		jtbpCoupSearch.setVisible(false);
+		/*
+		mcd.revalidate();
+		mcd.repaint();
+		
 		jtbpCoupSearch.setBounds(0, 0, 750, 650);
 		add(jtbpCoupSearch);
 		
 		setBounds(mcd.getX() + 170, mcd.getY() + 110, 850, 650);
 		setVisible(true);
+		*/
 	} // SearchCouponDesign
 
 	public ManageCouponDesign getMcd() {

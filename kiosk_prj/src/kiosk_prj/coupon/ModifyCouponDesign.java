@@ -14,17 +14,17 @@ import javax.swing.border.TitledBorder;
 @SuppressWarnings("serial")
 public class ModifyCouponDesign extends JDialog {
 	
-	ManageCouponDesign mcd;
+	private ManageCouponDesign mcd;
 	
-	JTextField jtfCouponKindName;
-	JLabel jlblCouponKindNo, jlblDiscount, jlblPeriod;
-	JComboBox<String> jcbPubCondition;
-	DefaultComboBoxModel<String> dcmPubCondition;
-	JTextField jtfPubConditonVal;
-	JRadioButton jrbPublishableOk, jrbPublishableNo;
-	JButton jbtnOk, jbtnCancel, jbtnDeleteCoup;
+	private JTextField jtfCouponKindName;
+	private JLabel jlblCouponKindNo, jlblDiscount, jlblPeriod;
+	private JComboBox<String> jcbPubCondition;
+	private DefaultComboBoxModel<String> dcmPubCondition;
+	private JTextField jtfPubConditonVal;
+	private JRadioButton jrbPublishableOk, jrbPublishableNo;
+	private JButton jbtnOk, jbtnCancel, jbtnDeleteCoup;
 	
-	JButton jbtnGoMain;
+	private JButton jbtnGoMain;
 	
 	public ModifyCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 수정", true);
@@ -77,6 +77,11 @@ public class ModifyCouponDesign extends JDialog {
 		jpPubCondition.add(jtfPubConditonVal);
 		jpPubCondition.setBorder(new TitledBorder("발급 조건"));
 		
+		ModifyCouponEvent mce = new ModifyCouponEvent(this);
+		jbtnCancel.addActionListener(mce);
+		jbtnOk.addActionListener(mce);
+		jbtnDeleteCoup.addActionListener(mce);
+		
 		setLayout(null);
 		
 		jlblRowCouponKindName.setBounds(30, 10, 80, 60);
@@ -116,4 +121,61 @@ public class ModifyCouponDesign extends JDialog {
 		setBounds(mcd.getX() + 200, mcd.getY() + 100, 750, 650);
 		setVisible(true);
 	} // ModifyCouponDesign
+
+	public ManageCouponDesign getMcd() {
+		return mcd;
+	}
+
+	public JTextField getJtfCouponKindName() {
+		return jtfCouponKindName;
+	}
+
+	public JLabel getJlblCouponKindNo() {
+		return jlblCouponKindNo;
+	}
+
+	public JLabel getJlblDiscount() {
+		return jlblDiscount;
+	}
+
+	public JLabel getJlblPeriod() {
+		return jlblPeriod;
+	}
+
+	public JComboBox<String> getJcbPubCondition() {
+		return jcbPubCondition;
+	}
+
+	public DefaultComboBoxModel<String> getDcmPubCondition() {
+		return dcmPubCondition;
+	}
+
+	public JTextField getJtfPubConditonVal() {
+		return jtfPubConditonVal;
+	}
+
+	public JRadioButton getJrbPublishableOk() {
+		return jrbPublishableOk;
+	}
+
+	public JRadioButton getJrbPublishableNo() {
+		return jrbPublishableNo;
+	}
+
+	public JButton getJbtnOk() {
+		return jbtnOk;
+	}
+
+	public JButton getJbtnCancel() {
+		return jbtnCancel;
+	}
+
+	public JButton getJbtnDeleteCoup() {
+		return jbtnDeleteCoup;
+	}
+
+	public JButton getJbtnGoMain() {
+		return jbtnGoMain;
+	}
+	
 } // class

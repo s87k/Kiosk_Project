@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 public class AddCouponEvent extends WindowAdapter implements ActionListener {
 	
-	AddCouponDesign acd;
+	private AddCouponDesign acd;
 	
 	public AddCouponEvent(AddCouponDesign acd) {
 		this.acd = acd;

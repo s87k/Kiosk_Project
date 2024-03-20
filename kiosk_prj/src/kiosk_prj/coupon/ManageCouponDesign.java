@@ -2,16 +2,16 @@ package kiosk_prj.coupon;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 //public class ManageCouponDesign extends JPanel {
 public class ManageCouponDesign extends JDialog {
 	
-	AdminMainPageDesign ampd;
+	private AdminMainPageDesign ampd;
 	
-	JButton jbtnAddCoupType, jbtnPublishCoup, jbtnSearchCoup, jbtnModifyCoup;
-	JButton jbtnGoToMain;
+	private JButton jbtnAddCoupType, jbtnPublishCoup, jbtnSearchCoup, jbtnModifyCoup;
+	private JButton jbtnGoToMain;
+	private SearchCouponDesign scdSearch, scdModify;
 	
 	public ManageCouponDesign(AdminMainPageDesign ampd) {
 		this.ampd = ampd;
@@ -24,6 +24,10 @@ public class ManageCouponDesign extends JDialog {
 		jbtnGoToMain = new JButton("메인으로");
 		
 		setLayout(null);
+		
+		scdSearch = new SearchCouponDesign(this);
+		scdModify = new SearchCouponDesign(this, 0);
+		
 		
 		jbtnAddCoupType.setBounds(10, 60, 150, 150);
 		jbtnPublishCoup.setBounds(10, 220, 150, 150);
@@ -70,6 +74,14 @@ public class ManageCouponDesign extends JDialog {
 
 	public JButton getJbtnGoToMain() {
 		return jbtnGoToMain;
+	}
+	
+	public SearchCouponDesign getScdSearch() {
+		return scdSearch;
+	}
+
+	public SearchCouponDesign getScdModify() {
+		return scdModify;
 	}
 
 	public static void main(String[] args) {

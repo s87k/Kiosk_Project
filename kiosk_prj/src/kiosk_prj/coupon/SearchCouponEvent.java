@@ -6,7 +6,7 @@ import javax.swing.event.ChangeListener;
 
 public class SearchCouponEvent implements ChangeListener {
 	
-	SearchCouponDesign scd;
+	private SearchCouponDesign scd;
 	
 	public SearchCouponEvent(SearchCouponDesign scd) {
 		this.scd = scd;
