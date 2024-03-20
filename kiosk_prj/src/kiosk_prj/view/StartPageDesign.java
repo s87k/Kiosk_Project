@@ -40,9 +40,10 @@ public class StartPageDesign extends JFrame{
 		
 		addWindowListener(spe);
 		
+		setSize(600,800);
+		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(false);
-		setBounds(100,0,600,800);
 	}//design
 
 	public static void main(String[] args) {
