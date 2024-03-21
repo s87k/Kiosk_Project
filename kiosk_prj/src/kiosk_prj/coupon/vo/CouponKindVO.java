@@ -28,6 +28,14 @@ public class CouponKindVO {
 		this.deleteDate = deleteDate;
 		this.flagDelete = flagDelete;
 	}
+	
+	public CouponKindVO(String adminId, String coupKindName, int discount, int expiresPeriod, boolean flagPublishable) {
+		this.adminId = adminId;
+		this.coupKindName = coupKindName;
+		this.discount = discount;
+		this.expiresPeriod = expiresPeriod;
+		this.flagPublishable = flagPublishable;
+	}
 
 	public int getCoupKindNo() {
 		return coupKindNo;
@@ -99,6 +107,14 @@ public class CouponKindVO {
 
 	public void setFlagDelete(boolean flagDelete) {
 		this.flagDelete = flagDelete;
+	}
+
+	@Override
+	public String toString() {
+		return "CouponKindVO [coupKindNo=" + coupKindNo + ", adminId=" + adminId + ", coupKindName=" + coupKindName
+				+ ", discount=" + discount + ", expiresPeriod=" + expiresPeriod + ", inputDate=" + inputDate
+				+ ", flagPublishable=" + flagPublishable + ", deleteDate=" + deleteDate + ", flagDelete=" + flagDelete
+				+ "]";
 	}
 		
 }
