@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DbConnection {
+	
+	static final String ID = "prj1kiosk";
+	static final String PASS = "tiger";
+	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+	
 	private static DbConnection dbCon;
 	
 	private DbConnection() {

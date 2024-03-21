@@ -12,10 +12,6 @@ import kiosk_prj.coupon.vo.CouponKindVO;
 public class CouponKindDAO {
 	private static CouponKindDAO ckDAO;
 	
-	static final String ID = "prj1kiosk";
-	static final String PASS = "tiger";
-	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-	
 	private CouponKindDAO() {
 	} // CouponKindDAO
 	
@@ -24,7 +20,7 @@ public class CouponKindDAO {
 			ckDAO = new CouponKindDAO();
 		} // end if
 		return ckDAO;
-	} // end getInstance
+	} // getInstance
 	
 	public void insertCoupKind(CouponKindVO ckVO) throws SQLException {
 		// 1. 드라이버 로딩
@@ -35,7 +31,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
@@ -74,7 +70,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
@@ -112,7 +108,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
@@ -149,7 +145,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
@@ -189,7 +185,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
@@ -229,7 +225,7 @@ public class CouponKindDAO {
 		
 		try {
 			// 2. 커넥션 얻기
-			con = dbCon.getConnection(URL, ID, PASS);
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
 			
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다

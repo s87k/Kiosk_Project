@@ -24,4 +24,11 @@ public class CoupConditionTypeVO {
 	public void setConditionTypeName(String conditionTypeName) {
 		this.conditionTypeName = conditionTypeName;
 	}
+
+	@Override
+	public String toString() {
+		return "CoupConditionTypeVO [conditionTypeNo=" + conditionTypeNo + ", conditionTypeName=" + conditionTypeName
+				+ "]";
+	}
+	
 }

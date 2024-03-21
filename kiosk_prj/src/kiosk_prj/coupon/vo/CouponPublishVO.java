@@ -25,4 +25,10 @@ public class CouponPublishVO {
 	public void setConditionPriceNo(int conditionPriceNo) {
 		this.conditionPriceNo = conditionPriceNo;
 	}
+
+	@Override
+	public String toString() {
+		return "CouponPublishVO [coupKindNo=" + coupKindNo + ", conditionPriceNo=" + conditionPriceNo + "]";
+	}
+	
 }

@@ -9,8 +9,12 @@ public class CoupConditionPriceVO {
 	}
 	
 	public CoupConditionPriceVO(int conditionPriceNo, int conditionTypeNo, int conditionPrice) {
-		super();
 		this.conditionPriceNo = conditionPriceNo;
+		this.conditionTypeNo = conditionTypeNo;
+		this.conditionPrice = conditionPrice;
+	}
+	
+	public CoupConditionPriceVO(int conditionTypeNo, int conditionPrice) {
 		this.conditionTypeNo = conditionTypeNo;
 		this.conditionPrice = conditionPrice;
 	}
@@ -33,4 +37,11 @@ public class CoupConditionPriceVO {
 	public void setConditionPrice(int conditionPrice) {
 		this.conditionPrice = conditionPrice;
 	}
+
+	@Override
+	public String toString() {
+		return "CoupConditionPriceVO [conditionPriceNo=" + conditionPriceNo + ", conditionTypeNo=" + conditionTypeNo
+				+ ", conditionPrice=" + conditionPrice + "]";
+	}
+	
 }

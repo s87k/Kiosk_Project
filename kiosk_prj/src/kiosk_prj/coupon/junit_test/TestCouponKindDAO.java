@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 
-class CouponDAOTest {
+class TestCouponKindDAO {
 	
 	CouponKindDAO ckDAO;
 	
