@@ -17,12 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
+import kiosk_prj.controller.OrderDetailEvent;
+
 @SuppressWarnings("serial")
 public class OrderDetailDesgin extends JDialog{
 	private OrderDesign od;
-	private JLabel menuInfo, menuImg, jlCup, jlTemp, jlShot, jlCount;
+	private JLabel menuInfo, menuImg, jlCount;
 	private JButton storeCup, personalCup, hot, ice, menuPlus, menuMinus, addMenu;
-	private int count;
 	private JRadioButton shotOption;
 	private Font font;
 	
@@ -53,7 +54,7 @@ public class OrderDetailDesgin extends JDialog{
 		
 		// 옵션 선택
 		// 컵 옵션
-		jlCup = new JLabel("컵*");
+		JLabel jlCup = new JLabel("컵*");
 		font = jlCup.getFont();
 		jlCup.setFont(font.deriveFont(Font.PLAIN, 20));
 		jlCup.setForeground(Color.RED);
@@ -70,7 +71,7 @@ public class OrderDetailDesgin extends JDialog{
 		personalCup.setBounds(180, 220, 100, 50);
 		
 		// 온도 옵션
-		jlTemp = new JLabel("온도*");
+		JLabel jlTemp = new JLabel("온도*");
 		font = jlTemp.getFont();
 		jlTemp.setFont(font.deriveFont(Font.PLAIN, 20));
 		jlTemp.setForeground(Color.RED);
@@ -87,7 +88,7 @@ public class OrderDetailDesgin extends JDialog{
 		ice.setBounds(180, 340, 100, 50);
 		
 		// 샷추가 옵션
-		jlShot = new JLabel("샷추가");
+		JLabel jlShot = new JLabel("샷추가");
 		font = jlShot.getFont();
 		jlShot.setFont(font.deriveFont(Font.PLAIN, 20));
 		
@@ -100,7 +101,7 @@ public class OrderDetailDesgin extends JDialog{
 		shotOption.setBounds(50, 455, 150, 20);
 		
 		// 수량 옵션
-		jlCount = new JLabel("수량");
+		jlCount = new JLabel("0");
 		jlCount.setHorizontalAlignment(SwingConstants.CENTER);
 		jlCount.setBorder(BorderFactory.createTitledBorder(""));
 		menuMinus  = new JButton("-");
@@ -114,10 +115,23 @@ public class OrderDetailDesgin extends JDialog{
 		add(menuPlus);
 		add(addMenu);
 		
-		menuMinus.setBounds(0, 511, 100, 50);//511
+		menuMinus.setBounds(0, 511, 100, 50);
 		jlCount.setBounds(100, 511, 100, 50);
 		menuPlus.setBounds(200, 511, 100, 50);
 		addMenu.setBounds(300, 511, 200, 50);
+		
+		//actionListener 추가
+		OrderDetailEvent ode = new OrderDetailEvent(this);
+		storeCup.addActionListener(ode);
+		personalCup.addActionListener(ode);
+		hot.addActionListener(ode);
+		ice.addActionListener(ode);
+		shotOption.addActionListener(ode);
+		menuMinus.addActionListener(ode);
+		menuPlus.addActionListener(ode);
+		addMenu.addActionListener(ode);
+		
+		addWindowListener(ode);
 		
 		setSize(500,600);
 		setLocationRelativeTo(null);
@@ -126,6 +140,50 @@ public class OrderDetailDesgin extends JDialog{
 		
 		
 	}//orderDetail
+
+	public JLabel getMenuInfo() {
+		return menuInfo;
+	}
+
+	public JLabel getMenuImg() {
+		return menuImg;
+	}
+
+	public JLabel getJlCount() {
+		return jlCount;
+	}
+
+	public JButton getStoreCup() {
+		return storeCup;
+	}
+
+	public JButton getPersonalCup() {
+		return personalCup;
+	}
+
+	public JButton getHot() {
+		return hot;
+	}
+
+	public JButton getIce() {
+		return ice;
+	}
+
+	public JButton getMenuPlus() {
+		return menuPlus;
+	}
+
+	public JButton getMenuMinus() {
+		return menuMinus;
+	}
+
+	public JButton getAddMenu() {
+		return addMenu;
+	}
+
+	public JRadioButton getShotOption() {
+		return shotOption;
+	}
 	
 //	public static void main(String[] args) {
 //		new OrderDetailDesgin();

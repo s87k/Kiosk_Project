@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kiosk_prj.view.OrderDesign;
 import kiosk_prj.view.OrderDetailDesgin;
+import kiosk_prj.view.PaymentPageDesign;
 
 public class OrderEvent extends WindowAdapter implements ActionListener, MouseListener{
 
@@ -84,6 +85,8 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		} 
 		if (ae.getSource() == od.getPay()) {
 			System.out.println("결제하기");
+			od.dispose();
+			PaymentPageDesign.main(new String[]{});
 		}
 	}//actionPerformed
 	

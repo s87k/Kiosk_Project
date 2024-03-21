@@ -143,11 +143,11 @@ public class OrderDesign extends JFrame implements ActionListener {
 		cartPanel.setLayout(new BorderLayout());
 
 		//JTable 1열 5행 일단 넣어봄..
-		cartList = new JTable(5, 1);
+//		cartList = new JTable(5, 1);
 		
 		//장바구니 DefaultTableModel 추가
-//		dtmCartList = new DefaultTableModel(new Object[]{"Item"}, 0);
-//        cartList = new JTable(dtmCartList);
+		dtmCartList = new DefaultTableModel(new Object[]{"Item"}, 0);
+        cartList = new JTable(dtmCartList);
         
 		//JTable 장바구니 테두리
 //      JScrollPane scrollPane = new JScrollPane(cartList);
@@ -214,7 +214,7 @@ public class OrderDesign extends JFrame implements ActionListener {
 		setResizable(false);
 		setSize(600, 800);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}//order
 
 	@Override
