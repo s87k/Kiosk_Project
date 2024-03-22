@@ -9,7 +9,9 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+
 import kiosk_prj.DAO.DbConnection;
+
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.membership.vo.MemberShipCouponVO;
 import kiosk_prj.membership.vo.MemberShipOrderVO;
@@ -172,7 +174,7 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String memberOrder = "SELECT s.order_time, b.menu_name, s.amount "
+			String memberOrder = "SELECT d.waiting_number, s.order_time, b.menu_name, s.amount "
 					+ "FROM SUMMARY_ORDER s, BEVERAGE_MANAGEMENT b, DETAILED_ORDER d "
 					+ "WHERE s.order_number = d.order_number AND b.menu_code = d.menu_code " 
 					+ "AND s.phone_number = ?";
@@ -185,6 +187,7 @@ public class MemberShipDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				msoVO = new MemberShipOrderVO(
+						rs.getString("waiting_number"),
 						rs.getString("order_time"), 
 						rs.getString("menu_name"),
 						rs.getInt("amount"));
