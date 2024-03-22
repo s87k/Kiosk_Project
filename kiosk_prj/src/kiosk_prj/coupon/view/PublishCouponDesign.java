@@ -1,14 +1,18 @@
 package kiosk_prj.coupon.view;
 
+import java.sql.SQLException;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,6 +39,7 @@ public class PublishCouponDesign extends JDialog {
 		String[] columnName = {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"};
 		dtmCoupType = new DefaultTableModel(null, columnName);
 		jtabCoupType = new JTable(dtmCoupType);
+		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane jspCoupType = new JScrollPane(jtabCoupType);
 		
 		JLabel jlblCondition = new JLabel("조건"); 
@@ -79,6 +84,14 @@ public class PublishCouponDesign extends JDialog {
 		add(jbtnGoMain);
 		add(jbtnPublish);
 		add(jbtnCancel);
+		
+		try {
+			pce.searchPublishableCouponType();
+			pce.searchAllCoupPubConditionType();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(mcd, "추가된 쿠폰을 목록을 조회하는 데 문제가 발생했습니다");
+			e.printStackTrace();
+		} // end catch
 		
 		// 455, 130, 1024, 768
 		setBounds(mcd.getX() + 200, mcd.getY() + 100, 750, 650);
