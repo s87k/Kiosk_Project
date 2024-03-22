@@ -8,8 +8,9 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JButton;
 
+import kiosk_prj.memvership.MemberShipDesign;
 import kiosk_prj.view.AdminMainPageDesign;
-import kiosk_prj.view.MemberShipDesign;
+import kiosk_prj.view.OrderStatusDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
@@ -50,6 +51,9 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		}//end if
 		if(e.getSource() == jbUserManagement) {
 			new MemberShipDesign(amod, null);
+		}
+		if(e.getSource() == jbOrderStatus) {
+			new OrderStatusDesign(amod);
 		}
 	}//actionPerformed
 
