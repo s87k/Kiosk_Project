@@ -71,6 +71,7 @@ public class MemberShipDesign extends JDialog {
 		listTab = new JTabbedPane();
 
 		// 주문 목록 컬럼
+
 		String[] orderColumn = { "대기번호", "주문시간", "상품명", "결제금액" };
 		dtmOrderList = new DefaultTableModel(orderColumn, 0);
 		orderList = new JTable(dtmOrderList);

@@ -45,7 +45,6 @@ public class DetailOrderEvent extends WindowAdapter implements ActionListener {
 				rowData[1] = msoVO.getOrderTime();
 				rowData[2] = msoVO.getMenuName();
 				rowData[3] = "" + msoVO.getAmount();
-				
 				//행 등록
 				dtm.addRow(rowData);
 			}
