@@ -1,4 +1,4 @@
-package kiosk_prj.memvership;
+package kiosk_prj.membership;
 
 
 import javax.swing.JButton;
