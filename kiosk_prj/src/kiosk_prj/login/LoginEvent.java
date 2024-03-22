@@ -63,7 +63,7 @@ public class LoginEvent extends WindowAdapter implements ActionListener {
 				System.out.println(pw);
 			} else {
 				ld.dispose();
-				new AdminMainPageDesign();
+				new AdminMainPageDesign(id);
 			}//end else
 		} else {
 			JOptionPane.showMessageDialog(null, "존재하지 않는 아이디 입니다.");

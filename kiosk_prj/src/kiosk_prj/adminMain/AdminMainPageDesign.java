@@ -21,8 +21,10 @@ public class AdminMainPageDesign extends JFrame {
 	private DefaultTableModel dtmStatus;
 	private JLabel jlOpenDate;
 
-	public AdminMainPageDesign() {
+	private String adminId;
+	public AdminMainPageDesign(String adminId) {
 		super("main");
+		this.adminId = adminId;
 
 		// 이미지
 
@@ -235,4 +237,8 @@ public class AdminMainPageDesign extends JFrame {
 		this.dtmStatus = dtmStatus;
 	}
 
+	public String getAdminId() {
+		return adminId;
+	}
+	
 }// class
