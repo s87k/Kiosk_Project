@@ -23,8 +23,8 @@ public class LoginDesign extends JFrame{
 		super("로그인");
 		
 		//이미지
-		ImageIcon iLogin = new ImageIcon("kiosk_prj/src/kiosk_prj/image/login.png");
-		ImageIcon logo = new ImageIcon("kiosk_prj/src/kiosk_prj/image/login_logo.png");
+//		ImageIcon iLogin = new ImageIcon(getClass().getClassLoader().getResource("login.png"));
+		ImageIcon logo = new ImageIcon("D:/dev/workspace/java_se/src/kiosk_prj/image/login_logo.png");
 		
 		//컴포넌트
 		JLabel jlId = new JLabel("ID");
@@ -32,7 +32,7 @@ public class LoginDesign extends JFrame{
 		JLabel jlLogo = new JLabel(logo);
 		iD = new JTextField(15);
 		password = new JPasswordField(15);
-		login = new JButton(iLogin);
+		login = new JButton("로그인");
 		
 		// 텍스트 중앙에 정렬
 		jlId.setHorizontalAlignment(JLabel.CENTER);
@@ -94,7 +94,7 @@ public class LoginDesign extends JFrame{
 		
 	}//LoginDesign
 
-
+	
 
 	public JTextField getiD() {
 		return iD;

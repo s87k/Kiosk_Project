@@ -8,9 +8,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import kiosk_prj.view.AdminMainPageDesign;
+import kiosk_prj.view.MemberShipDesign;
 import kiosk_prj.view.OrderStatusDesign;
+import kiosk_prj.view.SettlementDesign;
+import kiosk_prj.view.ShopCloseDesign;
+import kiosk_prj.view.ShopOpenDesign;
+
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
@@ -18,6 +25,7 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 	private JButton jbCoffee, jbNonCoffee, jbTea, jbSmoothie, jbAll,
 				jbMeniInfo, jbOrderStatus, jbSales, jbOpen, jbClosd,
 				jbUserManagement, jbOperate, jbCoupon, jbTrends;
+	private JLabel jlOpenDate;
 	
 	public AdminMainPageEvent(AdminMainPageDesign amod) {
 		this.amod = amod;
@@ -38,6 +46,7 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		jbOperate = amod.getJbOperate();
 		jbCoupon = amod.getJbCoupon();
 		jbTrends = amod.getJbTrends();
+		jlOpenDate = amod.getJlOpenDate();
 		
 	}//AdminMainPageEvent
 
@@ -50,15 +59,27 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 			OrderStatusDialog();
 		}//end if
 		if(e.getSource() == jbOpen) {
-			System.out.println("open");
+			new ShopOpenDesign(amod);
+		}//end if
+		if(e.getSource() == jbUserManagement) {
+			new MemberShipDesign(amod, null);
+		}//end if
+		if(e.getSource() == jbClosd) {
+			int openDate = jlOpenDate.getText().length();
+			if(openDate>17) {
+				JOptionPane.showMessageDialog(null, "마감은 개점설정 이전에 사용할 수 없습니다.");
+				return;
+			}//end if
+			new ShopCloseDesign(amod);
+		}//end if
+		if(e.getSource() == jbSales) {
+			new SettlementDesign(amod);
 		}//end if
 	}//actionPerformed
 	
 	public void OrderStatusDialog() {
 		new OrderStatusDesign(amod);
 	}//OrderStatusDialog
-
-	
 	
 	@Override
 	public void windowClosing(WindowEvent e) {

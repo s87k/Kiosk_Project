@@ -16,6 +16,5 @@ public class LoginVO {
     public String getPw() {
         return pw;
     }
-
 }
 

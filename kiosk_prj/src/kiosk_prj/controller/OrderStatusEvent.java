@@ -30,7 +30,7 @@ public class OrderStatusEvent extends WindowAdapter implements ActionListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbExit) {
-			System.out.println("asdfasdfasdf");
+			osd.dispose();
 		}//end if
 	}//actionPerformed
 	
