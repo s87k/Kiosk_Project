@@ -1,4 +1,4 @@
-package kiosk_prj.memvership;
+package kiosk_prj.membership;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
