@@ -1,4 +1,4 @@
-package kiosk_prj.vo.memberShipVO;
+package kiosk_prj.membership.vo;
 
 public class MemberShipCouponVO {
 	private String couponName, publishDate, useDate, expireDate, useStatus;

@@ -1,12 +1,10 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import kiosk_prj.controller.memberShipEvent.AddMemberEvent;
 
 @SuppressWarnings("serial")
 public class AddMemberDesign extends JDialog {

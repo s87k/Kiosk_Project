@@ -1,4 +1,4 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 import java.awt.Frame;
 
@@ -13,8 +13,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-import kiosk_prj.controller.memberShipEvent.MemberShipEvent;
 
 @SuppressWarnings("serial")
 public class MemberShipDesign extends JDialog {

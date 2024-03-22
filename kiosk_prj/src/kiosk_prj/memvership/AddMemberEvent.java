@@ -1,4 +1,4 @@
-package kiosk_prj.controller.memberShipEvent;
+package kiosk_prj.memvership;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,9 +7,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import kiosk_prj.DAO.memberShipDAO.MemberShipDAO;
-import kiosk_prj.view.memverShipView.AddMemberDesign;
-import kiosk_prj.vo.memberShipVO.MemberShipVO;
+import kiosk_prj.membership.dao.MemberShipDAO;
+import kiosk_prj.membership.vo.MemberShipVO;
 
 public class AddMemberEvent extends WindowAdapter implements ActionListener{
 	private AddMemberDesign admd;

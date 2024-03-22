@@ -1,4 +1,4 @@
-package kiosk_prj.controller.memberShipEvent;
+package kiosk_prj.memvership;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import kiosk_prj.DAO.DbConnection;
-import kiosk_prj.DAO.memberShipDAO.MemberShipDAO;
-import kiosk_prj.view.memverShipView.SearchMemberDesign;
-import kiosk_prj.vo.memberShipVO.MemberShipVO;
+import kiosk_prj.membership.dao.MemberShipDAO;
+import kiosk_prj.membership.vo.MemberShipVO;
 
 public class SearchMemberEvent extends WindowAdapter implements ActionListener {
 	private SearchMemberDesign smd;

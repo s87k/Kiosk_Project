@@ -1,4 +1,4 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
-import kiosk_prj.DAO.memberShipDAO.MemberShipDAO;
-import kiosk_prj.vo.memberShipVO.MemberShipVO;
+import kiosk_prj.membership.dao.MemberShipDAO;
+import kiosk_prj.membership.vo.MemberShipVO;
 
 class TestMemberShipDAO {
 

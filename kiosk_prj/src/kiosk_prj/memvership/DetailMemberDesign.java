@@ -1,9 +1,7 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-
-import kiosk_prj.controller.memberShipEvent.DetailMemberEvent;
 
 @SuppressWarnings("serial")
 public class DetailMemberDesign extends JDialog {
