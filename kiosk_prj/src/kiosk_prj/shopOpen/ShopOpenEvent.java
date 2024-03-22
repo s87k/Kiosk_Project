@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.shopOpen;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,11 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-
-import kiosk_prj.dao.ShopOpenCloseDAO;
-import kiosk_prj.view.ShopOpenCompleteDesign;
-import kiosk_prj.view.ShopOpenConfirmDesign;
-import kiosk_prj.view.ShopOpenDesign;
 
 public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 

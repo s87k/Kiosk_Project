@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.adminMain;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,19 +13,10 @@ import javax.swing.JOptionPane;
 
 import kiosk_prj.coupon.ManageCouponDesign;
 import kiosk_prj.membership.MemberShipDesign;
-import kiosk_prj.view.AdminMainPageDesign;
-import kiosk_prj.membership.MemberShipDesign;
-import kiosk_prj.view.OrderStatusDesign;
-import kiosk_prj.view.SettlementDesign;
-import kiosk_prj.view.ShopCloseDesign;
-import kiosk_prj.view.ShopOpenDesign;
-
-import kiosk_prj.view.OrderStatusDesign;
-
-import kiosk_prj.view.OrderStatusDesign;
-import kiosk_prj.view.SettlementDesign;
-import kiosk_prj.view.ShopCloseDesign;
-import kiosk_prj.view.ShopOpenDesign;
+import kiosk_prj.orderStatus.OrderStatusDesign;
+import kiosk_prj.settlement.SettlementDesign;
+import kiosk_prj.shopClose.ShopCloseDesign;
+import kiosk_prj.shopOpen.ShopOpenDesign;
 
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
@@ -85,22 +76,8 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 			new SettlementDesign(amod);
 		}//end if
 	
-		if(e.getSource() == jbOrderStatus) {
-			new OrderStatusDesign(amod);
-		}
 		if(e.getSource() == jbCoupon) {
 			new ManageCouponDesign(amod, null);
-		}//end if
-		if(e.getSource() == jbClosd) {
-			int openDate = jlOpenDate.getText().length();
-			if(openDate>17) {
-				JOptionPane.showMessageDialog(null, "마감은 개점설정 이전에 사용할 수 없습니다.");
-				return;
-			}//end if
-			new ShopCloseDesign(amod);
-		}//end if
-		if(e.getSource() == jbSales) {
-			new SettlementDesign(amod);
 		}//end if
 	}//actionPerformed
 	

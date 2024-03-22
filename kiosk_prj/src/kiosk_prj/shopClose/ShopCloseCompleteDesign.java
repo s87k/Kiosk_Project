@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.shopClose;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,11 +10,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
-public class ShopOpenCompleteDesign extends JDialog implements ActionListener {
+public class ShopCloseCompleteDesign extends JDialog implements ActionListener {
 	
 	private JButton jbExit;
 	
-	public ShopOpenCompleteDesign(ShopOpenDesign sod, String openDate) {
+	public ShopCloseCompleteDesign(ShopCloseDesign scd, String openDate) {
 		
 		//이미지
 		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/DialogComplete.png");
@@ -22,9 +22,9 @@ public class ShopOpenCompleteDesign extends JDialog implements ActionListener {
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);
-		JLabel jlcompleteText1 = new JLabel("개점처리 되었습니다.");
+		JLabel jlcompleteText1 = new JLabel("마감 되었습니다.");
 		JLabel jlcompleteText2 = new JLabel
-				("<HTML><BODY><CENTER><font color=\"#461228\">개점일자 : " + openDate + "</CENTER></BODY></HTML>");
+				("<HTML><BODY><CENTER><font color=\"#461228\">마감일자 : " + openDate + "</font></CENTER></BODY></HTML>");
 		jbExit = new JButton(BTexit2);
 		jbExit.setBorderPainted(false);
 		
@@ -56,7 +56,7 @@ public class ShopOpenCompleteDesign extends JDialog implements ActionListener {
 		
 		setAlwaysOnTop(true);//창 제일 위로!!!!!!!!!!!
 		setSize(650,550);
-		setLocation(sod.getX()+180,sod.getY()+80);
+		setLocation(scd.getX()+180,scd.getY()+80);
 		setResizable(false);//창 크기 변경 불가능
 		setVisible(true);
 	}//ShopOpenCompleteDesign

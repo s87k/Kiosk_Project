@@ -1,4 +1,4 @@
-package kiosk_prj.vo;
+package kiosk_prj.shopOpen;
 
 public class ShopCloseVO {
 	

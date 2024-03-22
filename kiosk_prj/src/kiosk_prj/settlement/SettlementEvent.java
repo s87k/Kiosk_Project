@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.settlement;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +10,6 @@ import java.util.GregorianCalendar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-
-import kiosk_prj.view.SettlementDesign;
 
 public class SettlementEvent extends WindowAdapter implements ActionListener {
 	

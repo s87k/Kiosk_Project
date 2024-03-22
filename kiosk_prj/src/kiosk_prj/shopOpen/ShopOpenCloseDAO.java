@@ -1,8 +1,10 @@
-package kiosk_prj.dao;
+package kiosk_prj.shopOpen;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import kiosk_prj.dao.DbConnection;
 
 public class ShopOpenCloseDAO {
 	

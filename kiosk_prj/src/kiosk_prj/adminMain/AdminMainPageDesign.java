@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.adminMain;
 
 import java.awt.Font;
 
@@ -10,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.controller.AdminMainPageEvent;
 
 @SuppressWarnings("serial")
 public class AdminMainPageDesign extends JFrame {
@@ -111,21 +110,22 @@ public class AdminMainPageDesign extends JFrame {
 		add(lbBackground);
 
 		// 이벤트 등록
-		AdminMainPageEvent ampe = new AdminMainPageEvent(this);
-		arrJbMenuFilter[0].addActionListener(ampe); // Coffee
-		arrJbMenuFilter[1].addActionListener(ampe); // Non Coffee
-		arrJbMenuFilter[2].addActionListener(ampe); // Tea
-		arrJbMenuFilter[3].addActionListener(ampe); // Smoothie
-		arrJbMenuFilter[4].addActionListener(ampe); // 전체
-		jbMeniInfo.addActionListener(ampe);
-		jbOrderStatus.addActionListener(ampe);
-		jbSales.addActionListener(ampe);
-		jbOpen.addActionListener(ampe);
-		jbClosd.addActionListener(ampe);
-		jbUserManagement.addActionListener(ampe);
-		jbOperate.addActionListener(ampe);
-		jbCoupon.addActionListener(ampe);
-		jbTrends.addActionListener(ampe);
+		
+		AdminMainPageEventTeeeeeeeeeeeest ampetest = new AdminMainPageEventTeeeeeeeeeeeest(this);
+		arrJbMenuFilter[0].addActionListener(ampetest); // Coffee
+		arrJbMenuFilter[1].addActionListener(ampetest); // Non Coffee
+		arrJbMenuFilter[2].addActionListener(ampetest); // Tea
+		arrJbMenuFilter[3].addActionListener(ampetest); // Smoothie
+		arrJbMenuFilter[4].addActionListener(ampetest); // 전체
+		jbMeniInfo.addActionListener(ampetest);
+		jbOrderStatus.addActionListener(ampetest);
+		jbSales.addActionListener(ampetest);
+		jbOpen.addActionListener(ampetest);
+		jbClosd.addActionListener(ampetest);
+		jbUserManagement.addActionListener(ampetest);
+		jbOperate.addActionListener(ampetest);
+		jbCoupon.addActionListener(ampetest);
+		jbTrends.addActionListener(ampetest);
 
 		setVisible(true);
 		setSize(1024,768);

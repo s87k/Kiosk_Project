@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.shopClose;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.dao.ShopOpenCloseDAO;
-import kiosk_prj.view.ShopCloseCompleteDesign;
-import kiosk_prj.view.ShopCloseConfirmDesign;
-import kiosk_prj.view.ShopCloseDesign;
+import kiosk_prj.shopOpen.ShopOpenCloseDAO;
 
 public class ShopCloseEvent extends WindowAdapter implements ActionListener {
 	

@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.settlement;
 
 import javax.swing.JDialog;
 

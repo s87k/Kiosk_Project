@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.shopClose;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.controller.ShopCloseEvent;
+import kiosk_prj.adminMain.AdminMainPageDesign;
 
 @SuppressWarnings("serial")
 public class ShopCloseDesign extends JDialog {

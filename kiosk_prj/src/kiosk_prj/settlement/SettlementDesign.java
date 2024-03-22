@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.settlement;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-import kiosk_prj.controller.SettlementEvent;
+import kiosk_prj.adminMain.AdminMainPageDesign;
 
 @SuppressWarnings("serial")
 public class SettlementDesign extends JDialog {

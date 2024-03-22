@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.shopOpen;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import kiosk_prj.controller.ShopOpenEvent;
+import kiosk_prj.adminMain.AdminMainPageDesign;
 
 @SuppressWarnings("serial")
 public class ShopOpenDesign extends JDialog {
@@ -305,5 +305,4 @@ public class ShopOpenDesign extends JDialog {
 	public JButton getJbExit() {
 		return jbExit;
 	}
-	
 }//class
