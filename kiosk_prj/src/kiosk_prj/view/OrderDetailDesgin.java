@@ -22,7 +22,7 @@ import kiosk_prj.controller.OrderDetailEvent;
 @SuppressWarnings("serial")
 public class OrderDetailDesgin extends JDialog{
 	private OrderDesign od;
-	private JLabel menuInfo, menuImg, jlCount;
+	private JLabel menuName, menuPrice, menuImg, jlCount;
 	private JButton storeCup, personalCup, hot, ice, menuPlus, menuMinus, addMenu;
 	private JRadioButton shotOption;
 	private Font font;
@@ -41,15 +41,26 @@ public class OrderDetailDesgin extends JDialog{
 		menuImg.setPreferredSize(new Dimension(120,120));
 		
 		
-		menuInfo = new JLabel("일단 아메리카노 1200원");
-		font = menuInfo.getFont();
-		menuInfo.setFont(font.deriveFont(Font.PLAIN, 20));
+		menuName = new JLabel("아메리카노");
+		menuPrice = new JLabel("1200");
+		JLabel won = new JLabel("원");
+		
+		font = menuName.getFont();
+		menuName.setFont(font.deriveFont(Font.PLAIN, 20));
+		font = menuPrice.getFont();
+		menuPrice.setFont(font.deriveFont(Font.PLAIN, 20));
+		font = won.getFont();
+		won.setFont(font.deriveFont(Font.PLAIN, 20));
 		
 		add(menuImg);
-		add(menuInfo);
+		add(menuName);
+		add(menuPrice);
+		add(won);
 		
 		menuImg.setBounds(30, 30, 120, 120);
-		menuInfo.setBounds(180, 55, 250, 50);
+		menuName.setBounds(180, 55, 100, 50);
+		menuPrice.setBounds(300, 55, 50, 50);
+		won.setBounds(350, 55, 30, 50);
 		
 		
 		// 옵션 선택
@@ -108,7 +119,7 @@ public class OrderDetailDesgin extends JDialog{
 		menuPlus = new JButton("+");
 		
 		// 주문 담기 버튼
-		addMenu = new JButton("??원 담기");
+		addMenu = new JButton("0원 담기");
 		
 		add(menuMinus);
 		add(jlCount);
@@ -121,7 +132,7 @@ public class OrderDetailDesgin extends JDialog{
 		addMenu.setBounds(300, 511, 200, 50);
 		
 		//actionListener 추가
-		OrderDetailEvent ode = new OrderDetailEvent(this);
+		OrderDetailEvent ode = new OrderDetailEvent(this, od);
 		storeCup.addActionListener(ode);
 		personalCup.addActionListener(ode);
 		hot.addActionListener(ode);
@@ -141,8 +152,12 @@ public class OrderDetailDesgin extends JDialog{
 		
 	}//orderDetail
 
-	public JLabel getMenuInfo() {
-		return menuInfo;
+	public JLabel getMenuName() {
+		return menuName;
+	}
+	
+	public JLabel getMenuPrice() {
+		return menuPrice;
 	}
 
 	public JLabel getMenuImg() {

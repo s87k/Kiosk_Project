@@ -25,10 +25,6 @@ public class OrderDesign extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 
 	public OrderDesign() {
-		order();
-	}//OrderDesign
-	
-	public void order() {
 		setTitle("Order Page");
 		setLayout(new BorderLayout());
 
@@ -56,31 +52,30 @@ public class OrderDesign extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		cardPanel.setLayout(cardLayout);
 
-		
 		// 베스트 패널
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(2, 2));
 		bestAmericano = new JButton("아메리카노");
 		panel1.add(bestAmericano);
-		
+
 		bestCafeLatte = new JButton("카페라떼");
 		panel1.add(bestCafeLatte);
-		
+
 		bestVanillaLatte = new JButton("바닐라 라떼");
 		panel1.add(bestVanillaLatte);
-		
+
 		// 커피 패널
 		panel2 = new JPanel();
 		panel2.setLayout(new GridLayout(2, 2));
 		espresso = new JButton("에스프레소");
 		panel2.add(espresso);
-		
+
 		americano = new JButton("아메리카노");
 		panel2.add(americano);
-		
+
 		cafeLatte = new JButton("카페라떼");
 		panel2.add(cafeLatte);
-		
+
 		vanillaLatte = new JButton("바닐라 라떼");
 		panel2.add(vanillaLatte);
 
@@ -89,13 +84,13 @@ public class OrderDesign extends JFrame implements ActionListener {
 		panel3.setLayout(new GridLayout(2, 2));
 		chocolateLatte = new JButton("초코 라떼");
 		panel3.add(chocolateLatte);
-		
+
 		toffeeNutLatte = new JButton("토피넛 라떼");
 		panel3.add(toffeeNutLatte);
-		
+
 		greenTeaLatte = new JButton("녹차 라떼");
 		panel3.add(greenTeaLatte);
-		
+
 		dalgonaLatte = new JButton("달고나 라떼");
 		panel3.add(dalgonaLatte);
 
@@ -104,13 +99,13 @@ public class OrderDesign extends JFrame implements ActionListener {
 		panel4.setLayout(new GridLayout(2, 2));
 		peachTea = new JButton("복숭아 티");
 		panel4.add(peachTea);
-		
+
 		lemonTea = new JButton("레몬 티");
 		panel4.add(lemonTea);
-		
+
 		grapefruitTea = new JButton("자몽 티");
 		panel4.add(grapefruitTea);
-		
+
 		camomileTea = new JButton("캐모마일 티");
 		panel4.add(camomileTea);
 
@@ -119,17 +114,17 @@ public class OrderDesign extends JFrame implements ActionListener {
 		panel5.setLayout(new GridLayout(2, 2));
 		yogurtSmoothie = new JButton("요거트 스무디");
 		panel5.add(yogurtSmoothie);
-		
+
 		StrowberrySmoothie = new JButton("딸기 스무디");
 		panel5.add(StrowberrySmoothie);
-		
+
 		milkShake = new JButton("밀크쉐이크");
 		panel5.add(milkShake);
-		
+
 		javachipFrappe = new JButton("자바칩 프라페");
 		panel5.add(javachipFrappe);
 
-		//card패널에 카드 추가
+		// card패널에 카드 추가
 		cardPanel.add(panel1, "panel1");
 		cardPanel.add(panel2, "panel2");
 		cardPanel.add(panel3, "panel3");
@@ -142,18 +137,18 @@ public class OrderDesign extends JFrame implements ActionListener {
 		cartPanel = new JPanel();
 		cartPanel.setLayout(new BorderLayout());
 
-		//JTable 1열 5행 일단 넣어봄..
+		// JTable 1열 5행 일단 넣어봄..
 //		cartList = new JTable(5, 1);
-		
-		//장바구니 DefaultTableModel 추가
-		dtmCartList = new DefaultTableModel(new Object[]{"Item"}, 0);
-        cartList = new JTable(dtmCartList);
-        
-		//JTable 장바구니 테두리
+
+		// 장바구니 DefaultTableModel 추가
+		dtmCartList = new DefaultTableModel();
+		cartList = new JTable(dtmCartList);
+
+		// JTable 장바구니 테두리
 //      JScrollPane scrollPane = new JScrollPane(cartList);
 //      scrollPane.setBorder(BorderFactory.createTitledBorder("장바구니")); // "장바구니" 테두리 추가
 //      cartPanel.add(scrollPane, BorderLayout.CENTER);
-        
+
 		cartPanel.add(cartList, BorderLayout.CENTER);
 
 		// 패널추가해서 jlOrderPrice, jtfOrderPrice, cancel, pay 일렬배치
@@ -172,22 +167,22 @@ public class OrderDesign extends JFrame implements ActionListener {
 		buttonsPanel.add(pay);
 
 		cartPanel.add(buttonsPanel, BorderLayout.SOUTH);
-		
+
 		add(cartPanel, BorderLayout.SOUTH);
 
-		//actionListener 추가
+		// actionListener 추가
 		OrderEvent oe = new OrderEvent(this);
-		
-		//메뉴 actionListener 추가
+
+		// 메뉴 actionListener 추가
 		bestAmericano.addActionListener(oe);
 		bestCafeLatte.addActionListener(oe);
 		bestVanillaLatte.addActionListener(oe);
-		
+
 		espresso.addActionListener(oe);
 		americano.addActionListener(oe);
 		cafeLatte.addActionListener(oe);
 		vanillaLatte.addActionListener(oe);
-		
+
 		chocolateLatte.addActionListener(oe);
 		toffeeNutLatte.addActionListener(oe);
 		greenTeaLatte.addActionListener(oe);
@@ -197,25 +192,25 @@ public class OrderDesign extends JFrame implements ActionListener {
 		lemonTea.addActionListener(oe);
 		grapefruitTea.addActionListener(oe);
 		camomileTea.addActionListener(oe);
-		
+
 		yogurtSmoothie.addActionListener(oe);
 		milkShake.addActionListener(oe);
 		StrowberrySmoothie.addActionListener(oe);
 		javachipFrappe.addActionListener(oe);
-		
+
 		pay.addActionListener(oe);
 		cancel.addActionListener(oe);
-		
+
 		cartList.addMouseListener(oe);
-		
+
 		addWindowListener(oe);
-		
+
 		setVisible(true);
 		setResizable(false);
 		setSize(600, 800);
 		setLocationRelativeTo(null);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}//order
+	}// order
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -230,11 +225,11 @@ public class OrderDesign extends JFrame implements ActionListener {
 		} else if (e.getSource() == smoothie) {
 			cardLayout.show(cardPanel, "panel5");
 		}
-	}//actionPerformed
+	}// actionPerformed
 
 	public static void main(String[] args) {
 		new OrderDesign();
-	}//main
+	}// main
 
 	public JPanel getMenueBarPanel() {
 		return menueBarPanel;
@@ -315,27 +310,27 @@ public class OrderDesign extends JFrame implements ActionListener {
 	public DefaultTableModel getDtmCartList() {
 		return dtmCartList;
 	}
-	
+
 	public JButton getBestAmericano() {
 		return bestAmericano;
 	}
-	
+
 	public JButton getBestCafeLatte() {
 		return bestCafeLatte;
 	}
-	
+
 	public JButton getBestVanillaLatte() {
 		return bestVanillaLatte;
 	}
-	
+
 	public JButton getEspresso() {
 		return espresso;
 	}
-	
+
 	public JButton getAmericano() {
 		return americano;
 	}
-	
+
 	public JButton getCafeLatte() {
 		return cafeLatte;
 	}
@@ -391,7 +386,5 @@ public class OrderDesign extends JFrame implements ActionListener {
 	public JButton getJavachipFrappe() {
 		return javachipFrappe;
 	}
-	
-	
-	
-}//class
+
+}// class

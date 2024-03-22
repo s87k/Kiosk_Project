@@ -6,15 +6,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.table.DefaultTableModel;
+
+import kiosk_prj.view.OrderDesign;
 import kiosk_prj.view.OrderDetailDesgin;
 
 public class OrderDetailEvent extends WindowAdapter implements ActionListener{
 
 	private OrderDetailDesgin odd;
+	private OrderDesign od;
 	private Color originalColor;
 	
-	public OrderDetailEvent(OrderDetailDesgin odd) {
+	public OrderDetailEvent(OrderDetailDesgin odd, OrderDesign od) {
 		this.odd = odd;
+		this.od = od;
 		originalColor = odd.getStoreCup().getBackground();
 	}//OrderDetailEvent
 	
@@ -47,15 +52,28 @@ public class OrderDetailEvent extends WindowAdapter implements ActionListener{
 				count--;
 				odd.getJlCount().setText(Integer.toString(count));
 			}//end if
+			int price = Integer.parseInt(odd.getMenuPrice().getText());
+			int totalPrice = count*price;
+			odd.getAddMenu().setText(totalPrice+"원 담기");
 		}
 		if(e.getSource() == odd.getMenuPlus()) {
 			System.out.println("수량더하기");
 			int count = Integer.parseInt(odd.getJlCount().getText());
 			count++;
 			odd.getJlCount().setText(Integer.toString(count));
+			int price = Integer.parseInt(odd.getMenuPrice().getText());
+			int totalPrice = count*price;
+			odd.getAddMenu().setText(totalPrice+"원 담기");
 		}
 		if(e.getSource() == odd.getAddMenu()) {
 			System.out.println("주문 담기");
+			String menuName = odd.getMenuName().getText();
+	        int menuPrice = Integer.parseInt(odd.getMenuPrice().getText());
+	        int count = Integer.parseInt(odd.getJlCount().getText());
+	        int totalPrice = count * menuPrice;
+	        
+	        Object[] rowData = {menuName, totalPrice};
+	        od.getDtmCartList().addRow(rowData);
 			odd.dispose();
 		}
 	}
