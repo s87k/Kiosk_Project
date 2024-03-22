@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JButton;
 
-import kiosk_prj.memvership.MemberShipDesign;
+import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.view.AdminMainPageDesign;
 import kiosk_prj.view.OrderStatusDesign;
 

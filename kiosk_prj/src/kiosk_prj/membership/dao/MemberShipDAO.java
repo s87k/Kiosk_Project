@@ -10,10 +10,10 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import kiosk_prj.DAO.DbConnection;
+import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.membership.vo.MemberShipCouponVO;
 import kiosk_prj.membership.vo.MemberShipOrderVO;
 import kiosk_prj.membership.vo.MemberShipVO;
-import kiosk_prj.memvership.MemberShipDesign;
 
 public class MemberShipDAO {
 	private static MemberShipDAO msDAO;	
