@@ -189,6 +189,7 @@ public class MemberShipDesign extends JDialog {
 		modifyMember.addActionListener(mse);
 		detailMember.addActionListener(mse);
 		checkMember.addActionListener(mse);
+		memberList.addMouseListener(mse);
 
 		// 다이얼로그 위치 설정
 		setVisible(true);
@@ -200,16 +201,16 @@ public class MemberShipDesign extends JDialog {
 		return jPhoneNum;
 	}
 
-	public void setjPhoneNum(JTextField jPhoneNum) {
-		this.jPhoneNum = jPhoneNum;
+	public void setjPhoneNum(String phoneNum) {
+		jPhoneNum.setText(phoneNum);
 	}
 
 	public JTextField getjName() {
 		return jName;
 	}
 
-	public void setjName(JTextField jName) {
-		this.jName = jName;
+	public void setjName(String name) {
+		jName.setText(name);
 	}
 
 	public JTextField getMemberNum() {

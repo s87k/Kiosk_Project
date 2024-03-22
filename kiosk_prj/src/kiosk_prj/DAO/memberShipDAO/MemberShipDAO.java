@@ -7,16 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import kiosk_prj.DAO.DbConnection;
+import kiosk_prj.view.memverShipView.MemberShipDesign;
 import kiosk_prj.vo.memberShipVO.MemberShipCouponVO;
 import kiosk_prj.vo.memberShipVO.MemberShipOrderVO;
 import kiosk_prj.vo.memberShipVO.MemberShipVO;
 
 public class MemberShipDAO {
-	private static MemberShipDAO msDAO;
-
+	private static MemberShipDAO msDAO;	
 	private MemberShipDAO() {
-
+		
 	}
 
 	public static MemberShipDAO getInstance() {
@@ -50,9 +52,11 @@ public class MemberShipDAO {
 		}
 	}
 
-	public int updateMember(MemberShipVO msVO) throws SQLException {
+	public int updateMember(MemberShipVO msVO, String phoneNumber) throws SQLException {
 		int cnt = 0;
 		DbConnection dbCon = DbConnection.getInstance();
+		MemberShipVO mVO = new MemberShipVO();
+		MemberShipDesign msd = new MemberShipDesign(new JFrame(), "회원관리");
 
 		// 1. 드라이버 로딩
 		Connection con = null;
@@ -63,7 +67,7 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String updateMember = "update MEMBERSHIP set PHONE_NUMBER = ?, MEMBER_NAME = ?, MEMBER_BIRTH = ?, GRADE = ? WHERE = PHONE_NUMBER = ?";
+			String updateMember = "update MEMBERSHIP set PHONE_NUMBER =?, MEMBER_NAME = ?, MEMBER_BIRTH = ?, MEMBER_GRADE = ? WHERE PHONE_NUMBER = ?";
 
 			pstmt = con.prepareStatement(updateMember);
 
@@ -72,6 +76,11 @@ public class MemberShipDAO {
 			pstmt.setString(2, msVO.getMemberName());
 			pstmt.setString(3, msVO.getMemberBirth());
 			pstmt.setString(4, msVO.getGrade());
+			pstmt.setString(5, phoneNumber);
+			System.out.println(phoneNumber);
+			System.out.println(msVO);
+			
+
 			// 5.
 			pstmt.executeUpdate();
 		} finally {
@@ -202,7 +211,7 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String memberCoupon = "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ch.use_coup_date, ch.status_use " 
+			String memberCoupon = "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ct.date_expire, ch.use_coup_date, ch.status_use " 
 					+"FROM coupon_held ch, coupon_type ct " 
 					+"WHERE ch.coup_kind_no = ct.coup_kind_no "
 					+"AND ch.phone_number = ?";
@@ -219,6 +228,7 @@ public class MemberShipDAO {
 						rs.getInt("discount"),
 						rs.getString("publish_date"),
 						rs.getString("use_coup_date"),
+						rs.getString("date_expire"),
 						rs.getString("status_use")
 						);
 				list.add(mscVO);
@@ -227,6 +237,6 @@ public class MemberShipDAO {
 			dbCon.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}
+	}//memberCouponList
 
 }// class

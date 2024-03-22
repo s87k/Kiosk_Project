@@ -1,9 +1,7 @@
 package kiosk_prj.view.memverShipView;
 
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -66,6 +64,7 @@ public class AddMemberDesign extends JDialog {
 		add(exit);
 		
 		AddMemberEvent ame = new AddMemberEvent(this);
+		add.addActionListener(ame);
 		exit.addActionListener(ame);
 		setVisible(true);
 		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);

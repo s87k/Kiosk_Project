@@ -1,9 +1,11 @@
 package kiosk_prj.vo.memberShipVO;
 
+
+
 public class MemberShipVO {
-	String phoneNum, memberName, memberBirth, grade, holdingCoupon;
-	
+	String phoneNum, memberName, memberBirth, grade, holdingCoupon, exPhoneNum;
 	public MemberShipVO() {
+		
 	}
 	
 	public MemberShipVO(String phoneNum, String memberName, String memberBirth, String grade) {
@@ -11,7 +13,24 @@ public class MemberShipVO {
 		this.memberName = memberName;
 		this.memberBirth = memberBirth;
 		this.grade = grade;
-		
+	}
+	
+	public MemberShipVO(String phoneNum, String memberName, String memberBirth, String grade, String exPhoneNum) {
+		this.phoneNum = phoneNum;
+		this.memberName = memberName;
+		this.memberBirth = memberBirth;
+		this.grade = grade;
+		this.exPhoneNum = exPhoneNum;
+	}
+
+
+
+	public String getExPhoneNum() {
+		return exPhoneNum;
+	}
+
+	public void setExPhoneNum(String exPhoneNum) {
+		this.exPhoneNum = exPhoneNum;
 	}
 
 	public String getPhoneNum() {
@@ -57,7 +76,7 @@ public class MemberShipVO {
 	@Override
 	public String toString() {
 		return "MemberShipVO [phoneNum=" + phoneNum + ", memberName=" + memberName + ", memberBirth=" + memberBirth
-				+ ", grade=" + grade + ", holdingCoupon=" + holdingCoupon + "]";
+				+ ", grade=" + grade + ", holdingCoupon=" + holdingCoupon + ", exPhoneNum=" + exPhoneNum + "]";
 	}
 
 }

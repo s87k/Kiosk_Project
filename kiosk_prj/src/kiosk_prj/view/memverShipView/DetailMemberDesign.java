@@ -8,9 +8,11 @@ import kiosk_prj.controller.memberShipEvent.DetailMemberEvent;
 @SuppressWarnings("serial")
 public class DetailMemberDesign extends JDialog {
 	private JButton jOrderList, jCouponList, jConsumeTrend;
+	private String phoneNum;
 	
-	public DetailMemberDesign(JDialog MemberShipDesign, String title) {
-		super(MemberShipDesign, "회원 상세");
+	public DetailMemberDesign(JDialog MemberShipDesign, String title, String phoneNum) {
+		super(MemberShipDesign, "회원 상세", true);
+		this.phoneNum = phoneNum;
 		
 		//컴포넌트
 		jOrderList = new JButton("주문 내역");
@@ -36,9 +38,17 @@ public class DetailMemberDesign extends JDialog {
 		jCouponList.addActionListener(dme);
 		jConsumeTrend.addActionListener(dme);
 		
-		setVisible(true);
 		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
+		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 
 	public JButton getjOrderList() {
