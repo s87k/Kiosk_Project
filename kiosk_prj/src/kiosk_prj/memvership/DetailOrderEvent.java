@@ -1,4 +1,4 @@
-package kiosk_prj.controller.memberShipEvent;
+package kiosk_prj.memvership;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,9 +8,8 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.DAO.memberShipDAO.MemberShipDAO;
-import kiosk_prj.view.memverShipView.DetailOrderDesign;
-import kiosk_prj.vo.memberShipVO.MemberShipOrderVO;
+import kiosk_prj.membership.dao.MemberShipDAO;
+import kiosk_prj.membership.vo.MemberShipOrderVO;
 
 public class DetailOrderEvent extends WindowAdapter implements ActionListener {
 	private DetailOrderDesign dod;

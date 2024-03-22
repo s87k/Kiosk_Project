@@ -1,4 +1,4 @@
-package kiosk_prj.controller.memberShipEvent;
+package kiosk_prj.memvership;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,15 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.DAO.memberShipDAO.MemberShipDAO;
-import kiosk_prj.view.memverShipView.AddMemberDesign;
-import kiosk_prj.view.memverShipView.DetailMemberDesign;
-import kiosk_prj.view.memverShipView.MemberShipDesign;
-import kiosk_prj.view.memverShipView.ModifyMemberDesign;
-import kiosk_prj.view.memverShipView.SearchMemberDesign;
-import kiosk_prj.vo.memberShipVO.MemberShipCouponVO;
-import kiosk_prj.vo.memberShipVO.MemberShipOrderVO;
-import kiosk_prj.vo.memberShipVO.MemberShipVO;
+import kiosk_prj.membership.dao.MemberShipDAO;
+import kiosk_prj.membership.vo.MemberShipCouponVO;
+import kiosk_prj.membership.vo.MemberShipOrderVO;
+import kiosk_prj.membership.vo.MemberShipVO;
 
 @SuppressWarnings("serial")
 public class MemberShipEvent extends WindowAdapter implements ActionListener, MouseListener {

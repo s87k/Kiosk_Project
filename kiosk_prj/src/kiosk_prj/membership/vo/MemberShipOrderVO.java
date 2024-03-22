@@ -1,4 +1,4 @@
-package kiosk_prj.vo.memberShipVO;
+package kiosk_prj.membership.vo;
 
 public class MemberShipOrderVO {
 	private String orderTime, menuName, phoneNumber;

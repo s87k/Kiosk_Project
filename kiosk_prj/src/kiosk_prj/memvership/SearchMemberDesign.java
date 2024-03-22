@@ -1,4 +1,4 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import kiosk_prj.controller.memberShipEvent.SearchMemberEvent;
 
 @SuppressWarnings("serial")
 public class SearchMemberDesign extends JDialog {

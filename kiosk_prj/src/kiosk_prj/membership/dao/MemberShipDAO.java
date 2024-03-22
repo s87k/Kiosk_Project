@@ -1,4 +1,4 @@
-package kiosk_prj.DAO.memberShipDAO;
+package kiosk_prj.membership.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +10,10 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import kiosk_prj.DAO.DbConnection;
-import kiosk_prj.view.memverShipView.MemberShipDesign;
-import kiosk_prj.vo.memberShipVO.MemberShipCouponVO;
-import kiosk_prj.vo.memberShipVO.MemberShipOrderVO;
-import kiosk_prj.vo.memberShipVO.MemberShipVO;
+import kiosk_prj.membership.vo.MemberShipCouponVO;
+import kiosk_prj.membership.vo.MemberShipOrderVO;
+import kiosk_prj.membership.vo.MemberShipVO;
+import kiosk_prj.memvership.MemberShipDesign;
 
 public class MemberShipDAO {
 	private static MemberShipDAO msDAO;	
@@ -55,8 +55,8 @@ public class MemberShipDAO {
 	public int updateMember(MemberShipVO msVO, String phoneNumber) throws SQLException {
 		int cnt = 0;
 		DbConnection dbCon = DbConnection.getInstance();
-		MemberShipVO mVO = new MemberShipVO();
-		MemberShipDesign msd = new MemberShipDesign(new JFrame(), "회원관리");
+//		MemberShipVO mVO = new MemberShipVO();
+//		MemberShipDesign msd = new MemberShipDesign(new JFrame(), "회원관리");
 
 		// 1. 드라이버 로딩
 		Connection con = null;

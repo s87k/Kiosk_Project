@@ -1,13 +1,10 @@
-package kiosk_prj.view.memverShipView;
+package kiosk_prj.memvership;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import kiosk_prj.controller.memberShipEvent.AddMemberEvent;
-import kiosk_prj.controller.memberShipEvent.ModifyMemberEvent;
 
 @SuppressWarnings("serial")
 public class ModifyMemberDesign extends JDialog{
@@ -76,9 +73,8 @@ public class ModifyMemberDesign extends JDialog{
 		ModifyMemberEvent mme = new ModifyMemberEvent(this);
 		exit.addActionListener(mme);
 		modify.addActionListener(mme);
-		setSize(574,648);
+		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
 		setVisible(true);
-//		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
 	}
 
 
