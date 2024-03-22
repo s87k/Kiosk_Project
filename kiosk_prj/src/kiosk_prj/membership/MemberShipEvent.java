@@ -138,7 +138,7 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 			for (int i = 0; i < list.size(); i++) {
 				msoVO = list.get(i);
 				rowData = new String[4];
-				rowData[0] = "" + (i + 1) + "";
+				rowData[0] = msoVO.getWatingNum();
 				rowData[1] = msoVO.getOrderTime();
 				rowData[2] = msoVO.getMenuName();
 				rowData[3] = "" + msoVO.getAmount();

@@ -71,7 +71,7 @@ public class MemberShipDesign extends JDialog {
 		listTab = new JTabbedPane();
 
 		// 주문 목록 컬럼
-		String[] orderColumn = { "번호", "주문시간", "상품명", "결제금액" };
+		String[] orderColumn = { "대기번호", "주문시간", "상품명", "결제금액" };
 		dtmOrderList = new DefaultTableModel(orderColumn, 0);
 		orderList = new JTable(dtmOrderList);
 		JScrollPane jspOrderList = new JScrollPane(orderList);
@@ -90,7 +90,7 @@ public class MemberShipDesign extends JDialog {
 
 		listTab.add("주문목록", jspOrderList);
 		listTab.add("쿠폰목록", jspCouponList);
-
+		
 		// 나가기 버튼
 		exit = new JButton("나가기");
 
@@ -194,15 +194,15 @@ public class MemberShipDesign extends JDialog {
 		setBounds(AdminMainPageDesign.getX(), AdminMainPageDesign.getY(), 924, 768);
 
 	}
-
+	
 	public JTextField getjPhoneNum() {
 		return jPhoneNum;
 	}
-
+	
 	public void setjPhoneNum(String phoneNum) {
 		jPhoneNum.setText(phoneNum);
 	}
-
+	
 	public JTextField getjName() {
 		return jName;
 	}

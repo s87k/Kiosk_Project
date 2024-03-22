@@ -1,13 +1,22 @@
 package kiosk_prj.membership.vo;
 
 public class MemberShipOrderVO {
-	private String orderTime, menuName, phoneNumber;
+	private String watingNum,orderTime, menuName, phoneNumber;
 	private int amount;
 	
-	public MemberShipOrderVO(String orderTime, String menuName, int amount) {
+	public MemberShipOrderVO(String watingNum, String orderTime, String menuName, int amount) {
+		this.watingNum = watingNum;
 		this.orderTime = orderTime;
 		this.menuName = menuName;
 		this.amount = amount;
+	}
+
+	public String getWatingNum() {
+		return watingNum;
+	}
+
+	public void setWatingNum(String watingNum) {
+		this.watingNum = watingNum;
 	}
 
 	public String getOrderTime() {
@@ -36,7 +45,7 @@ public class MemberShipOrderVO {
 
 	@Override
 	public String toString() {
-		return "MemberShipOrderVO [orderTime=" + orderTime + ", menuName=" + menuName + ", amount=" + amount + "]";
+		return "MemberShipOrderVO [watingNum ="+ watingNum + ", orderTime=" + orderTime + ", menuName=" + menuName + ", amount=" + amount + "]";
 	}
 
 	public String getPhoneNumber() {
