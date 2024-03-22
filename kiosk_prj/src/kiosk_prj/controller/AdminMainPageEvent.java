@@ -11,8 +11,17 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import kiosk_prj.coupon.ManageCouponDesign;
+import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.view.AdminMainPageDesign;
-import kiosk_prj.view.MemberShipDesign;
+import kiosk_prj.membership.MemberShipDesign;
+import kiosk_prj.view.OrderStatusDesign;
+import kiosk_prj.view.SettlementDesign;
+import kiosk_prj.view.ShopCloseDesign;
+import kiosk_prj.view.ShopOpenDesign;
+
+import kiosk_prj.view.OrderStatusDesign;
+
 import kiosk_prj.view.OrderStatusDesign;
 import kiosk_prj.view.SettlementDesign;
 import kiosk_prj.view.ShopCloseDesign;
@@ -63,6 +72,24 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		}//end if
 		if(e.getSource() == jbUserManagement) {
 			new MemberShipDesign(amod, null);
+		}//end if
+		if(e.getSource() == jbClosd) {
+			int openDate = jlOpenDate.getText().length();
+			if(openDate>17) {
+				JOptionPane.showMessageDialog(null, "마감은 개점설정 이전에 사용할 수 없습니다.");
+				return;
+			}//end if
+			new ShopCloseDesign(amod);
+		}//end if
+		if(e.getSource() == jbSales) {
+			new SettlementDesign(amod);
+		}//end if
+	
+		if(e.getSource() == jbOrderStatus) {
+			new OrderStatusDesign(amod);
+		}
+		if(e.getSource() == jbCoupon) {
+			new ManageCouponDesign(amod, null);
 		}//end if
 		if(e.getSource() == jbClosd) {
 			int openDate = jlOpenDate.getText().length();

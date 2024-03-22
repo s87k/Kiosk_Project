@@ -1,4 +1,5 @@
-package kiosk_prj.dao;
+package kiosk_prj.coupon.dao;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class DbConnection {
+	
+	static final String ID = "prj1kiosk";
+	static final String PASS = "tiger";
+	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+	
 	private static DbConnection dbCon;
 	
 	private DbConnection() {
@@ -20,7 +25,7 @@ public class DbConnection {
 		return dbCon;
 	}//getInstance
 	
-	public Connection getConnection(String id, String pass)throws SQLException{
+	public Connection getConnection(String url, String id, String pass)throws SQLException{
 		Connection con = null;
 		//1. 드라이버 로딩
 		try {
@@ -29,10 +34,12 @@ public class DbConnection {
 			cne.printStackTrace();
 		}//end catch
 		
-		String url = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
-		
-		con = DriverManager.getConnection(url,id,pass);
+		con = DriverManager.getConnection(url, id, pass);
 		return con;
+	}//getConnection
+	
+	public Connection getConnection(String id, String pass)throws SQLException{
+		return DriverManager.getConnection("jdbc:oracle:thin:@192.168.10.220:1521:orcl", id, pass);
 	}//getConnection
 	
 	public void dbClose(ResultSet rs, Statement stmt, Connection con)throws SQLException{

@@ -34,7 +34,7 @@ public class ShopOpenCloseDAO {
 		// 2.
 			String id = "kiosk";
 			String pass = "4";
-			con = dbCon.getConnection(null, id, pass);
+			con = dbCon.getConnection(id, pass);
 		// 3. 쿼리문 생성객체 얻기
 			StringBuilder insertOpenDate = new StringBuilder();
 			insertOpenDate
@@ -68,7 +68,7 @@ public class ShopOpenCloseDAO {
 		// 2.
 			String id = "kiosk";
 			String pass = "4";
-			con = dbCon.getConnection(null, id, pass);
+			con = dbCon.getConnection(id, pass);
 		// 3. 쿼리문 생성객체 얻기
 			StringBuilder insertCloseDate = new StringBuilder();
 			insertCloseDate

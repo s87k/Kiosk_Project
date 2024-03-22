@@ -7,5 +7,8 @@
 	</classpathentry>
 	<classpathentry kind="src" path="kiosk_prj/src"/>
 	<classpathentry kind="lib" path="C:/dev/drivers/ojdbc8.jar"/>
+
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+
 	<classpathentry kind="output" path="bin"/>
 </classpath>
