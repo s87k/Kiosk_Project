@@ -27,8 +27,8 @@ public class OrderDetailDesgin extends JDialog{
 	private JRadioButton shotOption;
 	private Font font;
 	
-	public OrderDetailDesgin(JFrame OrderDesign, String title) {
-		super(OrderDesign, "옵션 선택");
+	public OrderDetailDesgin(OrderDesign od, String title) {
+		super(od, "옵션 선택");
 		setLayout(null);
 		
 		// 메뉴 정보

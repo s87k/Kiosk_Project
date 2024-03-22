@@ -10,7 +10,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.view.CompletePayPageDesign;
 import kiosk_prj.view.PaymentPageDesign;
+import kiosk_prj.view.PhoneNumDesign;
 
 public class PaymentPageEvent extends WindowAdapter implements ActionListener, MouseListener{
 
@@ -30,12 +32,18 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == ppd.getBtnCheckCoupon()) {
 			System.out.println("쿠폰조회");
+			new PhoneNumDesign();
+			ppd.dispose();
 		}
 		if(e.getSource() == ppd.getCreditCard()) {
 			System.out.println("신용카드 결제");
+			new CompletePayPageDesign();
+			ppd.dispose();
 		}
 		if(e.getSource() == ppd.getCash()) {
 			System.out.println("현금 결제");
+			new CompletePayPageDesign();
+			ppd.dispose();
 		}
 	}//actionPerformed
 	

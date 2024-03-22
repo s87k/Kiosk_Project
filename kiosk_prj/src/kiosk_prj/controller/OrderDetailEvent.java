@@ -16,6 +16,7 @@ public class OrderDetailEvent extends WindowAdapter implements ActionListener{
 	private OrderDetailDesgin odd;
 	private OrderDesign od;
 	private Color originalColor;
+	private int count, menuPrice, totalPrice;
 	
 	public OrderDetailEvent(OrderDetailDesgin odd, OrderDesign od) {
 		this.odd = odd;
@@ -25,6 +26,13 @@ public class OrderDetailEvent extends WindowAdapter implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//메뉴금액
+		menuPrice = Integer.parseInt(odd.getMenuPrice().getText());
+		//수량
+        count = Integer.parseInt(odd.getJlCount().getText());
+        //총 주문금액
+        totalPrice = count * menuPrice;
+        
 		if(e.getSource() == odd.getStoreCup()) {
 			System.out.println("매장컵");
 			odd.getStoreCup().setBackground(Color.GRAY);
@@ -47,32 +55,23 @@ public class OrderDetailEvent extends WindowAdapter implements ActionListener{
 		}
 		if(e.getSource() == odd.getMenuMinus()) {
 			System.out.println("수량빼기");
-			int count = Integer.parseInt(odd.getJlCount().getText());
 			if(count > 0) {
 				count--;
 				odd.getJlCount().setText(Integer.toString(count));
 			}//end if
-			int price = Integer.parseInt(odd.getMenuPrice().getText());
-			int totalPrice = count*price;
 			odd.getAddMenu().setText(totalPrice+"원 담기");
 		}
 		if(e.getSource() == odd.getMenuPlus()) {
 			System.out.println("수량더하기");
-			int count = Integer.parseInt(odd.getJlCount().getText());
 			count++;
 			odd.getJlCount().setText(Integer.toString(count));
-			int price = Integer.parseInt(odd.getMenuPrice().getText());
-			int totalPrice = count*price;
 			odd.getAddMenu().setText(totalPrice+"원 담기");
 		}
 		if(e.getSource() == odd.getAddMenu()) {
 			System.out.println("주문 담기");
 			String menuName = odd.getMenuName().getText();
-	        int menuPrice = Integer.parseInt(odd.getMenuPrice().getText());
-	        int count = Integer.parseInt(odd.getJlCount().getText());
-	        int totalPrice = count * menuPrice;
-	        
-	        Object[] rowData = {menuName, totalPrice};
+	        String option = "";
+	        Object[] rowData = {menuName, option,totalPrice};
 	        od.getDtmCartList().addRow(rowData);
 			odd.dispose();
 		}

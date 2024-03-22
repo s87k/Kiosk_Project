@@ -11,11 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import kiosk_prj.controller.PhoneNumEvent;
+
 public class PhoneNumDesign extends JFrame {
 
 	private JLabel orderAmount;
 	private JTextField jtfPhoneNum;
 	private Font font;
+	private JButton keypad;
 
 	public PhoneNumDesign() {
 		setLayout(null);
@@ -26,7 +29,7 @@ public class PhoneNumDesign extends JFrame {
 		jlAmount.setFont(font.deriveFont(Font.PLAIN, 15));
 		jlAmount.setBounds(150, 50, 100, 30);
 
-		orderAmount = new JLabel("2700");
+		orderAmount = new JLabel("얼마더라");
 		font = orderAmount.getFont();
 		orderAmount.setFont(font.deriveFont(Font.PLAIN, 20));
 		orderAmount.setBounds(150, 100, 100, 30);
@@ -48,34 +51,26 @@ public class PhoneNumDesign extends JFrame {
 
 		// 버튼 배열
 		JButton[][] btnArr = new JButton[4][3];
+		
 
 		// 버튼 생성 및 프레임에 추가
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				JButton button = new JButton(btnLabel[i][j]);
-				btnArr[i][j] = button;
-				jpPhoneNum.add(button);
+				keypad = new JButton(btnLabel[i][j]);
+				btnArr[i][j] = keypad;
+				jpPhoneNum.add(keypad);
 			}//end for
 		}//end for
 
 		// 버튼에 ActionListener 추가
+		PhoneNumEvent pne = new PhoneNumEvent(this);
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				JButton button = btnArr[i][j];
-				button.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// 각 버튼을 클릭했을 때의 동작 추가
-						String buttonText = button.getText();
-						jtfPhoneNum.setText(buttonText);
-						System.out.println("Clicked: " + buttonText);
-						// 버튼에 대한 다른 동작 수행 가능
-					}// actionPerformed
-
-				});// addActionListener
+				keypad = btnArr[i][j];
+				keypad.addActionListener(pne);
 			} // end for
 		} // end for
+		keypad.addActionListener(pne);
 		
 		jpPhoneNum.setBounds(150, 280, 300, 300);
 		
@@ -104,5 +99,22 @@ public class PhoneNumDesign extends JFrame {
 	public JTextField getJtfPhoneNum() {
 		return jtfPhoneNum;
 	}
+
+	public void setOrderAmount(JLabel orderAmount) {
+		this.orderAmount = orderAmount;
+	}
+
+	public void setJtfPhoneNum(JTextField jtfPhoneNum) {
+		this.jtfPhoneNum = jtfPhoneNum;
+	}
+
+	public void setKeypad(JButton keypad) {
+		this.keypad = keypad;
+	}
+
+	public JButton getKeypad() {
+		return keypad;
+	}
+
 
 }// class
