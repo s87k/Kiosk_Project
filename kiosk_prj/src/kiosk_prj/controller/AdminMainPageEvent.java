@@ -8,7 +8,8 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JButton;
 
-import kiosk_prj.memvership.MemberShipDesign;
+import kiosk_prj.coupon.ManageCouponDesign;
+import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.view.AdminMainPageDesign;
 import kiosk_prj.view.OrderStatusDesign;
 
@@ -54,6 +55,9 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		}
 		if(e.getSource() == jbOrderStatus) {
 			new OrderStatusDesign(amod);
+		}
+		if(e.getSource() == jbCoupon) {
+			new ManageCouponDesign(amod, null);
 		}
 	}//actionPerformed
 
