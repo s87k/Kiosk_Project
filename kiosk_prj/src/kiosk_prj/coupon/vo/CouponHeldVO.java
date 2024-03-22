@@ -25,6 +25,12 @@ public class CouponHeldVO {
 		this.conditionPriceNo = conditionPriceNo;
 	}
 	
+	public CouponHeldVO(String phoneNumber, int coupKindNo, int conditionPriceNo) {
+		this.phoneNumber = phoneNumber;
+		this.coupKindNo = coupKindNo;
+		this.conditionPriceNo = conditionPriceNo;
+	}
+	
 	public String getCoupPubCode() {
 		return coupPubCode;
 	}
@@ -66,6 +72,13 @@ public class CouponHeldVO {
 	}
 	public void setConditionPriceNo(int conditionPriceNo) {
 		this.conditionPriceNo = conditionPriceNo;
+	}
+
+	@Override
+	public String toString() {
+		return "CouponHeldVO [coupPubCode=" + coupPubCode + ", phoneNumber=" + phoneNumber + ", publishDate="
+				+ publishDate + ", statusUse=" + statusUse + ", useCoupDate=" + useCoupDate + ", coupKindNo="
+				+ coupKindNo + ", conditionPriceNo=" + conditionPriceNo + "]";
 	}
 	
 }
