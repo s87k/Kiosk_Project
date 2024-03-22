@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.login;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,8 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-
-import kiosk_prj.controller.LoginEvent;
 
 @SuppressWarnings("serial")
 public class LoginDesign extends JFrame{
@@ -94,7 +92,7 @@ public class LoginDesign extends JFrame{
 		
 	}//LoginDesign
 
-
+	
 
 	public JTextField getiD() {
 		return iD;

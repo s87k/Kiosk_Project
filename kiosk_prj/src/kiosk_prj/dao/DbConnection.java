@@ -1,11 +1,11 @@
-package kiosk_prj.DAO;
-
+package kiosk_prj.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 
 public class DbConnection {
 	private static DbConnection dbCon;

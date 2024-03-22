@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.orderStatus;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +9,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
-
-import kiosk_prj.view.OrderStatusDesign;
 
 public class OrderStatusEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
@@ -30,7 +28,7 @@ public class OrderStatusEvent extends WindowAdapter implements ActionListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbExit) {
-			System.out.println("asdfasdfasdf");
+			osd.dispose();
 		}//end if
 	}//actionPerformed
 	

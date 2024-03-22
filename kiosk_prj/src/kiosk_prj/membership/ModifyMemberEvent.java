@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosk_prj.membership.dao.MemberShipDAO;
 import kiosk_prj.membership.vo.MemberShipVO;
-import kiosk_prj.view.AdminMainPageDesign;
 
 public class ModifyMemberEvent extends WindowAdapter implements ActionListener {
 	private ModifyMemberDesign mmd;

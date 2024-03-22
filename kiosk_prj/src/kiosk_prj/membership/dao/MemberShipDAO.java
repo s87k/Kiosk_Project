@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import kiosk_prj.DAO.DbConnection;
+import kiosk_prj.dao.DbConnection;
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.membership.vo.MemberShipCouponVO;
 import kiosk_prj.membership.vo.MemberShipOrderVO;

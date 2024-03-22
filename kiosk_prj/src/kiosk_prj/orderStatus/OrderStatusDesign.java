@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosk_prj.orderStatus;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.controller.OrderStatusEvent;
+import kiosk_prj.adminMain.AdminMainPageDesign;
 
 @SuppressWarnings("serial")
 public class OrderStatusDesign extends JDialog {
