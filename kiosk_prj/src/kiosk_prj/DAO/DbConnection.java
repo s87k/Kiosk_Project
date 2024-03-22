@@ -20,7 +20,7 @@ public class DbConnection {
 		return dbCon;
 	}//getInstance
 	
-	public Connection getConnection(String url, String id, String pass)throws SQLException{
+	public Connection getConnection(String id, String pass)throws SQLException{
 		Connection con = null;
 		//1. 드라이버 로딩
 		try {
@@ -29,7 +29,7 @@ public class DbConnection {
 			cne.printStackTrace();
 		}//end catch
 		
-		url = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
+		String url = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
 		
 		con = DriverManager.getConnection(url,id,pass);
 		return con;
