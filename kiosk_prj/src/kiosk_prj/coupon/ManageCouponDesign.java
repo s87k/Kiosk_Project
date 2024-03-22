@@ -2,20 +2,19 @@ package kiosk_prj.coupon;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 //public class ManageCouponDesign extends JPanel {
 public class ManageCouponDesign extends JDialog {
 	
-	private AdminMainPageDesign ampd;
 	
 	private JButton jbtnAddCoupType, jbtnPublishCoup, jbtnSearchCoup, jbtnModifyCoup;
 	private JButton jbtnGoToMain;
 	private SearchCouponDesign scdSearch, scdModify;
 	
-	public ManageCouponDesign(AdminMainPageDesign ampd) {
-		this.ampd = ampd;
-		ampd.setTitle("쿠폰 관리");
+	public ManageCouponDesign(JFrame AdminMainPageDesign, String title) {
+		super(AdminMainPageDesign, "쿠폰 관리");
 		
 		jbtnAddCoupType = new JButton("쿠폰 등록");
 		jbtnPublishCoup = new JButton("쿠폰 발급");
@@ -48,13 +47,10 @@ public class ManageCouponDesign extends JDialog {
 		jbtnModifyCoup.addActionListener(mce);
 		jbtnGoToMain.addActionListener(mce);
 		
-		setBounds(ampd.getX(), ampd.getY(), 1024, 768);
+		setBounds(AdminMainPageDesign.getX(), AdminMainPageDesign.getY(), 1024, 768);
 		setVisible(true);
 	} // ManageCoupon
 	
-	public AdminMainPageDesign getAmpd() {
-		return ampd;
-	}
 
 	public JButton getJbtnAddCoupType() {
 		return jbtnAddCoupType;
@@ -84,9 +80,5 @@ public class ManageCouponDesign extends JDialog {
 		return scdModify;
 	}
 
-	public static void main(String[] args) {
-		// 테스트용 
-		new ManageCouponDesign(new AdminMainPageDesign());
-	} // main
 	
 } // class
