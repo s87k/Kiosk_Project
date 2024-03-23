@@ -6,81 +6,74 @@ public class CouponAddedInfoVO {
 	private int discount;
 	private boolean flagPublishable;
 	private int expiresPeriod;
-	private int conditionTypeNo;
-	private String conditionTypeName;
-	private int conditionPriceNo;
-	private int conditionPrice;
+	private String condition;
 	
 	public CouponAddedInfoVO() {
 	}
-	
+
 	public CouponAddedInfoVO(int coupKindNo, String coupKindName, int discount, boolean flagPublishable,
-			int expiresPeriod, int conditionTypeNo, String conditionTypeName, int conditionPriceNo,
-			int conditionPrice) {
+			int expiresPeriod, String condition) {
 		this.coupKindNo = coupKindNo;
 		this.coupKindName = coupKindName;
 		this.discount = discount;
 		this.flagPublishable = flagPublishable;
 		this.expiresPeriod = expiresPeriod;
-		this.conditionTypeNo = conditionTypeNo;
-		this.conditionTypeName = conditionTypeName;
-		this.conditionPriceNo = conditionPriceNo;
-		this.conditionPrice = conditionPrice;
+		this.condition = condition;
 	}
-	
+
 	public int getCoupKindNo() {
 		return coupKindNo;
 	}
+
 	public void setCoupKindNo(int coupKindNo) {
 		this.coupKindNo = coupKindNo;
 	}
+
 	public String getCoupKindName() {
 		return coupKindName;
 	}
+
 	public void setCoupKindName(String coupKindName) {
 		this.coupKindName = coupKindName;
 	}
+
 	public int getDiscount() {
 		return discount;
 	}
+
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
-	public boolean isFlagPublishable() {
+
+	public boolean getFlagPublishable() {
 		return flagPublishable;
 	}
+
 	public void setFlagPublishable(boolean flagPublishable) {
 		this.flagPublishable = flagPublishable;
 	}
+
 	public int getExpiresPeriod() {
 		return expiresPeriod;
 	}
+
 	public void setExpiresPeriod(int expiresPeriod) {
 		this.expiresPeriod = expiresPeriod;
 	}
-	public int getConditionTypeNo() {
-		return conditionTypeNo;
+
+	public String getCondition() {
+		return condition;
 	}
-	public void setConditionTypeNo(int conditionTypeNo) {
-		this.conditionTypeNo = conditionTypeNo;
+
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
-	public String getConditionTypeName() {
-		return conditionTypeName;
-	}
-	public void setConditionTypeName(String conditionTypeName) {
-		this.conditionTypeName = conditionTypeName;
-	}
-	public int getConditionPriceNo() {
-		return conditionPriceNo;
-	}
-	public void setConditionPriceNo(int conditionPriceNo) {
-		this.conditionPriceNo = conditionPriceNo;
-	}
-	public int getConditionPrice() {
-		return conditionPrice;
-	}
-	public void setConditionPrice(int conditionPrice) {
-		this.conditionPrice = conditionPrice;
+
+	@Override
+	public String toString() {
+		return "CouponAddedInfoViewVO [coupKindNo=" + coupKindNo + ", coupKindName=" + coupKindName + ", discount="
+				+ discount + ", flagPublishable=" + flagPublishable + ", expiresPeriod=" + expiresPeriod
+				+ ", condition=" + condition + "]";
 	}
 	
 }

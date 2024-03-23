@@ -48,7 +48,7 @@ public class PublishCouponDesign extends JDialog {
 		jcbPubCondition = new JComboBox<String>(dcmPubCondition);
 		
 		jtfPubConditonVal = new JTextField(10);
-		jtfPubConditonVal.setDocument(new UnsignedIntegerDocument(5, 0, 99999));
+		jtfPubConditonVal.setDocument(new UnsignedIntegerDocument(8, 1, 99999999));
 		
 		jbtnGoMain = new JButton("메인으로");
 		jbtnPublish = new JButton("발급");
@@ -87,10 +87,15 @@ public class PublishCouponDesign extends JDialog {
 		
 		try {
 			pce.searchPublishableCouponType();
-			pce.searchAllCoupPubConditionType();
-		} catch (SQLException e) {
+		} catch (SQLException se) {
 			JOptionPane.showMessageDialog(mcd, "추가된 쿠폰을 목록을 조회하는 데 문제가 발생했습니다");
-			e.printStackTrace();
+			se.printStackTrace();
+		} // end catch
+		try {
+			pce.searchAllCoupPubConditionType();
+		} catch (SQLException se) {
+			JOptionPane.showMessageDialog(mcd, "쿠폰 발급 조건을 조회하는 데 문제가 발생했습니다");
+			se.printStackTrace();
 		} // end catch
 		
 		// 455, 130, 1024, 768

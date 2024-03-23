@@ -15,6 +15,13 @@ public class ManageCouponDesign extends JDialog {
 	private JButton jbtnGoToMain;
 	private SearchCouponDesign scdSearch, scdModify;
 	
+	private int lastClickedButton;
+	
+	public static final int BUTTON_ADD = 1;
+	public static final int BUTTON_PUBLISH = 2;
+	public static final int BUTTON_SEARCH = 3;
+	public static final int BUTTON_MODIFY = 4;
+	
 	public ManageCouponDesign(AdminMainPageDesign ampd) {
 		this.ampd = ampd;
 		ampd.setTitle("쿠폰 관리");
@@ -29,7 +36,6 @@ public class ManageCouponDesign extends JDialog {
 		
 		scdSearch = new SearchCouponDesign(this);
 		scdModify = new SearchCouponDesign(this, 0);
-		
 		
 		jbtnAddCoupType.setBounds(10, 60, 150, 150);
 		jbtnPublishCoup.setBounds(10, 220, 150, 150);
@@ -84,6 +90,14 @@ public class ManageCouponDesign extends JDialog {
 
 	public SearchCouponDesign getScdModify() {
 		return scdModify;
+	}
+
+	public int getLastClickedButton() {
+		return lastClickedButton;
+	}
+
+	public void setLastClickedButton(int lastClickedButton) {
+		this.lastClickedButton = lastClickedButton;
 	}
 
 	public static void main(String[] args) {

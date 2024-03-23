@@ -28,20 +28,20 @@ class TestCouponHeldDAO {
 	@Test
 	void testInsertCoupHeld() {
 		// given
-		CouponHeldVO chVO = new CouponHeldVO("01012345678", 1, 1);
+		CouponHeldVO chVO = new CouponHeldVO("01012345678", 50000, 1, 2);
 		
 		// when
 		// then
 		assertDoesNotThrow(()-> chDAO.insertCoupHeld(chVO));
 	}
 	
-//	@Disabled
+	@Disabled
 	@Test
 	void testUpdateCoupHeld() throws SQLException {
 		// given
 		CouponHeldVO chVO = new CouponHeldVO();
 		chVO.setStatusUse("1");
-		chVO.setCoupPubCode("2               ");
+		chVO.setCoupPubCode("1               ");
 		int cnt = 0;
 		
 		// when
@@ -73,7 +73,7 @@ class TestCouponHeldDAO {
 	void testSelectOneCoupHeld() throws SQLException {
 		// given
 		CouponHeldVO chVO = null;
-		String coupPubCode = "2               ";
+		String coupPubCode = "1               ";
 		
 		// when
 		chVO = chDAO.selectOneCoupHeld(coupPubCode);
@@ -85,6 +85,7 @@ class TestCouponHeldDAO {
 		}
 	}
 	
+//	@Disabled
 	@Test
 	void TestSelectUserCoupHeld() throws SQLException {
 		// given

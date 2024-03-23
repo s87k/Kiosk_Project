@@ -26,21 +26,23 @@ public class ManageCouponEvent extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == mcd.getJbtnAddCoupType()) {
+			mcd.setLastClickedButton(ManageCouponDesign.BUTTON_ADD);   
 			setSCDsVisible(false, false);
 			new AddCouponDesign(mcd);
 		} // end if
 		if(ae.getSource() == mcd.getJbtnPublishCoup()) {
+			mcd.setLastClickedButton(ManageCouponDesign.BUTTON_PUBLISH);
 			setSCDsVisible(false, false);
 			new PublishCouponDesign(mcd);
 		} // end if
 		if(ae.getSource() == mcd.getJbtnSearchCoup()) {
+			mcd.setLastClickedButton(ManageCouponDesign.BUTTON_SEARCH);
 			setSCDsVisible(true, false);
 		} // end if
 		if(ae.getSource() == mcd.getJbtnModifyCoup()) {
+			mcd.setLastClickedButton(ManageCouponDesign.BUTTON_MODIFY);
 			setSCDsVisible(false, true);
-			// 지금은 테스트용으로 바로 ModifyCouponDesign이 뜨지만, 
-			// 나중에는 CouponSearchDesign의 jtable에서 선택되면 CouponSearchEvent에서 호출하도록
-			new ModifyCouponDesign(mcd);
+			// 쿠폰 조회 다이얼로그를 호출하는 건 SearchCouponEvent.java
 		} // end if
 		if(ae.getSource() == mcd.getJbtnGoToMain()) {
 			closeDialog();
@@ -54,5 +56,5 @@ public class ManageCouponEvent extends WindowAdapter implements ActionListener {
 	public void closeDialog() {
 		mcd.dispose();
 	} // closeDialog
-	
+
 } // class

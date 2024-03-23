@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kiosk_prj.coupon.vo.CoupConditionPriceVO;
-
+@Deprecated
 public class CoupConditionPriceDAO {
 	
 	private static CoupConditionPriceDAO ccpDAO;
