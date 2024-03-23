@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OrderDesign extends JFrame implements ActionListener {
+public class OrderDesign extends JFrame {
 	private JPanel menueBarPanel, cardPanel, cartPanel;
 	private JButton best, coffee, nonCoffee, tea, smoothie, pay, cancel;
 	private JButton bestAmericano, bestCafeLatte, bestVanillaLatte;
@@ -31,15 +31,10 @@ public class OrderDesign extends JFrame implements ActionListener {
 		// 첫 번째 JPanel (상단)
 		menueBarPanel = new JPanel();
 		best = new JButton("Best");
-		best.addActionListener(this);
 		coffee = new JButton("Coffee");
-		coffee.addActionListener(this);
 		nonCoffee = new JButton("Non Coffee");
-		nonCoffee.addActionListener(this);
 		tea = new JButton("Tea");
-		tea.addActionListener(this);
 		smoothie = new JButton("Smoothie");
-		smoothie.addActionListener(this);
 		menueBarPanel.add(best);
 		menueBarPanel.add(coffee);
 		menueBarPanel.add(nonCoffee);
@@ -152,7 +147,7 @@ public class OrderDesign extends JFrame implements ActionListener {
 		// JTable 장바구니 테두리
 		JScrollPane scrollPane = new JScrollPane(cartList);
 		scrollPane.setPreferredSize(new Dimension(600, 200));
-		scrollPane.setBorder(BorderFactory.createTitledBorder("장바구니")); // "장바구니" 테두리 추가
+		scrollPane.setBorder(BorderFactory.createTitledBorder("장바구니")); 
 		cartPanel.add(scrollPane, BorderLayout.CENTER);
 
 		// 패널추가해서 jlOrderPrice, jtfOrderPrice, cancel, pay 일렬배치
@@ -164,7 +159,7 @@ public class OrderDesign extends JFrame implements ActionListener {
 		jtfOrderPrice.setEditable(false);
 		buttonsPanel.add(jtfOrderPrice);
 
-		cancel = new JButton("취소");
+		cancel = new JButton("주문 삭제");
 		buttonsPanel.add(cancel);
 
 		pay = new JButton("결제");
@@ -177,6 +172,13 @@ public class OrderDesign extends JFrame implements ActionListener {
 		// actionListener 추가
 		OrderEvent oe = new OrderEvent(this);
 
+		// 카드 actionListener 추가
+		best.addActionListener(oe);
+		coffee.addActionListener(oe);
+		nonCoffee.addActionListener(oe);
+		tea.addActionListener(oe);
+		smoothie.addActionListener(oe);
+		
 		// 메뉴 actionListener 추가
 		bestAmericano.addActionListener(oe);
 		bestCafeLatte.addActionListener(oe);
@@ -202,10 +204,13 @@ public class OrderDesign extends JFrame implements ActionListener {
 		StrowberrySmoothie.addActionListener(oe);
 		javachipFrappe.addActionListener(oe);
 
+		// 장바구니 actionListener 추가
+		cartList.addMouseListener(oe);
+		dtmCartList.addTableModelListener(oe);
+
+		// 결제 & 취소 버튼 actionListener 추가
 		pay.addActionListener(oe);
 		cancel.addActionListener(oe);
-
-		cartList.addMouseListener(oe);
 
 		addWindowListener(oe);
 
@@ -213,23 +218,7 @@ public class OrderDesign extends JFrame implements ActionListener {
 		setResizable(false);
 		setSize(600, 800);
 		setLocationRelativeTo(null);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}// order
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == best) {
-			cardLayout.show(cardPanel, "panel1");
-		} else if (e.getSource() == coffee) {
-			cardLayout.show(cardPanel, "panel2");
-		} else if (e.getSource() == nonCoffee) {
-			cardLayout.show(cardPanel, "panel3");
-		} else if (e.getSource() == tea) {
-			cardLayout.show(cardPanel, "panel4");
-		} else if (e.getSource() == smoothie) {
-			cardLayout.show(cardPanel, "panel5");
-		}
-	}// actionPerformed
+	}// OrderDesign
 
 	public static void main(String[] args) {
 		new OrderDesign();

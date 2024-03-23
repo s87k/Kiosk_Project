@@ -28,7 +28,7 @@ public class UsingCouponDesign extends JDialog {
 		JLabel availableCoupon = new JLabel("사용가능한 쿠폰");
 		font = availableCoupon.getFont();
 		availableCoupon.setFont(font.deriveFont(Font.PLAIN, 25));
-		availableCoupon.setBounds(100, 50, 200, 50);
+		availableCoupon.setBounds(160, 50, 200, 50);
 
 		// 보유 쿠폰 JTable
 		String[] couponTable = { "쿠폰 이름", "유효기간" };
@@ -37,14 +37,14 @@ public class UsingCouponDesign extends JDialog {
 
 		JScrollPane scrollPane = new JScrollPane(couponList);
 		scrollPane.setBorder(BorderFactory.createTitledBorder("쿠폰 목록"));
-		scrollPane.setBounds(100, 130, 200, 200);
+		scrollPane.setBounds(70, 130, 350, 300);
 
 		// 취소 & 사용하기 쿠폰
 		cancel = new JButton("취소");
-		cancel.setBounds(100, 350, 150, 30);
+		cancel.setBounds(140, 450, 100, 30);
 
 		use = new JButton("사용하기");
-		use.setBounds(280, 350, 150, 30);
+		use.setBounds(270, 450, 100, 30);
 
 		add(availableCoupon);
 		add(scrollPane);

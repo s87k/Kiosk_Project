@@ -32,7 +32,8 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == ppd.getBtnCheckCoupon()) {
 			System.out.println("쿠폰조회");
-			new PhoneNumDesign();
+			PhoneNumDesign pnd = new PhoneNumDesign();
+			pnd.getOrderAmount().setText(ppd.getOrderPrice().getText()+" 원");
 			ppd.dispose();
 		}
 		if(e.getSource() == ppd.getCreditCard()) {

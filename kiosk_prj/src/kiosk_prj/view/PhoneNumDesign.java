@@ -29,7 +29,7 @@ public class PhoneNumDesign extends JFrame {
 		jlAmount.setFont(font.deriveFont(Font.PLAIN, 15));
 		jlAmount.setBounds(150, 50, 100, 30);
 
-		orderAmount = new JLabel("얼마더라");
+		orderAmount = new JLabel("");
 		font = orderAmount.getFont();
 		orderAmount.setFont(font.deriveFont(Font.PLAIN, 20));
 		orderAmount.setBounds(150, 100, 100, 30);
@@ -40,8 +40,10 @@ public class PhoneNumDesign extends JFrame {
 		guide.setFont(font.deriveFont(Font.PLAIN, 23));
 		guide.setBounds(150, 160, 300, 50);
 
-		jtfPhoneNum = new JTextField(13);
-		jtfPhoneNum.setBounds(150, 220, 200, 30);
+		jtfPhoneNum = new JTextField(11);
+		font = jtfPhoneNum.getFont();
+		jtfPhoneNum.setFont(font.deriveFont(Font.PLAIN, 20));
+		jtfPhoneNum.setBounds(150, 240, 200, 50);
 
 		// 번호 입력하는 키패드 만들기
 		JPanel jpPhoneNum = new JPanel(new GridLayout(4, 3));
@@ -72,7 +74,7 @@ public class PhoneNumDesign extends JFrame {
 		} // end for
 		keypad.addActionListener(pne);
 		
-		jpPhoneNum.setBounds(150, 280, 300, 300);
+		jpPhoneNum.setBounds(150, 320, 300, 300);
 		
 		//프레임에 요소 추가
 		add(jlAmount);

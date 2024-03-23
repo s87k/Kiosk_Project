@@ -1,5 +1,6 @@
 package kiosk_prj.view;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,15 +20,20 @@ public class PaymentPageDesign extends JFrame {
 		setLayout(null);
 
 		// 총 상품 금액 표시 레이블
-		JLabel jlorderPrice = new JLabel("총 상품금액");
+		JLabel jlorderPrice = new JLabel("총 주문금액");
 		font = jlorderPrice.getFont();
 		jlorderPrice.setFont(font.deriveFont(Font.PLAIN, 25));
 		jlorderPrice.setBounds(150, 50, 150, 30);
 
-		orderPrice = new JLabel("1200원");
+		orderPrice = new JLabel("");
 		font = orderPrice.getFont();
 		orderPrice.setFont(font.deriveFont(Font.PLAIN, 25));
-		orderPrice.setBounds(340, 50, 150, 30);
+		orderPrice.setBounds(340, 50, 100, 30);
+
+		JLabel won = new JLabel("원");
+		font = won.getFont();
+		won.setFont(font.deriveFont(Font.PLAIN, 25));
+		won.setBounds(440, 50, 50, 30);
 
 		// 쿠폰 조회 & 안내 메시지
 		btnCheckCoupon = new JButton("쿠폰 조회");
@@ -38,13 +44,22 @@ public class PaymentPageDesign extends JFrame {
 		lblCheckCouponGuide.setFont(font.deriveFont(Font.PLAIN, 11));
 		lblCheckCouponGuide.setBounds(180, 150, 200, 25);
 
-		// 주문 메뉴 리스트
-		String[] column = { "상품", "수량" };
-		Object[][] data = { { "아메리카노", 1 }, { "가데이터 2", 2 }, { "가데이터 3", 3 }, };
-
-		dtmOrderMemuList = new DefaultTableModel(data, column);
+		// 장바구니
+		String[] cartTable = { "메뉴명", "옵션", "가격" };
+		dtmOrderMemuList = new DefaultTableModel(cartTable, 0) {
+			// 셀 수정 불가
+			public boolean isCellEditable(int row, int colum) {
+				return false;
+			}
+		};
 		orderMenuList = new JTable(dtmOrderMemuList);
+		// 열 이동 불가
+		orderMenuList.getTableHeader().setReorderingAllowed(false);
+		
+		// JTable 장바구니 테두리
 		JScrollPane jspOrderMenuList = new JScrollPane(orderMenuList);
+		jspOrderMenuList.setPreferredSize(new Dimension(450, 250));
+		jspOrderMenuList.setBorder(BorderFactory.createTitledBorder("장바구니"));
 		jspOrderMenuList.setBounds(70, 200, 450, 250);
 
 		// 총 결제 금액 표시 레이블
@@ -53,10 +68,15 @@ public class PaymentPageDesign extends JFrame {
 		jlTotalPrice.setFont(font.deriveFont(Font.PLAIN, 25));
 		jlTotalPrice.setBounds(150, 470, 150, 30);
 
-		totalPrice = new JLabel("1200원");
+		totalPrice = new JLabel("");
 		font = totalPrice.getFont();
 		totalPrice.setFont(font.deriveFont(Font.PLAIN, 25));
-		totalPrice.setBounds(340, 470, 150, 30);
+		totalPrice.setBounds(340, 470, 100, 30);
+
+		JLabel totalWon = new JLabel("원");
+		font = totalWon.getFont();
+		totalWon.setFont(font.deriveFont(Font.PLAIN, 25));
+		totalWon.setBounds(440, 470, 50, 30);
 
 		// 결제 방법 선택 레이블 및 버튼
 		JLabel jlPaymentMethod = new JLabel("결제 방법을 선택해주세요.");
@@ -73,11 +93,13 @@ public class PaymentPageDesign extends JFrame {
 		// 패널에 컴포넌트 추가
 		add(jlorderPrice);
 		add(orderPrice);
+		add(won);
 		add(btnCheckCoupon);
 		add(lblCheckCouponGuide);
 		add(jspOrderMenuList);
 		add(jlTotalPrice);
 		add(totalPrice);
+		add(totalWon);
 		add(jlPaymentMethod);
 		add(creditCard);
 		add(cash);

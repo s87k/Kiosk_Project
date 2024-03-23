@@ -22,6 +22,7 @@ import kiosk_prj.controller.OrderDetailEvent;
 @SuppressWarnings("serial")
 public class OrderDetailDesgin extends JDialog{
 	private OrderDesign od;
+	
 	private JLabel menuName, menuPrice, menuImg, jlCount;
 	private JButton storeCup, personalCup, hot, ice, menuPlus, menuMinus, addMenu;
 	private JRadioButton shotOption;
@@ -41,8 +42,8 @@ public class OrderDetailDesgin extends JDialog{
 		menuImg.setPreferredSize(new Dimension(120,120));
 		
 		
-		menuName = new JLabel("아메리카노");
-		menuPrice = new JLabel("1200");
+		menuName = new JLabel("");
+		menuPrice = new JLabel("");
 		JLabel won = new JLabel("원");
 		
 		font = menuName.getFont();
@@ -119,7 +120,7 @@ public class OrderDetailDesgin extends JDialog{
 		menuPlus = new JButton("+");
 		
 		// 주문 담기 버튼
-		addMenu = new JButton(menuPrice.getText()+"원 담기");
+		addMenu = new JButton("");
 		
 		add(menuMinus);
 		add(jlCount);
