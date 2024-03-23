@@ -112,14 +112,14 @@ public class OrderDetailDesgin extends JDialog{
 		shotOption.setBounds(50, 455, 150, 20);
 		
 		// 수량 옵션
-		jlCount = new JLabel("0");
+		jlCount = new JLabel("1");
 		jlCount.setHorizontalAlignment(SwingConstants.CENTER);
 		jlCount.setBorder(BorderFactory.createTitledBorder(""));
 		menuMinus  = new JButton("-");
 		menuPlus = new JButton("+");
 		
 		// 주문 담기 버튼
-		addMenu = new JButton("0원 담기");
+		addMenu = new JButton(menuPrice.getText()+"원 담기");
 		
 		add(menuMinus);
 		add(jlCount);

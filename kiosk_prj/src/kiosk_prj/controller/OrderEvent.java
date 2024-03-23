@@ -85,8 +85,8 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		} 
 		if (ae.getSource() == od.getPay()) {
 			System.out.println("결제하기");
+			new PaymentPageDesign();
 			od.dispose();
-			PaymentPageDesign.main(new String[]{});
 		}
 	}//actionPerformed
 	

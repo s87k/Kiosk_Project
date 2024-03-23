@@ -137,19 +137,23 @@ public class OrderDesign extends JFrame implements ActionListener {
 		cartPanel = new JPanel();
 		cartPanel.setLayout(new BorderLayout());
 
-		// JTable 1열 5행 일단 넣어봄..
-//		cartList = new JTable(5, 1);
 		// 장바구니 DefaultTableModel 추가
 		String[] cartTable = {"메뉴명","옵션","가격"};
-		dtmCartList = new DefaultTableModel(cartTable,0);
+		dtmCartList = new DefaultTableModel(cartTable,0) {
+			// 셀 수정 불가
+			public boolean isCellEditable(int row, int colum) {
+				return false;
+			}
+		};
 		cartList = new JTable(dtmCartList);
+		// 열 이동 불가
+		cartList.getTableHeader().setReorderingAllowed(false);
 
 		// JTable 장바구니 테두리
-      JScrollPane scrollPane = new JScrollPane(cartList);
-      scrollPane.setBorder(BorderFactory.createTitledBorder("장바구니")); // "장바구니" 테두리 추가
-      cartPanel.add(scrollPane, BorderLayout.CENTER);
-
-//		cartPanel.add(cartList, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(cartList);
+		scrollPane.setPreferredSize(new Dimension(600, 200));
+		scrollPane.setBorder(BorderFactory.createTitledBorder("장바구니")); // "장바구니" 테두리 추가
+		cartPanel.add(scrollPane, BorderLayout.CENTER);
 
 		// 패널추가해서 jlOrderPrice, jtfOrderPrice, cancel, pay 일렬배치
 		JPanel buttonsPanel = new JPanel();
