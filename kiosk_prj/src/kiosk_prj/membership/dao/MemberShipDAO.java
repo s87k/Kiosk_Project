@@ -79,10 +79,8 @@ public class MemberShipDAO {
 			pstmt.setString(3, msVO.getMemberBirth());
 			pstmt.setString(4, msVO.getGrade());
 			pstmt.setString(5, phoneNumber);
-			System.out.println(phoneNumber);
-			System.out.println(msVO);
 			
-
+			
 			// 5.
 			pstmt.executeUpdate();
 		} finally {
@@ -90,8 +88,34 @@ public class MemberShipDAO {
 		}
 		return cnt;
 	}
+	public int deleteMember(MemberShipVO msVO, String phoneNumber) throws SQLException {
+		int cnt = 0;
+		DbConnection dbCon = DbConnection.getInstance();
+		//1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			//2. 
+			String id = "Kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			//3.
+			String deleteMember = "update MEMBERSHIP set FLAG_DELETE = ? WHERE PHONE_NUMBER = ?";
+			//4.
+			pstmt = con.prepareStatement(deleteMember);
+			
+			pstmt.setString(1, "1");
+			pstmt.setString(2, phoneNumber);
+			//5.
+			pstmt.executeUpdate();
+		}finally {
+			dbCon.dbClose(null, pstmt, con);
+		}
+		return cnt;
+	}
 
-	public List<MemberShipVO> allMember(String phoneNumber) throws SQLException {
+	public List<MemberShipVO> searchMemberByPhoneNum(String phoneNumber) throws SQLException {
 		List<MemberShipVO> memberList = new ArrayList<MemberShipVO>();
 
 		DbConnection dbCon = DbConnection.getInstance();
@@ -107,7 +131,7 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP WHERE PHONE_NUMBER like ?";
+			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP WHERE FLAG_DELETE = '0' AND PHONE_NUMBER like ?";
 			pstmt = con.prepareStatement(allMember);
 			// 4.
 			pstmt.setString(1, "%" + phoneNumber);
@@ -125,6 +149,71 @@ public class MemberShipDAO {
 
 		return memberList;
 	}
+	public List<MemberShipVO> searchMemberByName(String name) throws SQLException{
+		List<MemberShipVO> memberList = new ArrayList<MemberShipVO>();
+		DbConnection dbCon = DbConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		// 2.
+		try {
+			String id = "Kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			// 3.
+			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP WHERE FLAG_DELETE = '0' AND MEMBER_NAME like ?";
+			pstmt = con.prepareStatement(allMember);
+			// 4.
+			pstmt.setString(1, "%" + name);
+			MemberShipVO msVO = null;
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				msVO = new MemberShipVO(rs.getString("MEMBER_NAME"), rs.getString("PHONE_NUMBER"),
+						rs.getString("MEMBER_BIRTH"), rs.getString("MEMBER_GRADE"));
+				memberList.add(msVO);
+			}
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		}
+
+		return memberList;
+	}
+	public List<MemberShipVO> searchByPhoneNumberAndName(String phoneNumber, String name) throws SQLException {
+	    List<MemberShipVO> memberList = new ArrayList<>();
+
+	    DbConnection dbCon = DbConnection.getInstance();
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	    	String id = "Kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+	        String sql = "SELECT MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE FROM MEMBERSHIP WHERE FLAG_DELETE = '0' AND PHONE_NUMBER = ? AND MEMBER_NAME = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, phoneNumber);
+	        pstmt.setString(2, name);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            MemberShipVO msVO = new MemberShipVO(
+	                rs.getString("MEMBER_NAME"),
+	                rs.getString("PHONE_NUMBER"),
+	                rs.getString("MEMBER_BIRTH"),
+	                rs.getString("MEMBER_GRADE")
+	            );
+	            memberList.add(msVO);
+	        }
+	    } finally {
+	        dbCon.dbClose(rs, pstmt, con);
+	    }
+
+	    return memberList;
+	}
+
 	public List<MemberShipVO> allMember() throws SQLException {
 		List<MemberShipVO> memberList = new ArrayList<MemberShipVO>();
 
@@ -141,8 +230,9 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP ";
+			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP where FLAG_DELETE = ? ";
 			pstmt = con.prepareStatement(allMember);
+			pstmt.setString(1, "0");
 			// 4.
 			MemberShipVO msVO = null;
 

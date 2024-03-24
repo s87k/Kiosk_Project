@@ -73,6 +73,7 @@ public class ModifyMemberDesign extends JDialog{
 		ModifyMemberEvent mme = new ModifyMemberEvent(this);
 		exit.addActionListener(mme);
 		modify.addActionListener(mme);
+		delete.addActionListener(mme);
 		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
 		setVisible(true);
 	}

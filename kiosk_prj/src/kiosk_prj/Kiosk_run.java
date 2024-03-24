@@ -6,8 +6,8 @@ import kiosk_prj.login.LoginDesign;
 public class Kiosk_run {
 
 	public static void main(String[] args) {
-//		new LoginDesign();
-		new AdminMainPageDesign();
+		new LoginDesign();
+//		new AdminMainPageDesign();
 	}//main
 
 }//class
