@@ -32,6 +32,9 @@ public class ModifyMemberEvent extends WindowAdapter implements ActionListener {
 		if(e.getSource() == mmd.getModify()) {
 			modify();
 		}
+		if(e.getSource() == mmd.getDelete()) {
+			delete();
+		}
 		
 	}
 	public void modify() {
@@ -55,6 +58,19 @@ public class ModifyMemberEvent extends WindowAdapter implements ActionListener {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(mmd, "회원 수정에 실패하였습니다.");
 		}
+	}
+	public void delete() {
+		MemberShipVO mVO = new MemberShipVO();
+		
+		MemberShipDAO mDAO = MemberShipDAO.getInstance();
+		try {
+			mDAO.deleteMember(mVO, mmd.getjPhoneNum().getText());
+			JOptionPane.showMessageDialog(mmd, "회원 삭제가 완료되었습니다.");
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(mmd, "회원 삭제가 실패하였습니다.");
+			e.printStackTrace();
+		}
+		
 	}
 
 }

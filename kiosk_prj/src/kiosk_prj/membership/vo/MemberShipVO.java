@@ -4,6 +4,7 @@ package kiosk_prj.membership.vo;
 
 public class MemberShipVO {
 	String phoneNum, memberName, memberBirth, grade, holdingCoupon, exPhoneNum;
+	boolean deleteFlag = true;
 	public MemberShipVO() {
 		
 	}
@@ -23,7 +24,22 @@ public class MemberShipVO {
 		this.exPhoneNum = exPhoneNum;
 	}
 
+	public MemberShipVO(String phoneNum, String memberName, String memberBirth, String grade, boolean deleteFlag) {
+		this.phoneNum = phoneNum;
+		this.memberName = memberName;
+		this.memberBirth = memberBirth;
+		this.grade = grade;
+		this.deleteFlag = deleteFlag;
+	}
 
+
+	public boolean isDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
 
 	public String getExPhoneNum() {
 		return exPhoneNum;
