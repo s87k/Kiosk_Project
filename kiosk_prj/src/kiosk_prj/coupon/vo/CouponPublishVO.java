@@ -1,9 +1,12 @@
 package kiosk_prj.coupon.vo;
 
+import java.sql.Date;
+
 public class CouponPublishVO {
 	private int conditionPrice;
 	private int conditionTypeNo;
 	private int coupKindNo;
+
 	
 	public CouponPublishVO() {
 	}

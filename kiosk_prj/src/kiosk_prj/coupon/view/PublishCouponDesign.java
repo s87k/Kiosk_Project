@@ -24,8 +24,8 @@ public class PublishCouponDesign extends JDialog {
 	
 	private ManageCouponDesign mcd;
 	
-	private JTable jtabCoupType;
-	private DefaultTableModel dtmCoupType;
+	private JTable jtabCoupKind;
+	private DefaultTableModel dtmCoupKind;
 	private JComboBox<String> jcbPubCondition;
 	private DefaultComboBoxModel<String> dcmPubCondition;
 	private JTextField jtfPubConditonVal;
@@ -37,15 +37,15 @@ public class PublishCouponDesign extends JDialog {
 		this.mcd= mcd;
 		
 		String[] columnName = {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"};
-		dtmCoupType = new DefaultTableModel(null, columnName) {
+		dtmCoupKind = new DefaultTableModel(null, columnName) {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
 		    }
 		};
-		jtabCoupType = new JTable(dtmCoupType);
-		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane jspCoupType = new JScrollPane(jtabCoupType);
+		jtabCoupKind = new JTable(dtmCoupKind);
+		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane jspCoupKind = new JScrollPane(jtabCoupKind);
 		
 		JLabel jlblCondition = new JLabel("조건"); 
 		JLabel jlblValue = new JLabel("값"); 
@@ -78,13 +78,13 @@ public class PublishCouponDesign extends JDialog {
 		jpPubCondition.setBorder(new TitledBorder("발급 조건"));
 		
 		setLayout(null);
-		jspCoupType.setBounds(30, 30, 680, 250);
+		jspCoupKind.setBounds(30, 30, 680, 250);
 		jpPubCondition.setBounds(30, 300, 680, 100);
 		jbtnGoMain.setBounds(175, 500, 120, 80);
 		jbtnPublish.setBounds(315, 500, 120, 80);
 		jbtnCancel.setBounds(455, 500, 120, 80);
 		
-		add(jspCoupType);
+		add(jspCoupKind);
 		add(jpPubCondition);
 		add(jbtnGoMain);
 		add(jbtnPublish);
@@ -112,12 +112,12 @@ public class PublishCouponDesign extends JDialog {
 		return mcd;
 	}
 
-	public JTable getJtabCoupType() {
-		return jtabCoupType;
+	public JTable getJtabCoupKind() {
+		return jtabCoupKind;
 	}
 
-	public DefaultTableModel getDtmCoupType() {
-		return dtmCoupType;
+	public DefaultTableModel getDtmCoupKind() {
+		return dtmCoupKind;
 	}
 
 	public JComboBox<String> getJcbPubCondition() {

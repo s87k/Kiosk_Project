@@ -100,7 +100,7 @@ public class CouponPublishDAO {
 		return rVO;
 	} // insertCoupPubProc
 	
-	public int updateCoupPub(CouponPublishVO cpVO) throws SQLException {
+	public int updateCoupPub(CouponPublishVO cpVOOld, CouponPublishVO cpVONew) throws SQLException {
 		int cnt = 0;
 		
 		// 1. 드라이버 로딩
@@ -116,15 +116,15 @@ public class CouponPublishDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String updateCoupPub = "update COUPON_PUBLISH set CONDITION_PRICE=?, CONDITION_TYPE_NO=?  where CONDITION_PRICE=?, CONDITION_TYPE_NO=?, COUP_KIND_NO=?";
+			String updateCoupPub = "update COUPON_PUBLISH set CONDITION_PRICE=?, CONDITION_TYPE_NO=?  where CONDITION_PRICE=? and CONDITION_TYPE_NO=? and COUP_KIND_NO=?";
 			pstmt = con.prepareStatement(updateCoupPub);
 			
 			// 4. 바인드 변수에 값 설정
-			pstmt.setInt(1, cpVO.getConditionPrice());
-			pstmt.setInt(2, cpVO.getConditionTypeNo());
-			pstmt.setInt(3, cpVO.getConditionPrice());
-			pstmt.setInt(4, cpVO.getConditionTypeNo());
-			pstmt.setInt(5, cpVO.getCoupKindNo());
+			pstmt.setInt(1, cpVONew.getConditionPrice());
+			pstmt.setInt(2, cpVONew.getConditionTypeNo());
+			pstmt.setInt(3, cpVOOld.getConditionPrice());
+			pstmt.setInt(4, cpVOOld.getConditionTypeNo());
+			pstmt.setInt(5, cpVOOld.getCoupKindNo());
 			
 			// 5. 쿼리문 수행 후 결과 얻기
 			//		부모(Statement)의 executeXxx(sql)메소드는 절대로 사용하지 않는다 

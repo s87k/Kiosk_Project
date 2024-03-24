@@ -33,8 +33,8 @@ public class SearchCouponDesign extends JPanel {
 	private ManageCouponDesign mcd;
 	
 	private JTabbedPane jtbpCoupSearch;
-	private JTable jtabCoupType, jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable;
-	private DefaultTableModel dtmCoupType, dtmCoupPub, dtmCoupPubUsable, dtmCoupPubUnUsable;
+	private JTable jtabCoupKind, jtabCoupIssue, jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable;
+	private DefaultTableModel dtmCoupKind, dtmCoupIssue, dtmCoupPub, dtmCoupPubUsable, dtmCoupPubUnUsable;
 	
 	public static final int TAB_ONLY_ADD_COUPON = 0;
 	public static final int TAB_ALL = 1;
@@ -57,33 +57,53 @@ public class SearchCouponDesign extends JPanel {
 		String couponCode = "";
 		int num = 1;
 		
-		JPanel jpCoupAdded = new JPanel();
-		dtmCoupType = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "발급 가능", "이용 기간", "발급 조건"}) {
+		JPanel jpCoupKind = new JPanel();
+		JPanel jpCoupIssue = new JPanel();
+		
+		dtmCoupKind = new DefaultTableModel(null, new String[] {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"}) {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
 		    }
 		};
-		jtabCoupType = new JTable(dtmCoupType);
-		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtabCoupKind = new JTable(dtmCoupKind);
+		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		JScrollPane jspCoupType = new JScrollPane(jtabCoupType);
+		dtmCoupIssue = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "발급 가능", "이용 기간", "발급 조건"}) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
+		jtabCoupIssue = new JTable(dtmCoupIssue);
+		jtabCoupIssue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		jtabCoupType.addMouseListener(sce);
+		JScrollPane jspCoupKind = new JScrollPane(jtabCoupKind);
+		JScrollPane jspCoupIssue = new JScrollPane(jtabCoupIssue);
 		
-		jpCoupAdded.setLayout(null);
-		jspCoupType.setBounds(10, 20, 810, 560);
+		jtabCoupKind.addMouseListener(sce);
+		jtabCoupIssue.addMouseListener(sce);
 		
-		jpCoupAdded.add(jspCoupType);
+		jpCoupKind.setLayout(null);
+		jpCoupIssue.setLayout(null);
+		jspCoupKind.setBounds(10, 20, 810, 560);
+		jspCoupIssue.setBounds(10, 20, 810, 560);
 		
-		jtbpCoupSearch.add("등록된 쿠폰", jpCoupAdded);
+		jpCoupKind.add(jspCoupKind);
+		jpCoupIssue.add(jspCoupIssue);
+		
+		jtbpCoupSearch.add("등록된 쿠폰", jpCoupKind);
+		jtbpCoupSearch.add("발급된 쿠폰", jpCoupIssue);
+		jtbpCoupSearch.addChangeListener(sce);
 		try {
+			sce.searchPublishableCouponType();
+			
 			listCaivVO = civDAO.searchAllAddedCouponView();
 			Iterator<CouponAddedInfoVO> itaCaiv = listCaivVO.iterator();
 			while(itaCaiv.hasNext()) {
 				caivVO = itaCaiv.next();
 				couponCode = ccr.CouponPublishVOToRadix62(new CouponPublishVO(caivVO.getConditionPrice(), caivVO.getConditionTypeNo(), caivVO.getCoupKindNo()));
-				dtmCoupType.addRow(new Object[] {num++, couponCode, 
+				dtmCoupIssue.addRow(new Object[] {num++, couponCode, 
 						caivVO.getCoupKindName(), caivVO.getDiscount(), 
 						caivVO.getFlagPublishable() == false ? "X": "O", 
 						caivVO.getExpiresPeriod(), caivVO.getCondition()});
@@ -147,7 +167,7 @@ public class SearchCouponDesign extends JPanel {
 			jpCoupUsable.add(jspPubUsable);
 			jpCoupUnusable.add(jspPubUnusable);
 			
-			jtbpCoupSearch.add("발급된 쿠폰", jpCoupPublished);
+			jtbpCoupSearch.add("회원 보유 쿠폰", jpCoupPublished);
 			jtbpCoupSearch.add("사용가능 쿠폰", jpCoupUsable);
 			jtbpCoupSearch.add("사용불가 쿠폰", jpCoupUnusable);
 			
@@ -215,8 +235,8 @@ public class SearchCouponDesign extends JPanel {
 		return jtbpCoupSearch;
 	}
 
-	public JTable getJtabCoupType() {
-		return jtabCoupType;
+	public JTable getJtabCoupKind() {
+		return jtabCoupKind;
 	}
 
 	public JTable getJtabCoupPub() {
@@ -231,8 +251,8 @@ public class SearchCouponDesign extends JPanel {
 		return jtabCoupPubUnusable;
 	}
 
-	public DefaultTableModel getDtmCoupType() {
-		return dtmCoupType;
+	public DefaultTableModel getDtmCoupKind() {
+		return dtmCoupKind;
 	}
 
 	public DefaultTableModel getDtmCoupPub() {
@@ -245,5 +265,13 @@ public class SearchCouponDesign extends JPanel {
 
 	public DefaultTableModel getDtmCoupPubUnusable() {
 		return dtmCoupPubUnUsable;
+	}
+
+	public JTable getJtabCoupIssue() {
+		return jtabCoupIssue;
+	}
+
+	public DefaultTableModel getDtmCoupIssue() {
+		return dtmCoupIssue;
 	}
 }

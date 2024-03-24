@@ -34,9 +34,13 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 		if(ae.getSource() == mcd.getJbtnOk()) {
 			try {
 				modifyCoupon();
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(mcd, "쿠폰 수정에 실패했습니다");
-				e.printStackTrace();
+			} catch (SQLException se) {
+				se.printStackTrace();
+				if(se.getErrorCode() == 2292) {
+					JOptionPane.showMessageDialog(mcd, "이미 회원에게 발급된 쿠폰은 조건 수정이 불가능합니다\n추가 발급을 막으려면 비활성화를 해주세요");
+				} else {
+					JOptionPane.showMessageDialog(mcd, "쿠폰 수정에 실패했습니다");
+				} // end else
 				return;
 			} // end catch
 		} // end if 
@@ -57,8 +61,8 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 	*/
 	public void modifyCoupon() throws SQLException {
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
-		CouponPublishVO cpVO = mcd.getCpVO();
-		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVO.getCoupKindNo());
+		CouponPublishVO cpVOOld = mcd.getCpVO();
+		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVOOld.getCoupKindNo());
 		
 		String coupKindName = mcd.getJtfCouponKindName().getText().trim();
 		boolean flagPublishable = ckVO.isFlagPublishable();
@@ -80,16 +84,17 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 			flagChanged = true;
 		} // end if
 		
-		if(cpVO.getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
+		if(cpVOOld.getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
 			int conditionPrice = Integer.parseInt(mcd.getJtfPubConditonVal().getText().trim());
-			int coupKindNo = mcd.getJcbPubCondition().getSelectedIndex() + 1;
+			int conditionTypeNo = mcd.getJcbPubCondition().getSelectedIndex() + 1;
 			
-			if(cpVO.getConditionPrice() != conditionPrice || cpVO.getCoupKindNo() != coupKindNo) {
-				cpVO.setConditionPrice(conditionPrice);
-				cpVO.setCoupKindNo(coupKindNo);
+			if(cpVOOld.getConditionPrice() != conditionPrice || cpVOOld.getCoupKindNo() != conditionTypeNo) {
+				CouponPublishVO cpVONew = new CouponPublishVO();
+				cpVONew.setConditionPrice(conditionPrice);
+				cpVONew.setConditionTypeNo(conditionTypeNo);
 				
 				CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
-				cnt = cpDAO.updateCoupPub(cpVO);
+				cnt = cpDAO.updateCoupPub(cpVOOld, cpVONew);
 				if(cnt != 1) {
 					msg = "쿠폰 정보 수정에 실패했습니다";
 					JOptionPane.showMessageDialog(mcd, msg);
