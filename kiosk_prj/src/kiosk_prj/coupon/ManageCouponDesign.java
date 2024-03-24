@@ -3,12 +3,17 @@ package kiosk_prj.coupon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 //public class ManageCouponDesign extends JPanel {
 public class ManageCouponDesign extends JDialog {
 	
+	public ManageCouponDesign(JFrame AdminMainPageDesign, String title) {
+		JOptionPane.showMessageDialog(null, "쿠폰 관리는 다른 디자인 클래스로 연결되어야 합니다\n테스트를 희망하시면 kiosk_prj.coupon.TestRunCoupon.java 를 실행시켜주세요");
+	} // ManageCouponDesign
 	
+	/*
 	private JButton jbtnAddCoupType, jbtnPublishCoup, jbtnSearchCoup, jbtnModifyCoup;
 	private JButton jbtnGoToMain;
 	private SearchCouponDesign scdSearch, scdModify;
@@ -79,6 +84,6 @@ public class ManageCouponDesign extends JDialog {
 	public SearchCouponDesign getScdModify() {
 		return scdModify;
 	}
-
+	 */
 	
 } // class

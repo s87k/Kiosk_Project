@@ -1,5 +1,5 @@
 package kiosk_prj.coupon.vo;
-
+@Deprecated
 public class CoupConditionPriceVO {
 	private int conditionPriceNo;
 	private int conditionTypeNo;

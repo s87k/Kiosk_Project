@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiosk_prj.coupon.vo.CouponKindVO;
+import oracle.security.o3logon.a;
 
 public class CouponKindDAO {
 	private static CouponKindDAO ckDAO;
@@ -36,8 +37,9 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String insertCoupKind = "insert into coupon_type(COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, DATE_EXPIRE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE) values (seq_cond_type_no.nextval, ?, ?, ?, ?, ?, ?, ?)";
-			pstmt = con.prepareStatement(insertCoupKind);
+			StringBuilder insertCoupKind = new StringBuilder("insert into coupon_kind(COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE) ")
+				.append("values (seq_coupon_kind_no.nextval, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt = con.prepareStatement(insertCoupKind.toString());
 			
 			// 4. 바인드 변수에 값 설정
 			pstmt.setString(1, ckVO.getAdminId());
@@ -75,7 +77,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String updateCoupKind = "update coupon_type set coup_kind_name=?, FLAG_PUBLISHABLE=?  where coup_kind_no=?";
+			String updateCoupKind = "update coupon_kind set coup_kind_name=?, FLAG_PUBLISHABLE=?  where coup_kind_no=?";
 			pstmt = con.prepareStatement(updateCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -113,7 +115,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String deleteCoupKind = "delete from coupon_type where coup_kind_no=?";
+			String deleteCoupKind = "delete from coupon_kind where coup_kind_no=?";
 			pstmt = con.prepareStatement(deleteCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -150,7 +152,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select ID, COUP_KIND_NAME, DISCOUNT, DATE_EXPIRE, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_type where coup_kind_no=?";
+			String selectCoupKind = "select ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where coup_kind_no=?";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -162,7 +164,7 @@ public class CouponKindDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();	// 조회된 결과를 움직일 수 있는 커서의 제어권을 받는다
 			if(rs.next()) {				// 쿼리문 실행했을 때 조회 결과가 있다면
-				ckVO = new CouponKindVO(coupKindNo, rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("date_expire"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true);
+				ckVO = new CouponKindVO(coupKindNo, rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("expires_period"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true);
 			} // end if
 			
 		} finally {
@@ -190,7 +192,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, DATE_EXPIRE, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_type";
+			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -201,7 +203,7 @@ public class CouponKindDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();	// 조회된 결과를 움직일 수 있는 커서의 제어권을 받는다
 			while(rs.next()) {				// 쿼리문 실행했을 때 조회 결과가 있다면
-				list.add(new CouponKindVO(rs.getInt("coup_kind_no"), rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("date_expire"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true));
+				list.add(new CouponKindVO(rs.getInt("coup_kind_no"), rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("expires_period"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true));
 			} // end if
 			
 		} finally {
@@ -230,7 +232,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, DATE_EXPIRE, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_type where flag_publishable=?";
+			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where flag_publishable=?";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -242,7 +244,7 @@ public class CouponKindDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();	// 조회된 결과를 움직일 수 있는 커서의 제어권을 받는다
 			while(rs.next()) {				// 쿼리문 실행했을 때 조회 결과가 있다면
-				list.add(new CouponKindVO(rs.getInt("coup_kind_no"), rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("date_expire"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true));
+				list.add(new CouponKindVO(rs.getInt("coup_kind_no"), rs.getString("id"), rs.getString("coup_kind_name"), rs.getInt("discount"), rs.getInt("expires_period"), rs.getDate("input_date"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getDate("delete_date"), rs.getString("flag_delete").equals("0") ? false : true));
 			} // end if
 			
 		} finally {

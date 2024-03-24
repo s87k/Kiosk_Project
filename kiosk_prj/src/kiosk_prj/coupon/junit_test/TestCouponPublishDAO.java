@@ -12,8 +12,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import kiosk_prj.coupon.dao.CouponPublishDAO;
+import kiosk_prj.coupon.vo.CoupConditionPriceVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPublishVO;
+import kiosk_prj.coupon.vo.ResultVO;
 
 class TestCouponPublishDAO {
 
@@ -36,9 +38,10 @@ class TestCouponPublishDAO {
 	@Test
 	void testInsertCoupPub() throws SQLException {
 		// given
-		int coupKindNo = 22;
-		int conditionPriceNo = 21;
-		CouponPublishVO cpVO = new CouponPublishVO(coupKindNo, conditionPriceNo);
+		int conditionPrice = 12345;
+		int conditionTypeNo = 1;
+		int coupKindNo = 5;
+		CouponPublishVO cpVO = new CouponPublishVO(conditionPrice, conditionTypeNo, coupKindNo);
 		
 		// when
 		// then
@@ -63,19 +66,41 @@ class TestCouponPublishDAO {
 		}
 	}
 	
+//	@Disabled
 	@Test
 	void testSelectOneCoupPub() throws SQLException {
 		// given
-		int coupKindNo = 1, conditionPriceNo = 1;
+		int conditionPrice = 12345;
+		int conditionTypeNo = 1;
+		int coupKindNo = 5;
 		CouponPublishVO cpVO = null;
 		
 		// when
-		cpVO = cpDAO.selectOneCoupPub(coupKindNo, conditionPriceNo);
+		cpVO = cpDAO.selectOneCoupPub(conditionPrice, conditionTypeNo, coupKindNo);
 		
 		// then 
 		assertNotNull(cpVO);
 		if(cpVO != null) {
 			System.out.println(cpVO);
+		}
+	}
+	
+	@Disabled
+	@Test
+	void TesIinsertCoupPubProc() throws SQLException {
+		// given
+		CoupConditionPriceVO ccpVO = new CoupConditionPriceVO(1, 3210);
+		CouponKindVO ckVO = new CouponKindVO();
+		ckVO.setCoupKindNo(26);
+		ResultVO rVO = null;
+		
+		// when
+		rVO = cpDAO.insertCoupPubProc(ccpVO, ckVO);
+		
+		// then
+		assertNotNull(rVO);
+		if(rVO != null) {
+			System.out.println(rVO);
 		}
 	}
 
