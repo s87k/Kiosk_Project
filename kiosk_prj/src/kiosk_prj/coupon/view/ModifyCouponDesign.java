@@ -111,11 +111,6 @@ public class ModifyCouponDesign extends JDialog {
 		jlblDiscount.setText(valueOf(ckVO.getDiscount()).concat("원"));
 		jlblPeriod.setText(valueOf(ckVO.getExpiresPeriod()).concat("개월"));
 		jtfCouponKindName.setText(ckVO.getCoupKindName());
-		if(ckVO.isFlagPublishable()) {
-			jrbPublishableOk.setSelected(true);
-		} else {
-			jrbPublishableNo.setSelected(true);
-		} // end else
 		
 		if(cpVO.getConditionTypeNo() == PUBLISH_NOT) {
 			jcbPubCondition.setEnabled(false);
@@ -123,6 +118,11 @@ public class ModifyCouponDesign extends JDialog {
 			jlblRowPublishable.setText("발급 가능");
 			jrbPublishableOk.setText("예");
 			jrbPublishableNo.setText("아니오");
+			if(ckVO.isFlagPublishable()) {
+				jrbPublishableOk.setSelected(true);
+			} else {
+				jrbPublishableNo.setSelected(true);
+			} // end else
 		} else {
 			try {
 				mce.searchAllCoupPubConditionType();
@@ -131,6 +131,11 @@ public class ModifyCouponDesign extends JDialog {
 				jlblRowPublishable.setText("자동 발급 활성화");
 				jrbPublishableOk.setText("활성화");
 				jrbPublishableNo.setText("비활성화");
+				if(cpVO.isFlagDisable()) {
+					jrbPublishableOk.setSelected(true);
+				} else {
+					jrbPublishableNo.setSelected(true);
+				} // end else
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(mcd, "쿠폰 발급 조건 조회에 실패했습니다");
 				e.printStackTrace();

@@ -69,7 +69,7 @@ public class SearchCouponDesign extends JPanel {
 		jtabCoupKind = new JTable(dtmCoupKind);
 		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		dtmCoupIssue = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "발급 가능", "이용 기간", "발급 조건"}) {
+		dtmCoupIssue = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "자동 발급 활성화", "이용 기간", "발급 조건"}) {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -105,7 +105,7 @@ public class SearchCouponDesign extends JPanel {
 				couponCode = ccr.CouponPublishVOToRadix62(new CouponPublishVO(caivVO.getConditionPrice(), caivVO.getConditionTypeNo(), caivVO.getCoupKindNo()));
 				dtmCoupIssue.addRow(new Object[] {num++, couponCode, 
 						caivVO.getCoupKindName(), caivVO.getDiscount(), 
-						caivVO.getFlagPublishable() == false ? "X": "O", 
+						caivVO.getFlagDisable() == false ? "X": "O", 
 						caivVO.getExpiresPeriod(), caivVO.getCondition()});
 			} // end while
 		} catch (SQLException se) {

@@ -43,7 +43,7 @@ public class CouponInfoViewDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO, COUP_KIND_NAME, DISCOUNT, FLAG_PUBLISHABLE, EXPIRES_PERIOD, CONDITION from COUPON_ADDED_INFO_VIEW";
+			String selectCoupKind = "select CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO, COUP_KIND_NAME, DISCOUNT, FLAG_DISABLE, EXPIRES_PERIOD, CONDITION from COUPON_ADDED_INFO_VIEW";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -54,7 +54,7 @@ public class CouponInfoViewDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();	// 조회된 결과를 움직일 수 있는 커서의 제어권을 받는다
 			while(rs.next()) {				// 쿼리문 실행했을 때 조회 결과가 있다면
-				listCaivVO.add(new CouponAddedInfoVO(rs.getInt("CONDITION_PRICE"), rs.getInt("CONDITION_TYPE_NO"), rs.getInt("COUP_KIND_NO"), rs.getString("COUP_KIND_NAME"), rs.getInt("discount"), rs.getString("flag_publishable").equals("0") ? false:true, rs.getInt("EXPIRES_PERIOD"), rs.getString("CONDITION")));
+				listCaivVO.add(new CouponAddedInfoVO(rs.getInt("CONDITION_PRICE"), rs.getInt("CONDITION_TYPE_NO"), rs.getInt("COUP_KIND_NO"), rs.getString("COUP_KIND_NAME"), rs.getInt("discount"), rs.getString("flag_DISABLE").equals("0") ? false:true, rs.getInt("EXPIRES_PERIOD"), rs.getString("CONDITION")));
 			} // end if
 			
 		} finally {

@@ -87,11 +87,13 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 		if(cpVOOld.getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
 			int conditionPrice = Integer.parseInt(mcd.getJtfPubConditonVal().getText().trim());
 			int conditionTypeNo = mcd.getJcbPubCondition().getSelectedIndex() + 1;
+			boolean flagDisable = mcd.getJrbPublishableOk().isSelected() == true ? true : false;
 			
-			if(cpVOOld.getConditionPrice() != conditionPrice || cpVOOld.getCoupKindNo() != conditionTypeNo) {
+			if(cpVOOld.getConditionPrice() != conditionPrice || cpVOOld.getCoupKindNo() != conditionTypeNo || cpVOOld.isFlagDisable() != flagDisable) {
 				CouponPublishVO cpVONew = new CouponPublishVO();
 				cpVONew.setConditionPrice(conditionPrice);
 				cpVONew.setConditionTypeNo(conditionTypeNo);
+				cpVONew.setFlagDisable(flagDisable);
 				
 				CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
 				cnt = cpDAO.updateCoupPub(cpVOOld, cpVONew);

@@ -6,20 +6,20 @@ public class CouponAddedInfoVO {
 	private int coupKindNo;
 	private String coupKindName;
 	private int discount;
-	private boolean flagPublishable;
+	private boolean flagDisable;
 	private int expiresPeriod;
 	private String condition;
 	
 	public CouponAddedInfoVO() {
 	}
 	public CouponAddedInfoVO(int conditionPrice, int conditionTypeNo, int coupKindNo, String coupKindName, int discount,
-			boolean flagPublishable, int expiresPeriod, String condition) {
+			boolean flagDisable, int expiresPeriod, String condition) {
 		this.conditionPrice = conditionPrice;
 		this.conditionTypeNo = conditionTypeNo;
 		this.coupKindNo = coupKindNo;
 		this.coupKindName = coupKindName;
 		this.discount = discount;
-		this.flagPublishable = flagPublishable;
+		this.flagDisable = flagDisable;
 		this.expiresPeriod = expiresPeriod;
 		this.condition = condition;
 	}
@@ -53,11 +53,11 @@ public class CouponAddedInfoVO {
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
-	public boolean getFlagPublishable() {
-		return flagPublishable;
+	public boolean getFlagDisable() {
+		return flagDisable;
 	}
-	public void setFlagPublishable(boolean flagPublishable) {
-		this.flagPublishable = flagPublishable;
+	public void setFlagDisable(boolean flagDisable) {
+		this.flagDisable = flagDisable;
 	}
 	public int getExpiresPeriod() {
 		return expiresPeriod;
@@ -75,7 +75,7 @@ public class CouponAddedInfoVO {
 	public String toString() {
 		return "CouponAddedInfoVO [conditionPrice=" + conditionPrice + ", conditionTypeNo=" + conditionTypeNo
 				+ ", coupKindNo=" + coupKindNo + ", coupKindName=" + coupKindName + ", discount=" + discount
-				+ ", flagPublishable=" + flagPublishable + ", expiresPeriod=" + expiresPeriod + ", condition="
+				+ ", flagDisable=" + flagDisable + ", expiresPeriod=" + expiresPeriod + ", condition="
 				+ condition + "]";
 	}
 	

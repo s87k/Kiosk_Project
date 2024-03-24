@@ -116,15 +116,29 @@ public class CouponPublishDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String updateCoupPub = "update COUPON_PUBLISH set CONDITION_PRICE=?, CONDITION_TYPE_NO=?  where CONDITION_PRICE=? and CONDITION_TYPE_NO=? and COUP_KIND_NO=?";
-			pstmt = con.prepareStatement(updateCoupPub);
+			
+			StringBuilder updateCoupPub = new StringBuilder("update COUPON_PUBLISH set CONDITION_PRICE=?, CONDITION_TYPE_NO=? ");
+			boolean flagSame = cpVOOld.isFlagDisable() == cpVONew.isFlagDisable(); 
+			if(flagSame) {
+				updateCoupPub.append(" where CONDITION_PRICE=? and CONDITION_TYPE_NO=? and COUP_KIND_NO=?");
+			} else {
+				updateCoupPub.append(" , FLAG_DISABLE=?, DISABLE_DATE=sysdate where CONDITION_PRICE=? and CONDITION_TYPE_NO=? and COUP_KIND_NO=?");
+			} // end else
+			pstmt = con.prepareStatement(updateCoupPub.toString());
 			
 			// 4. 바인드 변수에 값 설정
 			pstmt.setInt(1, cpVONew.getConditionPrice());
 			pstmt.setInt(2, cpVONew.getConditionTypeNo());
-			pstmt.setInt(3, cpVOOld.getConditionPrice());
-			pstmt.setInt(4, cpVOOld.getConditionTypeNo());
-			pstmt.setInt(5, cpVOOld.getCoupKindNo());
+			if(flagSame) {
+				pstmt.setInt(3, cpVOOld.getConditionPrice());
+				pstmt.setInt(4, cpVOOld.getConditionTypeNo());
+				pstmt.setInt(5, cpVOOld.getCoupKindNo());
+			} else {
+				pstmt.setString(3, cpVONew.isFlagDisable() == true ? "1" : "0");
+				pstmt.setInt(4, cpVOOld.getConditionPrice());
+				pstmt.setInt(5, cpVOOld.getConditionTypeNo());
+				pstmt.setInt(6, cpVOOld.getCoupKindNo());
+			} // end else
 			
 			// 5. 쿼리문 수행 후 결과 얻기
 			//		부모(Statement)의 executeXxx(sql)메소드는 절대로 사용하지 않는다 
@@ -157,7 +171,7 @@ public class CouponPublishDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectAllCoupPub = "select condition_price, condition_type_no, coup_kind_no from COUPON_PUBLISH";
+			String selectAllCoupPub = "select condition_price, condition_type_no, coup_kind_no, FLAG_DISABLE, DISABLE_DATE from COUPON_PUBLISH";
 			pstmt = con.prepareStatement(selectAllCoupPub);
 			
 			// 4. 바인드 변수에 값 설정
@@ -168,7 +182,7 @@ public class CouponPublishDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				list.add(new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no")));
+				list.add(new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no"), rs.getString("FLAG_DISABLE").equals("0") ? false : true, rs.getDate("FLAG_DISABLE_DATE")));
 			} // end while
 		} finally {
 			// 6. 연결 끊기
@@ -195,7 +209,7 @@ public class CouponPublishDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectOneCoupPub = "select condition_price, condition_type_no, coup_kind_no from COUPON_PUBLISH where condition_price=? and condition_type_no=? and coup_kind_no=?";
+			String selectOneCoupPub = "select condition_price, condition_type_no, coup_kind_no, FLAG_DISABLE, DISABLE_DATE from COUPON_PUBLISH where condition_price=? and condition_type_no=? and coup_kind_no=?";
 			pstmt = con.prepareStatement(selectOneCoupPub);
 			
 			// 4. 바인드 변수에 값 설정
@@ -209,7 +223,7 @@ public class CouponPublishDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				cpVO = new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no"));
+				cpVO = new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no"), rs.getString("FLAG_DISABLE").equals("0") ? false : true, rs.getDate("FLAG_DISABLE_DATE"));
 			} // end if
 		} finally {
 			// 6. 연결 끊기
