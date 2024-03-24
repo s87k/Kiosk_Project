@@ -50,7 +50,6 @@ public class MemberShipDesign extends JDialog {
 
 		// 회원 정보 입력창
 		jName = new JTextField();
-		jName.setEditable(false);
 		jPhoneNum = new JTextField();
 		checkMember = new JButton("조회");
 

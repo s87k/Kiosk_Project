@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -14,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.DAO.DbConnection;
 import kiosk_prj.membership.dao.MemberShipDAO;
 import kiosk_prj.membership.vo.MemberShipCouponVO;
 import kiosk_prj.membership.vo.MemberShipOrderVO;
@@ -22,17 +26,18 @@ import kiosk_prj.membership.vo.MemberShipVO;
 @SuppressWarnings("serial")
 public class MemberShipEvent extends WindowAdapter implements ActionListener, MouseListener {
 	private MemberShipDesign msd;
-
+	
 	public MemberShipEvent(MemberShipDesign msd) {
 		this.msd = msd;
-
+		
 	}
-
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton numberArr[] = msd.getInputNumber();
 		String currentText = msd.getjPhoneNum().getText();
 		String phoneNum = msd.getjPhoneNum().getText();
+		String name = msd.getjName().getText();
 
 		// 숫자 입력 버튼 for문 설정하여 코드 가독성 향상
 		if (currentText.length() <= 10) {
@@ -82,18 +87,31 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 		}
 
 		if (e.getSource() == msd.getCheckMember()) {
-			setMemberTable(phoneNum);
-
+			setMemberTable(phoneNum, name);
 		}
 
 	}
-
-	public void setMemberTable(String phoneNum) {
+		public void setMemberTable(String phoneNum, String name) {
 
 		MemberShipDAO msDAO = MemberShipDAO.getInstance();
 		try {
 			// 입력된 전화번호의 뒷자리에 해당하는 회원정보 가져오기
-			List<MemberShipVO> list = msDAO.allMember(phoneNum);
+			List<MemberShipVO> list = null;
+			if (!phoneNum.isEmpty() && !name.isEmpty()) {
+	            list = msDAO.searchByPhoneNumberAndName(phoneNum, name);
+	        }
+	        // 전화번호만 입력된 경우
+	        else if (!phoneNum.isEmpty()) {
+	            list = msDAO.searchMemberByPhoneNum(phoneNum);
+	        }
+	        // 이름만 입력된 경우
+	        else if (!name.isEmpty()) {
+	            list = msDAO.searchMemberByName(name);
+	        }
+	        // 아무것도 입력되지 않은 경우
+	        else {
+	            list = msDAO.allMember();
+	        }
 			// 모델 객체 값 설정
 			DefaultTableModel dtm = msd.getDtmMemberList();
 			// 값 설정 전에 모델객체 초기화
@@ -119,7 +137,7 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 			} // end for
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} // end catch
+		} // end catch		
 	}// setMemberTable
 
 	public void setMemberOrderTable(String phoneNum) {
@@ -153,11 +171,11 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 
 	}// setMemberOrder
 
-	public void setCouponList(String phoneNumber) {
+	public void setCouponList(String phoneNum) {
 
 		MemberShipDAO msDAO = MemberShipDAO.getInstance();
 		try {
-			List<MemberShipCouponVO> couponList = msDAO.memberCouponList(phoneNumber);
+			List<MemberShipCouponVO> couponList = msDAO.memberCouponList(phoneNum);
 			// 모델 객체 값 설정
 			DefaultTableModel dtm = msd.getDtmCouponList();
 			// 값 설정 전에 모델 초기화
