@@ -1,20 +1,18 @@
 package kiosk_prj.coupon.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import kiosk_prj.coupon.view.ManageCouponDesign;
+import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.view.SearchCouponDesign;
+import kiosk_prj.coupon.vo.CouponPublishVO;
 
-public class SearchCouponEvent implements ChangeListener, MouseListener {
+public class SearchCouponEvent implements MouseListener {
 	
 	private SearchCouponDesign scd;
+	
+	public static final int COUPON_CODE = 1;
 	
 	public SearchCouponEvent(SearchCouponDesign scd) {
 		this.scd = scd;
@@ -24,9 +22,9 @@ public class SearchCouponEvent implements ChangeListener, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent me) {
 		if (scd.getMcd().getLastClickedButton() == ManageCouponDesign.BUTTON_MODIFY) {
-			System.out.println(scd.getDtmCoupType().getValueAt(scd.getJtabCoupType().getSelectedRow(), scd.getJtabCoupType().getSelectedColumn()));
-			
-			
+			ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
+			CouponPublishVO cpVO = ccr.Radix62ToCouponPublishVO(scd.getDtmCoupType().getValueAt(scd.getJtabCoupType().getSelectedRow(), COUPON_CODE).toString());
+			new ModifyCouponDesign(scd.getMcd(), cpVO);
 		} // end if
 	} // mousePressed
 	
@@ -42,11 +40,4 @@ public class SearchCouponEvent implements ChangeListener, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
-	@Override
-	public void stateChanged(ChangeEvent ce) {
-//		JTabbedPane jtbpCoupSearch = (JTabbedPane)ce.getSource();
-//		System.out.println(jtbpCoupSearch.getSelectedIndex());
-	} // stateChanged
-
 } // class

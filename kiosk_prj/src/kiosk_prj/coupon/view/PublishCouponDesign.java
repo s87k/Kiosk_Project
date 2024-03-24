@@ -37,7 +37,12 @@ public class PublishCouponDesign extends JDialog {
 		this.mcd= mcd;
 		
 		String[] columnName = {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"};
-		dtmCoupType = new DefaultTableModel(null, columnName);
+		dtmCoupType = new DefaultTableModel(null, columnName) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
 		jtabCoupType = new JTable(dtmCoupType);
 		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane jspCoupType = new JScrollPane(jtabCoupType);

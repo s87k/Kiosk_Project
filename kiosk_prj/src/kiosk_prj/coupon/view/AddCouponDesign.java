@@ -39,7 +39,7 @@ public class AddCouponDesign extends JDialog{
 		
 		jtfCouponKindName = new JTextField(20);
 		jtfDiscount = new JTextField(20);
-		jtfDiscount.setDocument(new UnsignedIntegerDocument(5, 0, 99999));
+		jtfDiscount.setDocument(new UnsignedIntegerDocument(5, 1, 99999));
 		
 		jbtnMonth1 = new JButton("1개월");
 		jbtnMonth3 = new JButton("3개월");

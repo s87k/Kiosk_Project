@@ -17,10 +17,12 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.coupon.controller.ConvertCouponRadix;
 import kiosk_prj.coupon.controller.SearchCouponEvent;
 import kiosk_prj.coupon.dao.CouponInfoViewDAO;
 import kiosk_prj.coupon.vo.CouponAddedInfoVO;
 import kiosk_prj.coupon.vo.CouponPubInfoVO;
+import kiosk_prj.coupon.vo.CouponPublishVO;
 import kiosk_prj.coupon.vo.StatusUse;
 
 import static java.lang.String.valueOf;
@@ -48,15 +50,20 @@ public class SearchCouponDesign extends JPanel {
 		
 		String[] columnName = {"번호", "쿠폰 번호", "쿠폰 이름", "할인액", "이름", "연락처", "상태", "발급일", "사용일", "만료일"};
 		SearchCouponEvent sce = new SearchCouponEvent(this);
-		jtbpCoupSearch.addChangeListener(sce);
 		CouponInfoViewDAO civDAO = CouponInfoViewDAO.getInstance();
 		List<CouponAddedInfoVO> listCaivVO = new ArrayList<CouponAddedInfoVO>();
 		CouponAddedInfoVO caivVO = null;
+		ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
+		String couponCode = "";
 		int num = 1;
 		
 		JPanel jpCoupAdded = new JPanel();
-		dtmCoupType = new DefaultTableModel(null, new String[] {"번호", "종류 코드", "쿠폰 이름", "할인액", "발급 가능", "이용 기간", "발급 조건"});
-		
+		dtmCoupType = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "발급 가능", "이용 기간", "발급 조건"}) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
 		jtabCoupType = new JTable(dtmCoupType);
 		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -75,7 +82,8 @@ public class SearchCouponDesign extends JPanel {
 			Iterator<CouponAddedInfoVO> itaCaiv = listCaivVO.iterator();
 			while(itaCaiv.hasNext()) {
 				caivVO = itaCaiv.next();
-				dtmCoupType.addRow(new Object[] {num++, caivVO.getCoupKindNo(), 
+				couponCode = ccr.CouponPublishVOToRadix62(new CouponPublishVO(caivVO.getConditionPrice(), caivVO.getConditionTypeNo(), caivVO.getCoupKindNo()));
+				dtmCoupType.addRow(new Object[] {num++, couponCode, 
 						caivVO.getCoupKindName(), caivVO.getDiscount(), 
 						caivVO.getFlagPublishable() == false ? "X": "O", 
 						caivVO.getExpiresPeriod(), caivVO.getCondition()});
@@ -92,9 +100,24 @@ public class SearchCouponDesign extends JPanel {
 			JPanel jpCoupUsable = new JPanel();
 			JPanel jpCoupUnusable = new JPanel();
 			
-			dtmCoupPub = new DefaultTableModel(null, columnName);
-			dtmCoupPubUsable = new DefaultTableModel(null, columnName);
-			dtmCoupPubUnUsable = new DefaultTableModel(null, columnName);
+			dtmCoupPub = new DefaultTableModel(null, columnName) {
+				@Override
+			    public boolean isCellEditable(int row, int column) {
+			       return false;
+			    }
+			};
+			dtmCoupPubUsable = new DefaultTableModel(null, columnName) {
+				@Override
+			    public boolean isCellEditable(int row, int column) {
+			       return false;
+			    }
+			};
+			dtmCoupPubUnUsable = new DefaultTableModel(null, columnName) {
+				@Override
+			    public boolean isCellEditable(int row, int column) {
+			       return false;
+			    }
+			};
 			
 			jtabCoupPub = new JTable(dtmCoupPub);
 			jtabCoupPubUsable = new JTable(dtmCoupPubUsable);
