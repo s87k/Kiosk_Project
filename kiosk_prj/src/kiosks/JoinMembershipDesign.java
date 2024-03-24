@@ -1,4 +1,4 @@
-package kiosk_prj.view;
+package kiosks;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kiosk_prj.controller.JoinMembershipEvent;
-import kiosk_prj.controller.OrderDetailEvent;
+import kiosks.JoinMembershipEvent;
+import kiosks.OrderDetailEvent;
 
 @SuppressWarnings("serial")
 public class JoinMembershipDesign extends JFrame {
