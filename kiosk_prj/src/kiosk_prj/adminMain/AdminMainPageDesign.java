@@ -19,7 +19,7 @@ public class AdminMainPageDesign extends JFrame {
 	private JButton jbMeniInfo, jbOrderStatus, jbSales, jbOpen, jbClosd, jbUserManagement, jbOperate, jbCoupon,
 			jbTrends;
 	private DefaultTableModel dtmStatus;
-	private JLabel jlOpenDate;
+	private JLabel jlOpenDate, sumAmount;
 
 	private String adminId;
 	public AdminMainPageDesign(String adminId) {
@@ -53,11 +53,12 @@ public class AdminMainPageDesign extends JFrame {
 		jbTrends = new JButton("소비 트렌드");
 		JLabel lbBackground = new JLabel(imgBackground);
 		jlOpenDate = new JLabel("영업일자 : 개점설정이 필요합니다"); // 영업일자 바뀔때마다 업데이트되어야함.
-
+		sumAmount = new JLabel("오늘 매출 : ");
 		// 테이블 컬럼 넓이 변경
 		jtStatus.getColumnModel().getColumn(0).setPreferredWidth(150);
 		jtStatus.getColumnModel().getColumn(1).setPreferredWidth(200);
 		jtStatus.getColumnModel().getColumn(2).setPreferredWidth(150);
+		jtStatus.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		// 텍스트 정렬
 		jlOpenDate.setHorizontalAlignment(JLabel.RIGHT);
@@ -65,6 +66,7 @@ public class AdminMainPageDesign extends JFrame {
 		// 폰트
 		Font font = new Font("맑은 고딕", Font.BOLD, 21);
 		jtStatus.setFont(font);
+		sumAmount.setFont(font);
 		jlOpenDate.setFont(font);
 
 		// 배치관리자 해제
@@ -74,7 +76,9 @@ public class AdminMainPageDesign extends JFrame {
 		int buttonX1 = 600;
 		int buttonX2 = 780;
 
-		jspJtOrderResult.setBounds(60, 90, 500, 600);
+		jspJtOrderResult.setBounds(60, 90, 500, 500);
+		sumAmount.setBounds(60,590, 500, 100);
+		
 		arrJbMenuFilter[0].setBounds(buttonX1, 90, 170, 60); // Coffee
 		arrJbMenuFilter[1].setBounds(buttonX2, 90, 170, 60); // Non Coffee
 		arrJbMenuFilter[2].setBounds(buttonX1, 160, 170, 60); // Tea
@@ -94,6 +98,7 @@ public class AdminMainPageDesign extends JFrame {
 
 		// 컴포넌트 등록
 		add(jspJtOrderResult);
+		add(sumAmount);
 		add(arrJbMenuFilter[0]);
 		add(arrJbMenuFilter[1]);
 		add(arrJbMenuFilter[2]);
@@ -113,7 +118,7 @@ public class AdminMainPageDesign extends JFrame {
 
 		// 이벤트 등록
 		
-		AdminMainPageEventTeeeeeeeeeeeest ampetest = new AdminMainPageEventTeeeeeeeeeeeest(this);
+		AdminMainPageEvent ampetest = new AdminMainPageEvent(this);
 		arrJbMenuFilter[0].addActionListener(ampetest); // Coffee
 		arrJbMenuFilter[1].addActionListener(ampetest); // Non Coffee
 		arrJbMenuFilter[2].addActionListener(ampetest); // Tea
@@ -135,6 +140,14 @@ public class AdminMainPageDesign extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //Management.addActionListener(le);
+	}
+
+	public JLabel getSumAmount() {
+		return sumAmount;
+	}
+
+	public void setSumAmount(JLabel sumAmount) {
+		this.sumAmount = sumAmount;
 	}
 
 	public JButton[] getArrJbMenuFilter() {
