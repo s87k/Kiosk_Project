@@ -53,7 +53,7 @@ public class OrderMenuDAO {
 			.append(" select menu_img ")
 			.append(" from BEVERAGE_MANAGEMENT ")
 			.append(" where type_code = ?");
-//			.append(" order by menu_name ");//정렬기준 뭘로?
+//			.append(" order by menu_img ");//정렬기준 뭘로?
 
 			pstmt = con.prepareStatement(selectAllMenu.toString());
 
@@ -61,19 +61,18 @@ public class OrderMenuDAO {
 			pstmt.setString(1, typeCode);
 
 			// 5. 쿼리문 수행 후 결과 얻기
-			rs = pstmt.executeQuery();
-
 			OrderMenuVO omVO = null;
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				omVO = new OrderMenuVO(rs.getString("menu_code"), rs.getString("type_code"), rs.getString("menu_name"),
-						rs.getInt("menu_price"), rs.getString("menu_img"));
+				omVO = new OrderMenuVO(rs.getString("menu_img"));
 				list.add(omVO);
 			} // end while
 		} finally {
 			dbCon.dbClose(rs, pstmt, con);
 		} // end finally
 		return list;
-	}// selectAllMenu
+	}// selectMenuImg
+	
 	
 	/**
 	 * 옵션 선택 이미지, 메뉴명, 메뉴가격 가져오기
@@ -82,7 +81,7 @@ public class OrderMenuDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<OrderMenuVO> selectMenuDetail(String typeCode, String menuCode) throws SQLException {
+	public List<OrderMenuVO> selectMenuDetail(String menuImg) throws SQLException {
 		List<OrderMenuVO> list = new ArrayList<OrderMenuVO>();
 		
 		DbConnection dbCon = DbConnection.getInstance();
@@ -103,28 +102,27 @@ public class OrderMenuDAO {
 			selectAllMenu
 			.append(" select menu_img, menu_name, menu_price ")
 			.append(" from BEVERAGE_MANAGEMENT ")
-			.append(" where type_code=? and menu_code=? ");
+			.append(" where menu_img = ?");
 //			.append(" order by menu_name ");//정렬기준 뭘로?
 			
 			pstmt = con.prepareStatement(selectAllMenu.toString());
 			
 			// 4. 바인드 변수에 값넣기
-			pstmt.setString(1, typeCode);
-			pstmt.setString(2, menuCode);
+			pstmt.setString(1, menuImg);
 			
 			// 5. 쿼리문 수행 후 결과 얻기
 			rs = pstmt.executeQuery();
 			
 			OrderMenuVO omVO = null;
 			while (rs.next()) {
-				omVO = new OrderMenuVO(rs.getString("menu_code"), rs.getString("type_code"), rs.getString("menu_name"),
-						rs.getInt("menu_price"), rs.getString("menu_img"));
+				omVO = new OrderMenuVO(rs.getString("menu_img"), rs.getString("menu_name"),
+						rs.getInt("menu_price"));
 				list.add(omVO);
 			} // end while
 		} finally {
 			dbCon.dbClose(rs, pstmt, con);
 		} // end finally
 		return list;
-	}// selectAllMenu
+	}// selectMenuDetail
 
 }// class

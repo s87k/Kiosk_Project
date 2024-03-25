@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import kiosks.PaymentPageDesign;
 import kiosks.PhoneNumDesign;
@@ -23,18 +24,25 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == ucd.getCancel()) {
-			new PaymentPageDesign();
-			ucd.dispose();
 			pnd.dispose();
 		}
 		
 		if(e.getSource() == ucd.getUse()) {
-			System.out.println("쿠폰사용하기");
-			new PaymentPageDesign();
-			ucd.dispose();
 			pnd.dispose();
 		}
 	}//actionPerformed
+	
+	
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		pnd.dispose();
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		pnd.dispose();
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

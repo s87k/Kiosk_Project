@@ -32,8 +32,15 @@ public class UsingCouponDesign extends JDialog {
 
 		// 보유 쿠폰 JTable
 		String[] couponTable = { "쿠폰 이름", "유효기간" };
-		dtmCouponList = new DefaultTableModel(couponTable, 0);
+		dtmCouponList = new DefaultTableModel(couponTable, 0) {
+			// 셀 수정 불가
+			public boolean isCellEditable(int row, int colum) {
+				return false;
+			}
+		};
 		couponList = new JTable(dtmCouponList);
+		// 열 이동 불가
+		couponList.getTableHeader().setReorderingAllowed(false);
 
 		JScrollPane scrollPane = new JScrollPane(couponList);
 		scrollPane.setBorder(BorderFactory.createTitledBorder("쿠폰 목록"));
@@ -53,9 +60,9 @@ public class UsingCouponDesign extends JDialog {
 
 		// actionListener 추가
 		UsingCouponEvent uce = new UsingCouponEvent(this, pnd);
-		
+
 		couponList.addMouseListener(uce);
-		
+
 		cancel.addActionListener(uce);
 		use.addActionListener(uce);
 
@@ -87,7 +94,5 @@ public class UsingCouponDesign extends JDialog {
 //	public static void main(String[] args) {
 //		new UsingCouponDesign();
 //	}//main
-	
-	
 
 }// class

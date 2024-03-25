@@ -7,6 +7,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -15,13 +16,15 @@ import kiosks.JoinMembershipEvent;
 import kiosks.OrderDetailEvent;
 
 @SuppressWarnings("serial")
-public class JoinMembershipDesign extends JFrame {
+public class JoinMembershipDesign extends JDialog {
 
+	private PhoneNumDesign pnd;
 	private JTextField jtfPhoneNum, jtfYear, jtfMonth, jtfDay, jtfName;
 	private JButton cancel, join;
 	private Font font;
 
-	public JoinMembershipDesign() {
+	public JoinMembershipDesign(PhoneNumDesign pnd, String title) {
+		super(pnd, "회원가입");
 		setLayout(null);
 
 		// 회원가입 로고 추가
@@ -130,7 +133,7 @@ public class JoinMembershipDesign extends JFrame {
 		add(join);
 
 		// actionListener 추가
-		JoinMembershipEvent jme = new JoinMembershipEvent(this);
+		JoinMembershipEvent jme = new JoinMembershipEvent(this, pnd);
 		cancel.addActionListener(jme);
 		join.addActionListener(jme);
 
@@ -143,9 +146,9 @@ public class JoinMembershipDesign extends JFrame {
 
 	}// JoinMembershipDesign
 
-	public static void main(String[] args) {
-		new JoinMembershipDesign();
-	}// main
+//	public static void main(String[] args) {
+//		new JoinMembershipDesign();
+//	}// main
 
 	public JTextField getJtfPhoneNum() {
 		return jtfPhoneNum;

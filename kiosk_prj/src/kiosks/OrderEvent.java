@@ -38,6 +38,11 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 	public OrderEvent(OrderDesign od) {
 		this.od = od;
 
+		// OrderDesign 실행되면 카드에 메뉴이미지버튼 설정하기.
+		for (int i = 0; i < 5; i++) {
+			setMenuImg(i + "");
+		}
+
 		cartList = od.getCartList();
 		dtmCartList = od.getDtmCartList();
 		cardLayout = od.getCardLayout();
@@ -59,53 +64,10 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		}
 
 		// 메뉴 선택
-		if (ae.getSource() == od.getEspresso()) {
-			menuDetail("에스프레소", "1000");
-		}
-		if ((ae.getSource() == od.getAmericano()) || (ae.getSource() == od.getBestAmericano())) {
-			menuDetail("아메리카노", "1200");
-		}
-		if ((ae.getSource() == od.getCafeLatte()) || (ae.getSource() == od.getBestCafeLatte())) {
-			menuDetail("카페라떼", "1500");
-		}
-		if ((ae.getSource() == od.getVanillaLatte()) || (ae.getSource() == od.getBestVanillaLatte())) {
-			menuDetail("바닐라라떼", "2000");
-		}
-		if (ae.getSource() == od.getChocolateLatte()) {
-			System.out.println("초고라떼");
-		}
-		if (ae.getSource() == od.getToffeeNutLatte()) {
-			System.out.println("토피넛라떼");
-		}
-		if (ae.getSource() == od.getGreenTeaLatte()) {
-			System.out.println("녹차라떼");
-		}
-		if (ae.getSource() == od.getDalgonaLatte()) {
-			System.out.println("달고나라떼");
-		}
-		if (ae.getSource() == od.getPeachTea()) {
-			System.out.println("복숭아 티");
-		}
-		if (ae.getSource() == od.getLemonTea()) {
-			System.out.println("레몬 티");
-		}
-		if (ae.getSource() == od.getGrapefruitTea()) {
-			System.out.println("자몽 티");
-		}
-		if (ae.getSource() == od.getCamomileTea()) {
-			System.out.println("캐모마일 티");
-		}
-		if (ae.getSource() == od.getYogurtSmoothie()) {
-			System.out.println("요거트 스무디");
-		}
-		if (ae.getSource() == od.getMilkShake()) {
-			System.out.println("딸기 스무디");
-		}
-		if (ae.getSource() == od.getStrowberrySmoothie()) {
-			System.out.println("밀크쉐이크");
-		}
-		if (ae.getSource() == od.getJavachipFrappe()) {
-			System.out.println("자바칩 프라페");
+		JButton clickedBtn = (JButton) ae.getSource();
+		String btnText = clickedBtn.getText();
+		if (!btnText.isEmpty()) {
+			menuDetail(btnText);
 		}
 
 		// 주문 삭제 & 결제
@@ -118,17 +80,80 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 	}// actionPerformed
 
 	/**
-	 * 선택한 메뉴의 이름, 가격을 옵션 선택창에 설정
+	 * OrderDesign이 실행되면 각 카드에 메뉴버튼 설정.
 	 * 
-	 * @param name
-	 * @param price
-	 * @param orderPrice
+	 * @param typeCode
 	 */
-	private void menuDetail(String name, String price) {
-		OrderDetailDesgin odd = new OrderDetailDesgin(od, "옵션선택");
-		odd.getMenuName().setText(name);
-		odd.getMenuPrice().setText(price);
-		odd.getAddMenu().setText(price + "원 담기");
+	private void setMenuImg(String typeCode) {
+		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
+		try {
+			List<OrderMenuVO> list = omDAO.selectMenuImg(typeCode);
+
+			// 해당하는 카드 패널 가져오기
+			JPanel targetPanel = null;
+			switch (typeCode) {
+			case "0":
+				targetPanel = od.getPanel0();
+				break;
+			case "1":
+				targetPanel = od.getPanel1();
+				break;
+			case "2":
+				targetPanel = od.getPanel2();
+				break;
+			case "3":
+				targetPanel = od.getPanel3();
+				break;
+			case "4":
+				targetPanel = od.getPanel4();
+				break;
+			default:
+				// 예외 처리
+				break;
+			}// end switch
+
+			if (targetPanel != null) {
+				// 해당 패널에 메뉴 버튼 추가
+				for (OrderMenuVO omVO : list) {
+
+//					String btnName = menu.getMenuCode();
+					JButton btnName = new JButton(omVO.getMenuImg());
+
+					// 버튼에 이미지 추가
+//					ImageIcon icon = new ImageIcon(menu.getMenuImg());
+//					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+//					menuButton.setIcon(new ImageIcon(image));
+
+					// 버튼 이벤트 등록
+					targetPanel.add(btnName);
+					btnName.addActionListener(this);
+
+				}
+			} // end if
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}// setMenuImg
+
+	private void menuDetail(String menuImg) {
+		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
+		try {
+			List<OrderMenuVO> list = omDAO.selectMenuDetail(menuImg);
+			if (!list.isEmpty()) {
+				OrderMenuVO omVO;
+				omVO = list.get(0);
+
+				OrderDetailDesgin odd = new OrderDetailDesgin(od, "옵션선택");
+
+				odd.getMenuName().setText(omVO.getMenuName());
+				odd.getMenuPrice().setText(Integer.toString(omVO.getMenuPrice()));
+				odd.getAddMenu().setText(Integer.toString(omVO.getMenuPrice()) + "원 담기");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -162,6 +187,9 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		od.getJtfOrderPrice().setText(Integer.toString(totalOrderPrice));
 	}// updateOrderPrice
 
+	/**
+	 * 결제 버튼을 누르면 장바구니 정보를 결제창에 보내기
+	 */
 	private void sendData() {
 		PaymentPageDesign ppd = new PaymentPageDesign();
 		// 결제창에 장바구니 데이터 보내기
@@ -174,57 +202,11 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 			ppd.getDtmOrderMemuList().addRow(rowData);
 		} // end for
 
-		// 결제창에 결제금액 보내기
+		// 결제창에 주문금액 & 결제금액 보내기
 		ppd.getOrderPrice().setText(od.getJtfOrderPrice().getText());
+		ppd.getTotalPrice().setText(od.getJtfOrderPrice().getText());
 		od.dispose();
 	}// sendData
-
-	private void setMenuImg(String typeCode) {
-		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
-		try {
-			List<OrderMenuVO> list = omDAO.selectMenuImg(typeCode);
-
-			// 해당하는 카드 패널 가져오기
-			JPanel targetPanel = null;
-			switch (typeCode) {
-			case "0":
-				targetPanel = od.getPanel1();
-				break;
-			case "1":
-				targetPanel = od.getPanel2();
-				break;
-			case "2":
-				targetPanel = od.getPanel3();
-				break;
-			case "3":
-				targetPanel = od.getPanel4();
-				break;
-			case "4":
-				targetPanel = od.getPanel5();
-				break;
-			default:
-				// 예외 처리
-				break;
-			}//end switch
-
-			if (targetPanel != null) {
-				// 해당 패널에 메뉴 버튼 추가
-//				for (OrderMenuVO menu : list) {
-//					JButton menuButton = new JButton(menu.getName());
-//					// 버튼에 이미지 추가
-//					ImageIcon icon = new ImageIcon(menu.getImagePath());
-//					Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-//					menuButton.setIcon(new ImageIcon(image));
-//					// 버튼 이벤트 등록
-//					menuButton.addActionListener(this);
-//					targetPanel.add(menuButton);
-//				}
-			}//end if
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}// setMenuImg
 
 	@Override
 	public void windowClosed(WindowEvent e) {

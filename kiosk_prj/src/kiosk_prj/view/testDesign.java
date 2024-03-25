@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 public class testDesign extends JFrame {
 
 	public testDesign() {
-
 	}
 
 	public static void main(String[] args) {

@@ -19,6 +19,21 @@ public class OrderMenuVO {
 		this.menuPrice = menuPrice;
 		this.menuImg = menuImg;
 	}
+	
+
+	public OrderMenuVO(String menuImg) {
+		super();
+		this.menuImg = menuImg;
+	}
+	
+	
+
+	public OrderMenuVO(String menuImg, String menuName, int menuPrice) {
+		super();
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
+		this.menuImg = menuImg;
+	}
 
 	public String getMenuCode() {
 		return menuCode;

@@ -11,20 +11,20 @@ import kiosks.PaymentPageDesign;
 public class JoinMembershipEvent extends WindowAdapter implements ActionListener{
 
 	private JoinMembershipDesign jmd;
+	private PhoneNumDesign pnd;
 	
-	public JoinMembershipEvent(JoinMembershipDesign jmd) {
+	public JoinMembershipEvent(JoinMembershipDesign jmd, PhoneNumDesign pnd) {
 		this.jmd = jmd;
+		this.pnd = pnd;
 	}//JoinMembershipEvent
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jmd.getCancel()) {
-			new PaymentPageDesign();
-			jmd.dispose();
+			pnd.dispose();
 		}
 		if(e.getSource() == jmd.getJoin()) {
-			new PaymentPageDesign();
-			jmd.dispose();
+			pnd.dispose();
 		}
 	}//actionPerformed
 

@@ -12,11 +12,6 @@ import java.awt.event.ActionListener;
 public class OrderDesign extends JFrame {
 	private JPanel menueBarPanel, cardPanel, cartPanel;
 	private JButton best, coffee, nonCoffee, tea, smoothie, pay, cancel;
-	private JButton bestAmericano, bestCafeLatte, bestVanillaLatte;
-	private JButton americano, cafeLatte, vanillaLatte, espresso;
-	private JButton chocolateLatte, toffeeNutLatte, greenTeaLatte, dalgonaLatte;
-	private JButton peachTea, lemonTea, grapefruitTea, camomileTea;
-	private JButton yogurtSmoothie, milkShake, StrowberrySmoothie, javachipFrappe;
 	private JPanel panel1, panel2, panel3, panel4, panel0;
 	private JTable cartList;
 	private DefaultTableModel dtmCartList;
@@ -50,81 +45,34 @@ public class OrderDesign extends JFrame {
 		// 베스트 패널
 		panel0 = new JPanel();
 		panel0.setLayout(new GridLayout(0, 2));
-		bestAmericano = new JButton("아메리카노");
-		panel0.add(bestAmericano);
-
-		bestCafeLatte = new JButton("카페라떼");
-		panel0.add(bestCafeLatte);
-
-		bestVanillaLatte = new JButton("바닐라 라떼");
-		panel0.add(bestVanillaLatte);
+		JScrollPane scrollPane0 = new JScrollPane(panel0); 
 
 		// 커피 패널
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(0, 2));
-		espresso = new JButton("에스프레소");
-		panel1.add(espresso);
-
-		americano = new JButton("아메리카노");
-		panel1.add(americano);
-
-		cafeLatte = new JButton("카페라떼");
-		panel1.add(cafeLatte);
-
-		vanillaLatte = new JButton("바닐라 라떼");
-		panel1.add(vanillaLatte);
-
+		JScrollPane scrollPane1 = new JScrollPane(panel1); 
+		
 		// 논커피 패널
 		panel2 = new JPanel();
 		panel2.setLayout(new GridLayout(0, 2));
-		chocolateLatte = new JButton("초코 라떼");
-		panel2.add(chocolateLatte);
-
-		toffeeNutLatte = new JButton("토피넛 라떼");
-		panel2.add(toffeeNutLatte);
-
-		greenTeaLatte = new JButton("녹차 라떼");
-		panel2.add(greenTeaLatte);
-
-		dalgonaLatte = new JButton("달고나 라떼");
-		panel2.add(dalgonaLatte);
+		JScrollPane scrollPane2 = new JScrollPane(panel2); 
 
 		// 티 패널
 		panel3 = new JPanel();
 		panel3.setLayout(new GridLayout(0, 2));
-		peachTea = new JButton("복숭아 티");
-		panel3.add(peachTea);
-
-		lemonTea = new JButton("레몬 티");
-		panel3.add(lemonTea);
-
-		grapefruitTea = new JButton("자몽 티");
-		panel3.add(grapefruitTea);
-
-		camomileTea = new JButton("캐모마일 티");
-		panel3.add(camomileTea);
+		JScrollPane scrollPane3 = new JScrollPane(panel3); 
 
 		// 스무디 패널
 		panel4 = new JPanel();
 		panel4.setLayout(new GridLayout(0, 2));
-		yogurtSmoothie = new JButton("요거트 스무디");
-		panel4.add(yogurtSmoothie);
-
-		StrowberrySmoothie = new JButton("딸기 스무디");
-		panel4.add(StrowberrySmoothie);
-
-		milkShake = new JButton("밀크쉐이크");
-		panel4.add(milkShake);
-
-		javachipFrappe = new JButton("자바칩 프라페");
-		panel4.add(javachipFrappe);
+		JScrollPane scrollPane4 = new JScrollPane(panel4); 
 
 		// card패널에 카드 추가
-		cardPanel.add(panel0, "0");
-		cardPanel.add(panel1, "1");
-		cardPanel.add(panel2, "2");
-		cardPanel.add(panel3, "3");
-		cardPanel.add(panel4, "4");
+		cardPanel.add(scrollPane0, "0");
+		cardPanel.add(scrollPane1, "1");
+		cardPanel.add(scrollPane2, "2");
+		cardPanel.add(scrollPane3, "3");
+		cardPanel.add(scrollPane4, "4");
 
 		add(cardPanel, BorderLayout.CENTER);
 
@@ -179,31 +127,6 @@ public class OrderDesign extends JFrame {
 		tea.addActionListener(oe);
 		smoothie.addActionListener(oe);
 		
-		// 메뉴 actionListener 추가
-		bestAmericano.addActionListener(oe);
-		bestCafeLatte.addActionListener(oe);
-		bestVanillaLatte.addActionListener(oe);
-
-		espresso.addActionListener(oe);
-		americano.addActionListener(oe);
-		cafeLatte.addActionListener(oe);
-		vanillaLatte.addActionListener(oe);
-
-		chocolateLatte.addActionListener(oe);
-		toffeeNutLatte.addActionListener(oe);
-		greenTeaLatte.addActionListener(oe);
-		dalgonaLatte.addActionListener(oe);
-
-		peachTea.addActionListener(oe);
-		lemonTea.addActionListener(oe);
-		grapefruitTea.addActionListener(oe);
-		camomileTea.addActionListener(oe);
-
-		yogurtSmoothie.addActionListener(oe);
-		milkShake.addActionListener(oe);
-		StrowberrySmoothie.addActionListener(oe);
-		javachipFrappe.addActionListener(oe);
-
 		// 장바구니 actionListener 추가
 		cartList.addMouseListener(oe);
 		dtmCartList.addTableModelListener(oe);
@@ -264,6 +187,10 @@ public class OrderDesign extends JFrame {
 		return cancel;
 	}
 
+	public JPanel getPanel0() {
+		return panel0;
+	}
+	
 	public JPanel getPanel1() {
 		return panel1;
 	}
@@ -278,10 +205,6 @@ public class OrderDesign extends JFrame {
 
 	public JPanel getPanel4() {
 		return panel4;
-	}
-
-	public JPanel getPanel5() {
-		return panel0;
 	}
 
 	public JTable getCartList() {
@@ -302,82 +225,6 @@ public class OrderDesign extends JFrame {
 
 	public DefaultTableModel getDtmCartList() {
 		return dtmCartList;
-	}
-
-	public JButton getBestAmericano() {
-		return bestAmericano;
-	}
-
-	public JButton getBestCafeLatte() {
-		return bestCafeLatte;
-	}
-
-	public JButton getBestVanillaLatte() {
-		return bestVanillaLatte;
-	}
-
-	public JButton getEspresso() {
-		return espresso;
-	}
-
-	public JButton getAmericano() {
-		return americano;
-	}
-
-	public JButton getCafeLatte() {
-		return cafeLatte;
-	}
-
-	public JButton getVanillaLatte() {
-		return vanillaLatte;
-	}
-
-	public JButton getChocolateLatte() {
-		return chocolateLatte;
-	}
-
-	public JButton getToffeeNutLatte() {
-		return toffeeNutLatte;
-	}
-
-	public JButton getGreenTeaLatte() {
-		return greenTeaLatte;
-	}
-
-	public JButton getDalgonaLatte() {
-		return dalgonaLatte;
-	}
-
-	public JButton getPeachTea() {
-		return peachTea;
-	}
-
-	public JButton getLemonTea() {
-		return lemonTea;
-	}
-
-	public JButton getGrapefruitTea() {
-		return grapefruitTea;
-	}
-
-	public JButton getCamomileTea() {
-		return camomileTea;
-	}
-
-	public JButton getYogurtSmoothie() {
-		return yogurtSmoothie;
-	}
-
-	public JButton getMilkShake() {
-		return milkShake;
-	}
-
-	public JButton getStrowberrySmoothie() {
-		return StrowberrySmoothie;
-	}
-
-	public JButton getJavachipFrappe() {
-		return javachipFrappe;
 	}
 
 }// class

@@ -20,14 +20,12 @@ public class StartPageEvent extends WindowAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == spd.getStore()) {
 			spd.dispose();
-			System.out.println("매장주문");
-			OrderDesign.main(new String[]{});
+			new OrderDesign();
 		}//end if
 		
 		if(e.getSource() == spd.getTakeOut()) {
 			spd.dispose();
-			System.out.println("포장주문");
-			OrderDesign.main(new String[]{});
+			new OrderDesign();
 		}//end if
 		
 	}//actionPerformed

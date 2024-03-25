@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,37 +14,39 @@ import javax.swing.JTextField;
 
 import kiosks.PhoneNumEvent;
 
-public class PhoneNumDesign extends JFrame {
+public class PhoneNumDesign extends JDialog {
 
+	private PaymentPageDesign pdd;
 	private JLabel orderAmount;
 	private JTextField jtfPhoneNum;
 	private Font font;
 	private JButton keypad;
 
-	public PhoneNumDesign() {
+	public PhoneNumDesign(PaymentPageDesign ppd, String title) {
+		super(ppd, "번호 조회");
 		setLayout(null);
 
 		// 결제 금액 라벨
 		JLabel jlAmount = new JLabel("결제금액");
 		font = jlAmount.getFont();
 		jlAmount.setFont(font.deriveFont(Font.PLAIN, 15));
-		jlAmount.setBounds(150, 50, 100, 30);
+		jlAmount.setBounds(100, 30, 70, 30);
 
 		orderAmount = new JLabel("");
 		font = orderAmount.getFont();
 		orderAmount.setFont(font.deriveFont(Font.PLAIN, 20));
-		orderAmount.setBounds(150, 100, 100, 30);
+		orderAmount.setBounds(200, 30, 100, 30);
 
 		// 번호 조회 안내 라벨
 		JLabel guide = new JLabel("<html>휴대폰 번호를 입력해주세요.<br>쿠폰을 조회합니다.</html>");
 		font = guide.getFont();
 		guide.setFont(font.deriveFont(Font.PLAIN, 23));
-		guide.setBounds(150, 160, 300, 50);
+		guide.setBounds(100, 90, 300, 50);
 
 		jtfPhoneNum = new JTextField(11);
 		font = jtfPhoneNum.getFont();
 		jtfPhoneNum.setFont(font.deriveFont(Font.PLAIN, 20));
-		jtfPhoneNum.setBounds(150, 240, 200, 50);
+		jtfPhoneNum.setBounds(100, 160, 200, 50);
 
 		// 번호 입력하는 키패드 만들기
 		JPanel jpPhoneNum = new JPanel(new GridLayout(4, 3));
@@ -65,16 +68,15 @@ public class PhoneNumDesign extends JFrame {
 		}//end for
 
 		// 버튼에 ActionListener 추가
-		PhoneNumEvent pne = new PhoneNumEvent(this);
+		PhoneNumEvent pne = new PhoneNumEvent(this, ppd);
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				keypad = btnArr[i][j];
 				keypad.addActionListener(pne);
 			} // end for
 		} // end for
-		keypad.addActionListener(pne);
 		
-		jpPhoneNum.setBounds(150, 320, 300, 300);
+		jpPhoneNum.setBounds(100, 235, 300, 300);
 		
 		//프레임에 요소 추가
 		add(jlAmount);
@@ -85,14 +87,14 @@ public class PhoneNumDesign extends JFrame {
 		
 		setVisible(true);
 		setResizable(false);
-		setSize(600, 800);
+		setSize(500, 600);
 		setLocationRelativeTo(null);
 
 	}// PhoneNumDesign
 
-	public static void main(String[] args) {
-		new PhoneNumDesign();
-	}// main
+//	public static void main(String[] args) {
+//		new PhoneNumDesign();
+//	}// main
 
 	public JLabel getOrderAmount() {
 		return orderAmount;

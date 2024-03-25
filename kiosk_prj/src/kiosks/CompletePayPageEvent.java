@@ -18,7 +18,6 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == cppd.getToStart()) {
-			System.out.println("처음으로");
 			new StartPageDesign();
 			cppd.dispose();
 		}

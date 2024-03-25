@@ -47,11 +47,11 @@ public class OrderDetailDesgin extends JDialog{
 		JLabel won = new JLabel("원");
 		
 		font = menuName.getFont();
-		menuName.setFont(font.deriveFont(Font.PLAIN, 20));
+		menuName.setFont(font.deriveFont(Font.BOLD, 20));
 		font = menuPrice.getFont();
 		menuPrice.setFont(font.deriveFont(Font.PLAIN, 20));
 		font = won.getFont();
-		won.setFont(font.deriveFont(Font.PLAIN, 20));
+		won.setFont(font.deriveFont(Font.BOLD, 20));
 		
 		add(menuImg);
 		add(menuName);
@@ -59,9 +59,9 @@ public class OrderDetailDesgin extends JDialog{
 		add(won);
 		
 		menuImg.setBounds(30, 30, 120, 120);
-		menuName.setBounds(180, 55, 100, 50);
-		menuPrice.setBounds(300, 55, 50, 50);
-		won.setBounds(350, 55, 30, 50);
+		menuName.setBounds(180, 55, 150, 50);
+		menuPrice.setBounds(340, 55, 50, 50);
+		won.setBounds(390, 55, 30, 50);
 		
 		
 		// 옵션 선택
