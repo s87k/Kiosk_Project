@@ -2,22 +2,20 @@ package kiosk_prj.shopOpen;
 
 public class ShopCloseVO {
 	
-	private String menuType, menuName, amount;
-	private int count;
+	private String menuType, menuName;
+	private int amount;
 	
 	/**
-	 * String openDate, String menuType, String menuName, int count, String amount<br>
-	 * 오픈일, 메뉴종류, 메뉴이름, 잔 수, 가격
+	 * String menuType, String menuName, int amount<br>
+	 * 오픈일, 메뉴종류, 메뉴이름, 샷 수, 가격
 	 * 
 	 * @param menuType
 	 * @param menuName
-	 * @param count
 	 * @param amount
 	 */
-	public ShopCloseVO(String menuType, String menuName, int count, String amount) {
+	public ShopCloseVO(String menuType, String menuName, int amount) {
 		this.menuType = menuType;
 		this.menuName = menuName;
-		this.count = count;
 		this.amount = amount;
 	}
 
@@ -29,12 +27,13 @@ public class ShopCloseVO {
 		return menuName;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public int getCount() {
-		return count;
+	@Override
+	public String toString() {
+		return "ShopCloseVO [menuType=" + menuType + ", menuName=" + menuName + ", amount=" + amount + "]";
 	}
 
 }//class
