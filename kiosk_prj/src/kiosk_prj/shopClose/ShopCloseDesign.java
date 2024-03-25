@@ -47,10 +47,11 @@ public class ShopCloseDesign extends JDialog {
 		jlTotalAmount = new JLabel(" 00,000원");
 		
 		//테이블 컬럼 넓이 변경
-		jtClose.getColumnModel().getColumn(0).setPreferredWidth(70);
-		jtClose.getColumnModel().getColumn(1).setPreferredWidth(435);
+		jtClose.getColumnModel().getColumn(0).setPreferredWidth(100);
+		jtClose.getColumnModel().getColumn(1).setPreferredWidth(405);
 		jtClose.getColumnModel().getColumn(2).setPreferredWidth(70);
 		jtClose.getColumnModel().getColumn(3).setPreferredWidth(150);
+		jtClose.setRowHeight(28);
 
 		//폰트
 		Font font = new Font("맑은 고딕", Font.BOLD, 21);
@@ -72,6 +73,10 @@ public class ShopCloseDesign extends JDialog {
 		jlTotalAmount.setOpaque(true);
 		jlTotalAmount.setBackground(new Color(0xC6C7D1));
 		
+		jtClose.setBackground(Color.WHITE); //테이블 배경색
+		jtClose.setGridColor(Color.GRAY); //테두리 색
+		
+		
 		
 		//배치관리자 해제
 		setLayout(null);
@@ -80,8 +85,8 @@ public class ShopCloseDesign extends JDialog {
 		jbInsertClose.setBounds(800,600,165,80);
 		jlTitle.setBounds(40,100,725,50);
 		jspJtClose.setBounds(40,150,725,500);
-		jlTotalCount.setBounds(40,650,525,50);
-		jlTotalAmount.setBounds(565,650,200,50);
+		jlTotalCount.setBounds(40,647,525,50);
+		jlTotalAmount.setBounds(565,647,200,50);
 		jbExit.setBounds(800,10,165,43);
 		
 		lbBackground.setBounds(0,0,1024,768);
@@ -100,7 +105,6 @@ public class ShopCloseDesign extends JDialog {
 		//이벤트 등록
 		ShopCloseConfirmDesign sccd = new ShopCloseConfirmDesign();
 		ShopCloseEvent sce = new ShopCloseEvent(this, sccd);
-		sce.selectDailySettlement(); //테이블에 값 세팅해주는 method
 		jbInsertClose.addActionListener(sce);
 		jbExit.addActionListener(sce);
 		

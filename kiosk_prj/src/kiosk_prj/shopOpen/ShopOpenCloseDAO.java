@@ -2,7 +2,10 @@ package kiosk_prj.shopOpen;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import kiosk_prj.dao.DbConnection;
 
@@ -93,10 +96,49 @@ public class ShopOpenCloseDAO {
 	}//insertCloseDate
 	
 	/**
-	 * 해당 영업일의 총 판매정보를 select
+	 * 해당 영업일의 총 판매정보를 select //마감용
 	 */
-	public void selectDailySettlemnet(String OpenDate) {
+	public List<ShopCloseVO> selectDailySettlemnet(String OpenDate) throws SQLException{
+		List<ShopCloseVO> list = new ArrayList<ShopCloseVO>();
 		
+		DbConnection dbCon = DbConnection.getInstance();
+		// 1.
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+		// 2.
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+		// 3. 쿼리문 생성객체 얻기
+			StringBuilder selectDailySettlemnet = new StringBuilder();
+			selectDailySettlemnet
+			.append(" select    m.type_name, b.menu_name, b.menu_price+(d.shot*500) price ")
+			.append(" from      detailed_order d, beverage_management b, menu_type m ")
+			.append(" where	    d.menu_code=b.menu_code and m.type_code=b.type_code and shop_open=? ")
+			.append(" order by	m.TYPE_CODE ");
+			
+			pstmt=con.prepareStatement(selectDailySettlemnet.toString());
+		// 4. 바인드 변수에 값 설정
+			pstmt.setString(1, OpenDate);
+		// 5. 쿼리문 수행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			ShopCloseVO scVO = null;
+			while(rs.next()) {//조회된 결과에서 다음 레코드가 존재?
+				scVO = new ShopCloseVO(rs.getString("type_name"), rs.getString("menu_name"),
+						rs.getInt("price"));
+				list.add(scVO);
+			}//end while
+			
+		}finally {
+		// 6. 연결끊기
+			dbCon.dbClose(rs, pstmt, con);
+		}//end finally
+		
+		return list;
 	}//selectDailySettlemnet
 	
 }//class
