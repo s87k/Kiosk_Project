@@ -15,6 +15,7 @@ public class PaymentPageDesign extends JFrame {
 	private DefaultTableModel dtmOrderMemuList;
 	private Font font;
 
+
 	public PaymentPageDesign() {
 		// 수동 배치
 		setLayout(null);
@@ -114,12 +115,15 @@ public class PaymentPageDesign extends JFrame {
 
 		addWindowListener(ppe);
 
-		setVisible(true);
-		setResizable(false);
 		setSize(600, 800);
 		setLocationRelativeTo(null);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
 	}// PaymentPageDesign
+
+	public void setTotalPrice(JLabel totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public JLabel getOrderPrice() {
 		return orderPrice;

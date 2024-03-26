@@ -73,6 +73,51 @@ public class OrderMenuDAO {
 		return list;
 	}// selectMenuImg
 	
+	/**
+	 * 탑3 메뉴 이미지 가져오기
+	 * 
+	 * @param menuCode
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<OrderMenuVO> selectTop3Img() throws SQLException {
+		List<OrderMenuVO> list = new ArrayList<OrderMenuVO>();
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			
+			// 3. 쿼리문 생성객체 얻기
+			String selectTop3Img = 
+			   " select     b.menu_img "
+               + " from      detailed_order d, beverage_management b, menu_type m "
+               + "    where        d.menu_code=b.menu_code and m.type_code=b.type_code  "
+               + "    order by    m.TYPE_CODE  ";
+			
+			pstmt = con.prepareStatement(selectTop3Img.toString());
+			
+			// 4. 쿼리문 수행 후 결과 얻기
+			OrderMenuVO omVO = null;
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				omVO = new OrderMenuVO(rs.getString("menu_img"));
+				list.add(omVO);
+			} // end while
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally
+		return list;
+	}// selectMenuImg
+	
 	
 	/**
 	 * 옵션 선택 이미지, 메뉴명, 메뉴가격 가져오기

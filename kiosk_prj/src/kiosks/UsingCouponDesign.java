@@ -1,6 +1,7 @@
 package kiosks;
 
 import java.awt.Font;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -8,20 +9,25 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-import kiosks.JoinMembershipEvent;
-import kiosks.UsingCouponEvent;
 
+
+@SuppressWarnings("serial")
 public class UsingCouponDesign extends JDialog {
-	private PhoneNumDesign pnd;
 	private JTable couponList;
 	private DefaultTableModel dtmCouponList;
 	private JButton cancel, use;
 	private Font font;
+	private String totalPrice;
 
-	public UsingCouponDesign(PhoneNumDesign pnd, String title) {
-		super(pnd, "쿠폰 조회");
+
+	public UsingCouponDesign(PaymentPageDesign ppd, String title, String totalPrice) {
+		super(ppd, "쿠폰 조회", true);
+		this.totalPrice = totalPrice;
 		setLayout(null);
 
 		// 사용가능한 보유 쿠폰 라벨
@@ -38,9 +44,19 @@ public class UsingCouponDesign extends JDialog {
 				return false;
 			}
 		};
+		
 		couponList = new JTable(dtmCouponList);
+		
+		//테이블 정렬 : 유효기간을 기준으로 오름차순 정렬
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtmCouponList);
+		sorter.setComparator(1, (Object o1, Object o2) -> ((String) o1).compareTo((String) o2));
+		sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+		
+		couponList.setRowSorter(sorter);
+		
 		// 열 이동 불가
 		couponList.getTableHeader().setReorderingAllowed(false);
+		
 
 		JScrollPane scrollPane = new JScrollPane(couponList);
 		scrollPane.setBorder(BorderFactory.createTitledBorder("쿠폰 목록"));
@@ -57,9 +73,10 @@ public class UsingCouponDesign extends JDialog {
 		add(scrollPane);
 		add(cancel);
 		add(use);
+		
 
 		// actionListener 추가
-		UsingCouponEvent uce = new UsingCouponEvent(this, pnd);
+		UsingCouponEvent uce = new UsingCouponEvent(this);
 
 		couponList.addMouseListener(uce);
 
@@ -89,6 +106,13 @@ public class UsingCouponDesign extends JDialog {
 
 	public JButton getUse() {
 		return use;
+	}
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+	
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 //	public static void main(String[] args) {

@@ -52,6 +52,7 @@ public class JoinMembershipDesign extends JDialog {
 		jtfPhoneNum = new JTextField(15);
 		font = jtfPhoneNum.getFont();
 		jtfPhoneNum.setFont(font.deriveFont(Font.PLAIN, 20));
+		jtfPhoneNum.setEditable(false);
 		jtfPhoneNum.setBounds(50, 230, 200, 50);
 
 		// 생년월일 추가

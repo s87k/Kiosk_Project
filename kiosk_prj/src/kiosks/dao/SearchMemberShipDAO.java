@@ -49,7 +49,7 @@ public class SearchMemberShipDAO {
 
 			// 3. 쿼리문 생성객체 얻기
 			String selectPhoneNum = 
-					" select PHONE_NUMBER from MEMBERSHIP where PHONE_NUMBER = ? ";
+					" select PHONE_NUMBER from MEMBERSHIP where flag_delete = '0' and PHONE_NUMBER = ? ";
 
 			pstmt = con.prepareStatement(selectPhoneNum);
 			

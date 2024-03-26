@@ -16,14 +16,15 @@ import kiosks.PhoneNumEvent;
 
 public class PhoneNumDesign extends JDialog {
 
-	private PaymentPageDesign pdd;
+	private PaymentPageDesign ppd;
 	private JLabel orderAmount;
 	private JTextField jtfPhoneNum;
 	private Font font;
 	private JButton keypad;
+	private String totalPrice;
 
-	public PhoneNumDesign(PaymentPageDesign ppd, String title) {
-		super(ppd, "번호 조회");
+	public PhoneNumDesign(PaymentPageDesign ppd, String title, String totalPrice) {
+		super(ppd, "번호 조회", true);
 		setLayout(null);
 
 		// 결제 금액 라벨
@@ -85,16 +86,20 @@ public class PhoneNumDesign extends JDialog {
 		add(jtfPhoneNum);
 		add(jpPhoneNum);
 		
-		setVisible(true);
-		setResizable(false);
 		setSize(500, 600);
 		setLocationRelativeTo(null);
-
+		setResizable(false);
+		setVisible(true);
 	}// PhoneNumDesign
 
-//	public static void main(String[] args) {
-//		new PhoneNumDesign();
-//	}// main
+
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public JLabel getOrderAmount() {
 		return orderAmount;

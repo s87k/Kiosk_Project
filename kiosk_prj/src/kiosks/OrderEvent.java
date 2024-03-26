@@ -1,7 +1,6 @@
 package kiosks;
 
 import java.awt.CardLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -9,9 +8,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -19,9 +21,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import kiosks.OrderDesign;
-import kiosks.OrderDetailDesgin;
-import kiosks.PaymentPageDesign;
 import kiosks.dao.OrderMenuDAO;
 import kiosks.vo.OrderMenuVO;
 
@@ -30,7 +29,6 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 	private OrderDesign od;
 
 	private CardLayout cardLayout;
-
 	private JTable cartList;
 	private DefaultTableModel dtmCartList;
 	private String name, price, orderPrice;
@@ -39,12 +37,11 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		this.od = od;
 
 		// OrderDesign 실행되면 카드에 메뉴이미지버튼 설정하기.
+		trendCheck();
 		for (int i = 0; i < 5; i++) {
 			setMenuImg(i + "");
 		}
 
-		cartList = od.getCartList();
-		dtmCartList = od.getDtmCartList();
 		cardLayout = od.getCardLayout();
 	}// OrderEvent
 
@@ -79,6 +76,44 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		}
 	}// actionPerformed
 
+	public void trendCheck() {
+		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
+		try {
+			List<OrderMenuVO> list = omDAO.selectTop3Img();
+
+			// 각 메뉴 이름의 발생 횟수를 저장하기 위한 Map
+			Map<String, Integer> menuCountMap = new HashMap<>();
+
+			// 각 메뉴 이름의 발생 횟수 계산
+			for (OrderMenuVO oVO : list) {
+				String menuImg = oVO.getMenuImg();
+				menuCountMap.put(menuImg, menuCountMap.getOrDefault(menuImg, 0) + 1);
+			}
+
+			// 발생 횟수에 따라 정렬
+			List<Map.Entry<String, Integer>> sortedMenuCountList = new ArrayList<>(menuCountMap.entrySet());
+			sortedMenuCountList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+			// 상위 3개의 메뉴 이미지 버튼 생성
+			int count = 0;
+			for (Map.Entry<String, Integer> entry : sortedMenuCountList) {
+				if (count < 3) {
+					JButton btnName = new JButton(entry.getKey());
+
+					// 버튼 이벤트 등록
+					od.getPanel0().add(btnName);
+					btnName.addActionListener(this);
+
+					count++;
+				} else {
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * OrderDesign이 실행되면 각 카드에 메뉴버튼 설정.
 	 * 
@@ -92,9 +127,6 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 			// 해당하는 카드 패널 가져오기
 			JPanel targetPanel = null;
 			switch (typeCode) {
-			case "0":
-				targetPanel = od.getPanel0();
-				break;
 			case "1":
 				targetPanel = od.getPanel1();
 				break;
