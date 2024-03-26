@@ -4,6 +4,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import kiosk_prj.coupon.dao.CouponPublishDAO;
 import kiosk_prj.coupon.vo.CoupConditionPriceVO;
+import kiosk_prj.coupon.vo.CouponAutoPubVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPublishVO;
 import kiosk_prj.coupon.vo.ResultVO;
@@ -66,7 +68,7 @@ class TestCouponPublishDAO {
 		}
 	}
 	
-//	@Disabled
+	@Disabled
 	@Test
 	void testSelectOneCoupPub() throws SQLException {
 		// given
@@ -104,4 +106,40 @@ class TestCouponPublishDAO {
 		}
 	}
 
+	@Disabled
+	@Test
+	void TestIsCoupKindPublished() throws SQLException{
+		// given
+		boolean flagPublish = false;
+		
+		
+		// when
+		flagPublish = cpDAO.isCoupKindPublished(1);
+		
+		// then
+		assertTrue(flagPublish);
+		
+		// when
+		flagPublish = cpDAO.isCoupKindPublished(8);
+		
+		// then
+		assertFalse(flagPublish);
+	}
+
+	@Test
+	void TestSelectShouldPublishCoup() throws SQLException {
+		// given
+		List<CouponAutoPubVO> list = new ArrayList<CouponAutoPubVO>();
+		
+		// when
+		list = cpDAO.selectShouldPublishCoup("01056567878", 15000);
+		
+		// then
+		assertNotNull(list);
+		if(list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i));
+			}
+		}
+	}
 }
