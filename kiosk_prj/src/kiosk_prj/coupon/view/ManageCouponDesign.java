@@ -24,7 +24,7 @@ public class ManageCouponDesign extends JDialog {
 	
 	public ManageCouponDesign(AdminMainPageDesign ampd) {
 		this.ampd = ampd;
-		ampd.setTitle("쿠폰 관리");
+		setTitle("쿠폰 관리");
 		
 		jbtnAddCoupType = new JButton("쿠폰 등록");
 		jbtnPublishCoup = new JButton("쿠폰 발급");
