@@ -82,7 +82,7 @@ class TestCouponKindDAO {
 		assertNotNull(ckVO);
 	}
 	
-	@Disabled
+//	@Disabled
 	@Test
 	void testSelectAll() throws SQLException {
 		// given
@@ -97,7 +97,7 @@ class TestCouponKindDAO {
 		assertNotNull(list);
 	}
 	
-//	@Disabled
+	@Disabled
 	@Test
 	void testSelectPublishable() throws SQLException {
 		// given
