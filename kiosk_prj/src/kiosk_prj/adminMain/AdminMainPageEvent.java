@@ -20,6 +20,7 @@ import kiosk_prj.orderStatus.OrderStatusDesign;
 import kiosk_prj.settlement.SettlementDesign;
 import kiosk_prj.shopClose.ShopCloseDesign;
 import kiosk_prj.shopOpen.ShopOpenDesign;
+import kiosk_prj.trend.TrendDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 
@@ -89,6 +90,9 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if (e.getSource() == jbCoupon) {
 			new ManageCouponDesign(amod, null);
 		} // end if
+		if (e.getSource() == jbTrends) {
+			new TrendDesign(amod, null);
+		}
 	}// actionPerformed
 
 	public void currentOrderStatus(String dateOnly) {
