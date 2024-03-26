@@ -21,7 +21,7 @@ public class DetailMemberEvent extends WindowAdapter implements ActionListener{
 			new DetailCouponDesign(dmd, "회원상세 >>> 쿠폰목록", phoneNum);
 		}
 		if(e.getSource() == dmd.getjConsumeTrend()) {
-			new ConsumePatternDesign(dmd, "회원상세 >>> 소비패턴");
+			new ConsumePatternDesign(dmd, "회원상세 >>> 소비패턴", phoneNum);
 		}
 	}
 

@@ -58,7 +58,7 @@ public class AdminMainPageDesign extends JFrame {
 		jtStatus.getColumnModel().getColumn(0).setPreferredWidth(150);
 		jtStatus.getColumnModel().getColumn(1).setPreferredWidth(200);
 		jtStatus.getColumnModel().getColumn(2).setPreferredWidth(150);
-		jtStatus.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		jtStatus.setRowHeight(28);
 
 		// 텍스트 정렬
 		jlOpenDate.setHorizontalAlignment(JLabel.RIGHT);
@@ -68,7 +68,7 @@ public class AdminMainPageDesign extends JFrame {
 		jtStatus.setFont(font);
 		sumAmount.setFont(font);
 		jlOpenDate.setFont(font);
-
+		
 		// 배치관리자 해제
 		setLayout(null);
 
@@ -95,7 +95,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbTrends.setBounds(buttonX2, 510, 170, 60);
 		jlOpenDate.setBounds(500, 30, 490, 30);
 		lbBackground.setBounds(0, 0, 1024, 768);
-
+		
 		// 컴포넌트 등록
 		add(jspJtOrderResult);
 		add(sumAmount);
