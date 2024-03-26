@@ -49,13 +49,14 @@ public class SettlementDesign extends JDialog {
 		ImageIcon imgExit = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTexit.png");
 		ImageIcon imgL = new ImageIcon("kiosk_prj/src/kiosk_prj/image/L.png");
 		ImageIcon imgR = new ImageIcon("kiosk_prj/src/kiosk_prj/image/R.png");
+		ImageIcon imgSetPeriod = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTsetPeriod.png");
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);
 		jbExit = new JButton(imgExit);
 		jbLeftMonth = new JButton(imgL);
 		jbRightMonth = new JButton(imgR);
-		jbSetPeriod = new JButton("설정기간 내 매출 조회");
+		jbSetPeriod = new JButton(imgSetPeriod);
 		jlInquiryYearMonth = new JLabel("조회 년월 : ");
 		jlViewYearMonth = new JLabel("24.03.");
 		jtaDates = new JTextArea[6][7];

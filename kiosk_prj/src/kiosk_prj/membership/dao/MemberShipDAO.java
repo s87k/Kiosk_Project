@@ -9,18 +9,18 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-
 import kiosk_prj.DAO.DbConnection;
-
+import kiosk_prj.adminMain.currentOrderVO;
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.membership.vo.MemberShipCouponVO;
 import kiosk_prj.membership.vo.MemberShipOrderVO;
 import kiosk_prj.membership.vo.MemberShipVO;
 
 public class MemberShipDAO {
-	private static MemberShipDAO msDAO;	
+	private static MemberShipDAO msDAO;
+
 	private MemberShipDAO() {
-		
+
 	}
 
 	public static MemberShipDAO getInstance() {
@@ -79,8 +79,7 @@ public class MemberShipDAO {
 			pstmt.setString(3, msVO.getMemberBirth());
 			pstmt.setString(4, msVO.getGrade());
 			pstmt.setString(5, phoneNumber);
-			
-			
+
 			// 5.
 			pstmt.executeUpdate();
 		} finally {
@@ -88,28 +87,29 @@ public class MemberShipDAO {
 		}
 		return cnt;
 	}
+
 	public int deleteMember(MemberShipVO msVO, String phoneNumber) throws SQLException {
 		int cnt = 0;
 		DbConnection dbCon = DbConnection.getInstance();
-		//1. 드라이버 로딩
+		// 1. 드라이버 로딩
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
-			//2. 
+			// 2.
 			String id = "Kiosk";
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
-			//3.
+			// 3.
 			String deleteMember = "update MEMBERSHIP set FLAG_DELETE = ? WHERE PHONE_NUMBER = ?";
-			//4.
+			// 4.
 			pstmt = con.prepareStatement(deleteMember);
-			
+
 			pstmt.setString(1, "1");
 			pstmt.setString(2, phoneNumber);
-			//5.
+			// 5.
 			pstmt.executeUpdate();
-		}finally {
+		} finally {
 			dbCon.dbClose(null, pstmt, con);
 		}
 		return cnt;
@@ -149,7 +149,8 @@ public class MemberShipDAO {
 
 		return memberList;
 	}
-	public List<MemberShipVO> searchMemberByName(String name) throws SQLException{
+
+	public List<MemberShipVO> searchMemberByName(String name) throws SQLException {
 		List<MemberShipVO> memberList = new ArrayList<MemberShipVO>();
 		DbConnection dbCon = DbConnection.getInstance();
 		Connection con = null;
@@ -180,38 +181,35 @@ public class MemberShipDAO {
 
 		return memberList;
 	}
+
 	public List<MemberShipVO> searchByPhoneNumberAndName(String phoneNumber, String name) throws SQLException {
-	    List<MemberShipVO> memberList = new ArrayList<>();
+		List<MemberShipVO> memberList = new ArrayList<>();
 
-	    DbConnection dbCon = DbConnection.getInstance();
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
+		DbConnection dbCon = DbConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-	    try {
-	    	String id = "Kiosk";
+		try {
+			String id = "Kiosk";
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
-	        String sql = "SELECT MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE FROM MEMBERSHIP WHERE FLAG_DELETE = '0' AND PHONE_NUMBER = ? AND MEMBER_NAME = ?";
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setString(1, phoneNumber);
-	        pstmt.setString(2, name);
-	        rs = pstmt.executeQuery();
+			String sql = "SELECT MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE FROM MEMBERSHIP WHERE FLAG_DELETE = '0' AND PHONE_NUMBER like ? AND MEMBER_NAME = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%" + phoneNumber);
+			pstmt.setString(2, name);
+			rs = pstmt.executeQuery();
 
-	        while (rs.next()) {
-	            MemberShipVO msVO = new MemberShipVO(
-	                rs.getString("MEMBER_NAME"),
-	                rs.getString("PHONE_NUMBER"),
-	                rs.getString("MEMBER_BIRTH"),
-	                rs.getString("MEMBER_GRADE")
-	            );
-	            memberList.add(msVO);
-	        }
-	    } finally {
-	        dbCon.dbClose(rs, pstmt, con);
-	    }
+			while (rs.next()) {
+				MemberShipVO msVO = new MemberShipVO(rs.getString("MEMBER_NAME"), rs.getString("PHONE_NUMBER"),
+						rs.getString("MEMBER_BIRTH"), rs.getString("MEMBER_GRADE"));
+				memberList.add(msVO);
+			}
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		}
 
-	    return memberList;
+		return memberList;
 	}
 
 	public List<MemberShipVO> allMember() throws SQLException {
@@ -266,8 +264,7 @@ public class MemberShipDAO {
 			// 3.
 			String memberOrder = "SELECT d.waiting_number, s.order_time, b.menu_name, s.amount "
 					+ "FROM SUMMARY_ORDER s, BEVERAGE_MANAGEMENT b, DETAILED_ORDER d "
-					+ "WHERE s.order_number = d.order_number AND b.menu_code = d.menu_code " 
-					+ "AND s.phone_number = ?";
+					+ "WHERE s.order_number = d.order_number AND b.menu_code = d.menu_code " + "AND s.phone_number = ?";
 			// 4.
 			pstmt = con.prepareStatement(memberOrder);
 			// 5.
@@ -276,11 +273,8 @@ public class MemberShipDAO {
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				msoVO = new MemberShipOrderVO(
-						rs.getString("waiting_number"),
-						rs.getString("order_time"), 
-						rs.getString("menu_name"),
-						rs.getInt("amount"));
+				msoVO = new MemberShipOrderVO(rs.getString("waiting_number"), rs.getString("order_time"),
+						rs.getString("menu_name"), rs.getInt("amount"));
 				list.add(msoVO);
 			}
 			// 6.연결끊기
@@ -304,32 +298,26 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String memberCoupon = "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ct.date_expire, ch.use_coup_date, ch.status_use " 
-					+"FROM coupon_held ch, coupon_type ct " 
-					+"WHERE ch.coup_kind_no = ct.coup_kind_no "
-					+"AND ch.phone_number = ?";
-			//4.
+			String memberCoupon = "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ct.date_expire, ch.use_coup_date, ch.status_use "
+					+ "FROM coupon_held ch, coupon_type ct " + "WHERE ch.coup_kind_no = ct.coup_kind_no "
+					+ "AND ch.phone_number = ?";
+			// 4.
 			pstmt = con.prepareStatement(memberCoupon);
-			//5.
+			// 5.
 			pstmt.setString(1, phoneNumber);
 			MemberShipCouponVO mscVO = null;
-			
+
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				mscVO = new MemberShipCouponVO(
-						rs.getString("coup_kind_name"),
-						rs.getInt("discount"),
-						rs.getString("publish_date"),
-						rs.getString("use_coup_date"),
-						rs.getString("date_expire"),
-						rs.getString("status_use")
-						);
+			while (rs.next()) {
+				mscVO = new MemberShipCouponVO(rs.getString("coup_kind_name"), rs.getInt("discount"),
+						rs.getString("publish_date"), rs.getString("use_coup_date"), rs.getString("date_expire"),
+						rs.getString("status_use"));
 				list.add(mscVO);
 			}
 		} finally {
 			dbCon.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}//memberCouponList
+	}// memberCouponList
 
 }// class
