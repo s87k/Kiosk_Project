@@ -65,4 +65,10 @@ public class CouponPublishVO {
 	public void setDisableDate(Date disableDate) {
 		this.disableDate = disableDate;
 	}
+
+	@Override
+	public String toString() {
+		return "CouponPublishVO [conditionPrice=" + conditionPrice + ", conditionTypeNo=" + conditionTypeNo
+				+ ", coupKindNo=" + coupKindNo + ", flagDisable=" + flagDisable + ", disableDate=" + disableDate + "]";
+	}
 }

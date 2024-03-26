@@ -13,6 +13,7 @@ import kiosk_prj.coupon.UpdateDefaultModelImpl;
 import kiosk_prj.coupon.dao.CoupConditionTypeDAO;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.dao.CouponPublishDAO;
+import kiosk_prj.coupon.view.ManageCouponDesign;
 import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.vo.CoupConditionTypeVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
@@ -45,31 +46,48 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 			} // end catch
 		} // end if 
 		if(ae.getSource() == mcd.getJbtnDeleteCoup()) {
-			
+			try {
+				deleteCoupon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} // end catch
 		} // end if 
 	} // actionPerformed
 	
-	/*
-	public void modifyAddedCoupon() throws SQLException {
-		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
-		CouponPublishVO cpVO = mcd.getCpVO();
-		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVO.getCoupKindNo());
-		String coupKindName = mcd.getJtfCouponKindName().getText().trim();
-		boolean flagPublishable = ckVO.isFlagPublishable();
+	public void deleteCoupon() throws SQLException {
+		if(mcd.getCpVO().getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
+			return;
+		}
+		int coupKindNo = mcd.getCpVO().getCoupKindNo();
+		String msg = "발급된 쿠폰은 삭제할 수 없습니다.\n이 쿠폰을 더이상 자동 발급 조건에 등록하지 못하도록 발급가능을 '아니오'로 변경해주세요";
 		
-	} // modifyAddedCoupon
-	*/
+		CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
+		if(cpDAO.isCoupKindPublished(coupKindNo)) {
+			JOptionPane.showMessageDialog(mcd, msg);
+			return;
+		} // end if
+		
+		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
+		int cnt = ckDAO.deleteCoupKind(coupKindNo);
+		if(cnt == 1) {
+			msg = "쿠폰 삭제되었습니다";
+		} else {
+			msg = "쿠폰 삭제에 실패했습니다";
+		} // end else
+		JOptionPane.showMessageDialog(mcd, msg);
+		
+	} // deleteCoupon
+	
 	public void modifyCoupon() throws SQLException {
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		CouponPublishVO cpVOOld = mcd.getCpVO();
 		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVOOld.getCoupKindNo());
 		
 		String coupKindName = mcd.getJtfCouponKindName().getText().trim();
-		boolean flagPublishable = ckVO.isFlagPublishable();
-		boolean flagChanged = false;		
+		boolean flagPublishable = mcd.getJrbPublishableOk().isSelected();
+		boolean flagChanged = false;
 		
 		int cnt = 0;
-		String msg = "쿠폰 정보 수정에 성공했습니다";
 		
 		if( ! ckVO.getCoupKindName().equals(coupKindName) || ckVO.isFlagPublishable() != flagPublishable) {
 			ckVO.setCoupKindName(coupKindName);
@@ -77,15 +95,19 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 			
 			cnt = ckDAO.updateCoupKind(ckVO);
 			if(cnt != 1) {
-				msg = "쿠폰 정보 수정에 실패했습니다";
-				JOptionPane.showMessageDialog(mcd, msg);
+				JOptionPane.showMessageDialog(mcd, "쿠폰 정보 수정에 실패했습니다");
 				return;
 			} // if
 			flagChanged = true;
 		} // end if
 		
 		if(cpVOOld.getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
-			int conditionPrice = Integer.parseInt(mcd.getJtfPubConditonVal().getText().trim());
+			String strConditionPrice =  mcd.getJtfPubConditonVal().getText().trim();
+			if(strConditionPrice == null || strConditionPrice.equals("")) {
+				JOptionPane.showMessageDialog(mcd, "값은 꼭 입력되어야합니다");
+				return;	
+			} // end if
+			int conditionPrice = Integer.parseInt(strConditionPrice);
 			int conditionTypeNo = mcd.getJcbPubCondition().getSelectedIndex() + 1;
 			boolean flagDisable = mcd.getJrbPublishableOk().isSelected() == true ? true : false;
 			
@@ -98,19 +120,19 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 				CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
 				cnt = cpDAO.updateCoupPub(cpVOOld, cpVONew);
 				if(cnt != 1) {
-					msg = "쿠폰 정보 수정에 실패했습니다";
-					JOptionPane.showMessageDialog(mcd, msg);
+					JOptionPane.showMessageDialog(mcd, "쿠폰 정보 수정에 실패했습니다");
 					return;
 				} // end if
 				flagChanged = true;
 			} // end if
-			
-		} // end if
-		if( ! flagChanged) {
-			msg = "변경 사항이 없습니다";
 		} // end if
 		
-		JOptionPane.showMessageDialog(mcd, msg);
+		if( ! flagChanged) {
+			JOptionPane.showMessageDialog(mcd, "변경 사항이 없습니다");
+		} else {
+			JOptionPane.showMessageDialog(mcd, "쿠폰 정보 수정에 성공했습니다");
+		} // end else
+		
 	} // modifyCoupon
 
 	public void closeDialog() {

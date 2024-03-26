@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiosk_prj.coupon.vo.CoupConditionPriceVO;
+import kiosk_prj.coupon.vo.CouponAutoPubVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPublishVO;
 import kiosk_prj.coupon.vo.ResultVO;
@@ -192,6 +193,71 @@ public class CouponPublishDAO {
 		return list;
 	} // selectAllCoupPub
 	
+	public List<CouponAutoPubVO> selectShouldPublishCoup(String phoneNumber, int amount) throws SQLException {
+		List<CouponAutoPubVO> listCapVO = new ArrayList<CouponAutoPubVO>();
+		
+		// 1. 드라이버 로딩
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// 2. 커넥션 얻기
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
+			
+			// 3. 쿼리문 생성 객체 얻기
+			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
+			// 		바인드 변수에는 `'` 를 사용하지 않는다
+			StringBuilder selectShouldPublishCoup = new StringBuilder();
+			selectShouldPublishCoup
+			.append("	select 	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, csh.CONDITION_TYPE_NO, csh.COUP_KIND_NO	")
+			.append("	from	COUPON_KIND ck,	")
+			.append("			(select	CONDITION_PRICE,CONDITION_TYPE_NO,COUP_KIND_NO	")
+			.append("			from	(	")
+			.append("					select	cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO, cp.FLAG_DISABLE	")
+			.append("					from	coupon_publish cp, coupon_held ch	")
+			.append("					where	(ch.CONDITION_PRICE(+)=cp.condition_price and ch.CONDITION_TYPE_NO(+)=cp.CONDITION_TYPE_NO and ch.COUP_KIND_NO(+)=cp.COUP_KIND_NO) and	")
+			.append("							(ch.phone_number is null or ch.PHONE_NUMBER not like ?)	")
+			.append("					)	")
+			.append("			where	CONDITION_TYPE_NO=1 and  flag_disable=1 and CONDITION_PRICE <	")
+			.append("					(select	sum(amount)	")
+			.append("					from	SUMMARY_ORDER	")
+			.append("					where 	PHONE_NUMBER=?)) csh	")
+			.append("					, COUPON_PUBLISH_CONDITION_TYPE cpct	")
+			.append("	where	csh.COUP_KIND_NO=ck.COUP_KIND_NO and csh.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO	")
+			.append("	union all	")
+			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', cp.CONDITION_PRICE) condition_msg, cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO	")
+			.append("	from	coupon_publish cp, COUPON_KIND ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
+			.append("	where	(cp.COUP_KIND_NO=ck.COUP_KIND_NO and cp.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO) and	")
+			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	");
+			pstmt = con.prepareStatement(selectShouldPublishCoup.toString());
+			
+			// 4. 바인드 변수에 값 설정
+			pstmt.setString(1, phoneNumber);
+			pstmt.setString(2, phoneNumber);
+			pstmt.setString(3, phoneNumber);
+			pstmt.setString(4, phoneNumber);
+			pstmt.setInt(5, amount);
+						
+			// 5. 쿼리문 수행 후 결과 얻기
+			//		부모(Statement)의 executeXxx(sql)메소드는 절대로 사용하지 않는다 
+			//		-> 실행해도 값이 안 나옴
+			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				listCapVO.add(new CouponAutoPubVO(rs.getString("PHONE_NUMBER"), rs.getString("COUP_KIND_NAME"), rs.getInt("DISCOUNT"), rs.getInt("EXPIRES_PERIOD"),
+						rs.getString("CONDITION_MSG"), rs.getInt("CONDITION_PRICE"), rs.getInt("CONDITION_TYPE_NO"), rs.getInt("COUP_KIND_NO")));
+			} // end while
+		} finally {
+			// 6. 연결 끊기
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally 
+		
+		return listCapVO;
+	} // selectShouldPublishCoup
+	
 	public CouponPublishVO selectOneCoupPub(int conditionPrice, int conditionTypeNo, int coupKindNo) throws SQLException {
 		CouponPublishVO cpVO = null;
 		
@@ -223,7 +289,7 @@ public class CouponPublishDAO {
 			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				cpVO = new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no"), rs.getString("FLAG_DISABLE").equals("0") ? false : true, rs.getDate("FLAG_DISABLE_DATE"));
+				cpVO = new CouponPublishVO(rs.getInt("condition_price"), rs.getInt("condition_type_no"), rs.getInt("coup_kind_no"), rs.getString("FLAG_DISABLE").equals("0") ? false : true, rs.getDate("DISABLE_DATE"));
 			} // end if
 		} finally {
 			// 6. 연결 끊기
@@ -231,6 +297,45 @@ public class CouponPublishDAO {
 		} // end finally 
 		
 		return cpVO;
+	} // selectOneCoupPub
+	
+	public boolean isCoupKindPublished(int coupKindNo) throws SQLException {
+		boolean flagPublish = false;
+		
+		// 1. 드라이버 로딩
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// 2. 커넥션 얻기
+			con = dbCon.getConnection(DbConnection.URL, DbConnection.ID, DbConnection.PASS);
+			
+			// 3. 쿼리문 생성 객체 얻기
+			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
+			// 		바인드 변수에는 `'` 를 사용하지 않는다
+			String selectOneCoupPub = "select '0' output from COUPON_PUBLISH where coup_kind_no=?";
+			pstmt = con.prepareStatement(selectOneCoupPub);
+			
+			// 4. 바인드 변수에 값 설정
+			pstmt.setInt(1, coupKindNo);
+			
+			// 5. 쿼리문 수행 후 결과 얻기
+			//		부모(Statement)의 executeXxx(sql)메소드는 절대로 사용하지 않는다 
+			//		-> 실행해도 값이 안 나옴
+			//		=> 매개변수 없는 executeXxx() 메소드를 사용해야 한다
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				flagPublish = true;
+			} // end if
+		} finally {
+			// 6. 연결 끊기
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally 
+		
+		return flagPublish;
 	} // selectOneCoupPub
 	
 } // class

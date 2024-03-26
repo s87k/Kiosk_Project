@@ -51,11 +51,6 @@ public class SearchCouponDesign extends JPanel {
 		String[] columnName = {"번호", "쿠폰 번호", "쿠폰 이름", "할인액", "이름", "연락처", "상태", "발급일", "사용일", "만료일"};
 		SearchCouponEvent sce = new SearchCouponEvent(this);
 		CouponInfoViewDAO civDAO = CouponInfoViewDAO.getInstance();
-		List<CouponAddedInfoVO> listCaivVO = new ArrayList<CouponAddedInfoVO>();
-		CouponAddedInfoVO caivVO = null;
-		ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
-		String couponCode = "";
-		int num = 1;
 		
 		JPanel jpCoupKind = new JPanel();
 		JPanel jpCoupIssue = new JPanel();
@@ -96,18 +91,8 @@ public class SearchCouponDesign extends JPanel {
 		jtbpCoupSearch.add("발급된 쿠폰", jpCoupIssue);
 		jtbpCoupSearch.addChangeListener(sce);
 		try {
-			sce.searchPublishableCouponType();
-			
-			listCaivVO = civDAO.searchAllAddedCouponView();
-			Iterator<CouponAddedInfoVO> itaCaiv = listCaivVO.iterator();
-			while(itaCaiv.hasNext()) {
-				caivVO = itaCaiv.next();
-				couponCode = ccr.CouponPublishVOToRadix62(new CouponPublishVO(caivVO.getConditionPrice(), caivVO.getConditionTypeNo(), caivVO.getCoupKindNo()));
-				dtmCoupIssue.addRow(new Object[] {num++, couponCode, 
-						caivVO.getCoupKindName(), caivVO.getDiscount(), 
-						caivVO.getFlagDisable() == false ? "X": "O", 
-						caivVO.getExpiresPeriod(), caivVO.getCondition()});
-			} // end while
+			sce.renewPublishableCouponType();
+			sce.renewCoupIssueTable();
 		} catch (SQLException se) {
 			se.printStackTrace();
 			JOptionPane.showMessageDialog(mcd, "등록된 쿠폰 조회에 실패했습니다");
@@ -172,9 +157,9 @@ public class SearchCouponDesign extends JPanel {
 			jtbpCoupSearch.add("사용불가 쿠폰", jpCoupUnusable);
 			
 			try {
-				addRow2DtmCoupPub(dtmCoupPub, civDAO.searchPubCouponView());
-				addRow2DtmCoupPub(dtmCoupPubUsable, civDAO.searchPubCouponView(StatusUse.USABLE.getIntVal()));
-				addRow2DtmCoupPub(dtmCoupPubUnUsable, civDAO.searchPubCouponView(StatusUse.UN_USABLE.getIntVal()));
+				sce.renewRow2DtmCoupPub(dtmCoupPub, civDAO.searchPubCouponView());
+				sce.renewRow2DtmCoupPub(dtmCoupPubUsable, civDAO.searchPubCouponView(StatusUse.USABLE.getIntVal()));
+				sce.renewRow2DtmCoupPub(dtmCoupPubUnUsable, civDAO.searchPubCouponView(StatusUse.UN_USABLE.getIntVal()));
 			} catch (SQLException se) {
 				se.printStackTrace();
 				JOptionPane.showMessageDialog(mcd, "발급된 쿠폰 조회에 실패했습니다");
@@ -200,33 +185,6 @@ public class SearchCouponDesign extends JPanel {
 		*/
 	} // SearchCouponDesign
 	
-	public void addRow2DtmCoupPub(DefaultTableModel dtm, List<CouponPubInfoVO> listCpiVO) {
-		Iterator<CouponPubInfoVO> itaCpi = listCpiVO.iterator();
-		
-		CouponPubInfoVO cpiVO = null;
-		Object[] arrElement = null;
-		Date publishDate = null;
-		Date useCoupDate = null;
-		Date expireDate = null;
-		
-		SimpleDateFormat sdfFull = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
-		
-		int cnt = 1;
-		while(itaCpi.hasNext()) {
-			cpiVO = itaCpi.next();
-			publishDate = cpiVO.getPublishDate();
-			useCoupDate = cpiVO.getUseCoupDate();
-			expireDate = cpiVO.getExpireDate();
-			arrElement = new Object[] {cnt++, cpiVO.getCoupPubCode(), cpiVO.getCoupKindName(),
-					cpiVO.getDiscount(), cpiVO.getMemberName(), cpiVO.getPhoneNumber(), cpiVO.getStatusUse(),
-					publishDate != null ? sdfFull.format(publishDate) : "-",
-					useCoupDate != null ? sdfFull.format(useCoupDate) : "-",
-					expireDate != null ? sdfYMD.format(expireDate) : "-"};
-			dtm.addRow(arrElement);
-		} // end while
-	} // addRow2DtmCoupPub
-
 	public ManageCouponDesign getMcd() {
 		return mcd;
 	}

@@ -46,10 +46,11 @@ public class ModifyCouponDesign extends JDialog {
 		this.mcd = mcd;
 		this.cpVO = cpVO;
 		
+		/*
 		System.out.println(cpVO.getConditionPrice());
 		System.out.println(cpVO.getConditionTypeNo());
 		System.out.println(cpVO.getCoupKindNo());
-		
+		*/
 		JLabel jlblRowCouponKindName = new JLabel("쿠폰 이름");
 		JLabel jlblRowCouponKindNo = new JLabel("쿠폰 종류 번호");
 		JLabel jlblRowDiscount = new JLabel("할인 금액");
@@ -78,7 +79,6 @@ public class ModifyCouponDesign extends JDialog {
 		
 		jbtnOk = new JButton("수정");
 		jbtnCancel = new JButton("취소");
-		jbtnDeleteCoup = new JButton("삭제");
 		
 		JPanel jpPubCondition = new JPanel();
 		jpPubCondition.setLayout(null);
@@ -95,7 +95,6 @@ public class ModifyCouponDesign extends JDialog {
 		ModifyCouponEvent mce = new ModifyCouponEvent(this);
 		jbtnCancel.addActionListener(mce);
 		jbtnOk.addActionListener(mce);
-		jbtnDeleteCoup.addActionListener(mce);
 		
 		CouponKindVO ckVO = null;
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
@@ -123,6 +122,10 @@ public class ModifyCouponDesign extends JDialog {
 			} else {
 				jrbPublishableNo.setSelected(true);
 			} // end else
+			jbtnDeleteCoup = new JButton("삭제");
+			jbtnDeleteCoup.addActionListener(mce);
+			jbtnDeleteCoup.setBounds(455, 500, 120, 80);
+			add(jbtnDeleteCoup);
 		} else {
 			try {
 				mce.searchAllCoupPubConditionType();
@@ -159,7 +162,6 @@ public class ModifyCouponDesign extends JDialog {
 		jrbPublishableNo.setBounds(270, 420, 120, 60);
 		jbtnOk.setBounds(175, 500, 120, 80);
 		jbtnCancel.setBounds(315, 500, 120, 80);
-		jbtnDeleteCoup.setBounds(455, 500, 120, 80);
 		
 		add(jlblRowCouponKindName);
 		add(jtfCouponKindName);
@@ -175,7 +177,6 @@ public class ModifyCouponDesign extends JDialog {
 		add(jrbPublishableNo);
 		add(jbtnOk);
 		add(jbtnCancel);
-		add(jbtnDeleteCoup);
 		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		// 455, 130, 1024, 768
