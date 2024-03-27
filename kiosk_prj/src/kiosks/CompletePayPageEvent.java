@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 
+import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosks.CompletePayPageDesign;
 import kiosks.StartPageDesign;
 import kiosks.dao.SelectCouponDAO;

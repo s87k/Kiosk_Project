@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosks.StartPageEvent;
 
 @SuppressWarnings("serial")
@@ -14,6 +15,9 @@ public class StartPageDesign extends JFrame{
 	private JLabel logo;
 	
 	public StartPageDesign() {
+		design();
+	}//StartPageDesign
+	public StartPageDesign(AdminMainPageDesign ampd) {
 		design();
 	}//StartPageDesign
 	

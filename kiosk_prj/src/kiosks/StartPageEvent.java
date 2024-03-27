@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import kiosks.OrderDesign;
 import kiosks.StartPageDesign;
+import kiosks.vo.SummaryOrderVO;
 
 public class StartPageEvent extends WindowAdapter implements ActionListener {
 
