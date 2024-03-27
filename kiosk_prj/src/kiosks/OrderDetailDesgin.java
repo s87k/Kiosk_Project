@@ -72,7 +72,7 @@ public class OrderDetailDesgin extends JDialog{
 		jlCup.setForeground(Color.RED);
 		
 		storeCup = new JButton("매장컵");
-		personalCup = new JButton("개인컵");
+		personalCup = new JButton("텀블러");
 		
 		add(jlCup);
 		add(storeCup);

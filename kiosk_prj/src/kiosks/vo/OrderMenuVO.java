@@ -34,6 +34,8 @@ public class OrderMenuVO {
 		this.menuPrice = menuPrice;
 		this.menuImg = menuImg;
 	}
+	
+	
 
 	public String getMenuCode() {
 		return menuCode;

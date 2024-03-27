@@ -4,13 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import kiosks.JoinMembershipEvent;
 import kiosks.OrderDetailEvent;
@@ -19,7 +23,10 @@ import kiosks.OrderDetailEvent;
 public class JoinMembershipDesign extends JDialog {
 
 	private PhoneNumDesign pnd;
-	private JTextField jtfPhoneNum, jtfYear, jtfMonth, jtfDay, jtfName;
+	private JTextField jtfPhoneNum, jtfName;
+	private JComboBox<String> comYear;
+	private JComboBox<String> comMonth;
+	private JComboBox<String> comDay;
 	private JButton cancel, join;
 	private Font font;
 
@@ -62,11 +69,16 @@ public class JoinMembershipDesign extends JDialog {
 		jlBirth.setForeground(Color.RED);
 		jlBirth.setBounds(50, 310, 100, 30);
 
+		// 생년월일 콤보 박스
+		comYear = new JComboBox<>(getYearArray());
+		comMonth = new JComboBox<>(getMonthArray());
+		comDay = new JComboBox<>(getDayArray());
+		comYear.setSelectedItem("1990");
+		
 		// 년
-		jtfYear = new JTextField(4);
-		font = jtfYear.getFont();
-		jtfYear.setFont(font.deriveFont(Font.PLAIN, 20));
-		jtfYear.setBounds(50, 350, 100, 50);
+		font = comYear.getFont();
+		comYear.setFont(font.deriveFont(Font.PLAIN, 20));
+		comYear.setBounds(50, 350, 100, 50);
 		
 		JLabel jlYear = new JLabel("년");
 		font = jlYear.getFont();
@@ -74,10 +86,9 @@ public class JoinMembershipDesign extends JDialog {
 		jlYear.setBounds(160, 365, 50, 30);
 		
 		// 월
-		jtfMonth = new JTextField(2);
-		font = jtfMonth.getFont();
-		jtfMonth.setFont(font.deriveFont(Font.PLAIN, 20));
-		jtfMonth.setBounds(230, 350, 70, 50);
+		font = comMonth.getFont();
+		comMonth.setFont(font.deriveFont(Font.PLAIN, 20));
+		comMonth.setBounds(230, 350, 70, 50);
 		
 		JLabel jlMonth = new JLabel("월");
 		font = jlMonth.getFont();
@@ -85,10 +96,9 @@ public class JoinMembershipDesign extends JDialog {
 		jlMonth.setBounds(310, 365, 50, 30);
 		
 		// 일
-		jtfDay = new JTextField(2);
-		font = jtfDay.getFont();
-		jtfDay.setFont(font.deriveFont(Font.PLAIN, 20));
-		jtfDay.setBounds(380, 350, 70, 50);
+		font = comDay.getFont();
+		comDay.setFont(font.deriveFont(Font.PLAIN, 20));
+		comDay.setBounds(380, 350, 70, 50);
 		
 		JLabel jlDay = new JLabel("일");
 		font = jlDay.getFont();
@@ -122,11 +132,11 @@ public class JoinMembershipDesign extends JDialog {
 		add(jlPhoneNum);
 		add(jtfPhoneNum);
 		add(jlBirth);
-		add(jtfYear);
+		add(comYear);
 		add(jlYear);
-		add(jtfMonth);
+		add(comMonth);
 		add(jlMonth);
-		add(jtfDay);
+		add(comDay);
 		add(jlDay);
 		add(jlName);
 		add(jtfName);
@@ -151,20 +161,46 @@ public class JoinMembershipDesign extends JDialog {
 //		new JoinMembershipDesign();
 //	}// main
 
+	private static String[] getMonthArray() {
+		String[] months = new String[12];
+		for(int i = 0; i < months.length; i++) {
+			months[i] = Integer.toString(i+1);
+		}
+		return months;
+	}
+
+	private static String[] getDayArray() {
+		String[] days = new String[31];
+		for(int i = 0; i < days.length; i++) {
+			days[i] = Integer.toString(i+1);
+		}
+		return days;
+	}
+
+	private static String[] getYearArray() {
+		String[] years = new String[125];
+		for(int i = 0; i < years.length; i++) {
+			years[i] = Integer.toString(1900+i);
+		}
+		return years;
+	}
+
 	public JTextField getJtfPhoneNum() {
 		return jtfPhoneNum;
 	}
 
-	public JTextField getJtfYear() {
-		return jtfYear;
+
+
+	public JComboBox<String> getComYear() {
+		return comYear;
 	}
 
-	public JTextField getJtfMonth() {
-		return jtfMonth;
+	public JComboBox<String> getComMonth() {
+		return comMonth;
 	}
 
-	public JTextField getJtfDay() {
-		return jtfDay;
+	public JComboBox<String> getComDay() {
+		return comDay;
 	}
 
 	public JTextField getJtfName() {

@@ -13,44 +13,46 @@ import kiosks.OrderDetailEvent;
 
 public class CompletePayPageDesign extends JFrame {
 
-	private JLabel orderNum, memberNum;
+	private JLabel orderNum, memberCoup, issuedGuide;
 	private JButton toStart;
 	private Font font;
+	private String phoneNum;
 
-	public CompletePayPageDesign() {
+	public CompletePayPageDesign(String phoneNum) {
+		this.phoneNum = phoneNum;
 		setLayout(null);
 
 		// 주문완료
 		JLabel orderFinGuide = new JLabel("주문완료되었습니다.");
 		font = orderFinGuide.getFont();
-		orderFinGuide.setFont(font.deriveFont(Font.PLAIN, 20));
-		orderFinGuide.setBounds(100, 50, 300, 50);
+		orderFinGuide.setFont(font.deriveFont(Font.BOLD, 20));
+		orderFinGuide.setBounds(150, 50, 300, 50);
 
 		orderNum = new JLabel("n번째 주문");
 		font = orderNum.getFont();
-		orderNum.setFont(font.deriveFont(Font.PLAIN, 20));
-		orderNum.setBounds(100, 150, 200, 50);
+		orderNum.setFont(font.deriveFont(Font.BOLD, 20));
+		orderNum.setBounds(190, 150, 200, 50);
 
 		add(orderFinGuide);
 		add(orderNum);
 
 		// 쿠폰 사용
-		JLabel issuedGuide = new JLabel("쿠폰이 발급되었습니다!");
+		issuedGuide = new JLabel("<html>주문해주셔서 감사합니다.<br>곧 음료가 준비됩니다.</html>");
 		font = issuedGuide.getFont();
-		issuedGuide.setFont(font.deriveFont(Font.PLAIN, 15));
-		issuedGuide.setBounds(100, 250, 200, 50);
+		issuedGuide.setFont(font.deriveFont(Font.BOLD, 15));
+		issuedGuide.setBounds(160, 250, 200, 50);
 
-		memberNum = new JLabel("1234 님의 현재 보유 쿠폰 N장");
-		font = memberNum.getFont();
-		memberNum.setFont(font.deriveFont(Font.PLAIN, 13));
-		memberNum.setBounds(100, 320, 300, 30);
+		memberCoup = new JLabel("");
+		font = memberCoup.getFont();
+		memberCoup.setFont(font.deriveFont(Font.BOLD, 13));
+		memberCoup.setBounds(140, 320, 300, 30);
 
 		add(issuedGuide);
-		add(memberNum);
+		add(memberCoup);
 
 		// 처음으로 버튼 추가
 		toStart = new JButton("처음으로");
-		toStart.setBounds(230, 380, 100, 30);
+		toStart.setBounds(330, 450, 100, 30);
 		add(toStart);
 
 		// actionListener 추가
@@ -74,12 +76,26 @@ public class CompletePayPageDesign extends JFrame {
 		return orderNum;
 	}
 
-	public JLabel getMemberNum() {
-		return memberNum;
+	public JLabel getMemberCoup() {
+		return memberCoup;
 	}
 
 	public JButton getToStart() {
 		return toStart;
 	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public JLabel getIssuedGuide() {
+		return issuedGuide;
+	}
+	
+	
 
 }// class

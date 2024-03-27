@@ -38,7 +38,9 @@ public class JoinMembershipEvent extends WindowAdapter implements ActionListener
 		String phoneNum = jmd.getJtfPhoneNum().getText();
 		String name = jmd.getJtfName().getText();
 		StringBuilder births = new StringBuilder();
-		births.append(jmd.getJtfYear().getText()).append(jmd.getJtfMonth().getText()).append(jmd.getJtfDay().getText());
+		births.append(jmd.getComYear().getSelectedItem().toString())
+		.append(jmd.getComMonth().getSelectedItem().toString())
+		.append(jmd.getComDay().getSelectedItem().toString());
 		String birth = births.toString();
 		System.out.println("phoneNum " + phoneNum + "name " + name + "birth " + birth);
 

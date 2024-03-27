@@ -48,7 +48,7 @@ public class SelectCouponDAO {
 					" select ck.coup_kind_name, ch.publish_date, ck.expires_period "
 					+ " from COUPON_HELD ch, COUPON_KIND ck "
 					+ " where ch.coup_kind_no = ck.coup_kind_no "
-					+ " and ch.status_use=0 and ch.phone_number = ? ";
+					+ " and ch.status_use = '0' and ch.phone_number = ? ";
 			pstmt = con.prepareStatement(searchCoup);
 			pstmt.setString(1, phoneNumber);
 			SelectCouponVO scVO = null;
@@ -96,8 +96,6 @@ public class SelectCouponDAO {
 			dbCon.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}
+	}//searchDiscount
 	
-	
-	
-}
+}//class

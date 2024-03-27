@@ -22,12 +22,12 @@ public class UsingCouponDesign extends JDialog {
 	private DefaultTableModel dtmCouponList;
 	private JButton cancel, use;
 	private Font font;
-	private String totalPrice;
+	private String phoneNumber;
 
 
-	public UsingCouponDesign(PaymentPageDesign ppd, String title, String totalPrice) {
+	public UsingCouponDesign(PaymentPageDesign ppd, String phoneNumber) {
 		super(ppd, "쿠폰 조회", true);
-		this.totalPrice = totalPrice;
+		this.phoneNumber = phoneNumber;
 		setLayout(null);
 
 		// 사용가능한 보유 쿠폰 라벨
@@ -76,7 +76,7 @@ public class UsingCouponDesign extends JDialog {
 		
 
 		// actionListener 추가
-		UsingCouponEvent uce = new UsingCouponEvent(this);
+		UsingCouponEvent uce = new UsingCouponEvent(this, ppd);
 
 		couponList.addMouseListener(uce);
 
@@ -107,13 +107,17 @@ public class UsingCouponDesign extends JDialog {
 	public JButton getUse() {
 		return use;
 	}
-	public String getTotalPrice() {
-		return totalPrice;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
-	public void setTotalPrice(String totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+
+
 
 //	public static void main(String[] args) {
 //		new UsingCouponDesign();

@@ -4,26 +4,29 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.MaskFormatter;
 
 import kiosks.PhoneNumEvent;
 
 public class PhoneNumDesign extends JDialog {
 
-	private PaymentPageDesign ppd;
 	private JLabel orderAmount;
-	private JTextField jtfPhoneNum;
+	private JFormattedTextField jtfPhoneNum;
 	private Font font;
 	private JButton keypad;
 	private String totalPrice;
 
-	public PhoneNumDesign(PaymentPageDesign ppd, String title, String totalPrice) {
+	public PhoneNumDesign(PaymentPageDesign ppd) {
 		super(ppd, "번호 조회", true);
 		setLayout(null);
 
@@ -44,7 +47,14 @@ public class PhoneNumDesign extends JDialog {
 		guide.setFont(font.deriveFont(Font.PLAIN, 23));
 		guide.setBounds(100, 90, 300, 50);
 
-		jtfPhoneNum = new JTextField(11);
+		try {
+			MaskFormatter form = new MaskFormatter("###########");
+			form.setPlaceholderCharacter(' ');
+			jtfPhoneNum = new JFormattedTextField(form);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		font = jtfPhoneNum.getFont();
 		jtfPhoneNum.setFont(font.deriveFont(Font.PLAIN, 20));
 		jtfPhoneNum.setBounds(100, 160, 200, 50);
@@ -57,7 +67,6 @@ public class PhoneNumDesign extends JDialog {
 
 		// 버튼 배열
 		JButton[][] btnArr = new JButton[4][3];
-		
 
 		// 버튼 생성 및 프레임에 추가
 		for (int i = 0; i < 4; i++) {
@@ -65,8 +74,8 @@ public class PhoneNumDesign extends JDialog {
 				keypad = new JButton(btnLabel[i][j]);
 				btnArr[i][j] = keypad;
 				jpPhoneNum.add(keypad);
-			}//end for
-		}//end for
+			} // end for
+		} // end for
 
 		// 버튼에 ActionListener 추가
 		PhoneNumEvent pne = new PhoneNumEvent(this, ppd);
@@ -76,22 +85,21 @@ public class PhoneNumDesign extends JDialog {
 				keypad.addActionListener(pne);
 			} // end for
 		} // end for
-		
+
 		jpPhoneNum.setBounds(100, 235, 300, 300);
-		
-		//프레임에 요소 추가
+
+		// 프레임에 요소 추가
 		add(jlAmount);
 		add(orderAmount);
 		add(guide);
 		add(jtfPhoneNum);
 		add(jpPhoneNum);
-		
+
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 	}// PhoneNumDesign
-
 
 	public String getTotalPrice() {
 		return totalPrice;
@@ -113,7 +121,7 @@ public class PhoneNumDesign extends JDialog {
 		this.orderAmount = orderAmount;
 	}
 
-	public void setJtfPhoneNum(JTextField jtfPhoneNum) {
+	public void setJtfPhoneNum(JFormattedTextField jtfPhoneNum) {
 		this.jtfPhoneNum = jtfPhoneNum;
 	}
 
@@ -124,6 +132,5 @@ public class PhoneNumDesign extends JDialog {
 	public JButton getKeypad() {
 		return keypad;
 	}
-
 
 }// class

@@ -9,12 +9,12 @@ import kiosks.PaymentPageEvent;
 
 @SuppressWarnings("serial")
 public class PaymentPageDesign extends JFrame {
-	private JLabel orderPrice, lblCheckCouponGuide, totalPrice;
+	private JLabel orderPrice, lblCheckCouponGuide, totalPrice, usedCoup;
 	private JButton btnCheckCoupon, creditCard, cash;
 	private JTable orderMenuList;
 	private DefaultTableModel dtmOrderMemuList;
 	private Font font;
-
+	private String phoneNum;
 
 	public PaymentPageDesign() {
 		// 수동 배치
@@ -39,6 +39,9 @@ public class PaymentPageDesign extends JFrame {
 		// 쿠폰 조회 & 안내 메시지
 		btnCheckCoupon = new JButton("쿠폰 조회");
 		btnCheckCoupon.setBounds(180, 110, 100, 30);
+		
+		usedCoup = new JLabel("");
+		usedCoup.setBounds(300, 110, 100, 30);
 
 		lblCheckCouponGuide = new JLabel("<html>*전화번호로 보유쿠폰을 조회합니다.<br>*회원가입도 쿠폰조회에서!</html>");
 		font = lblCheckCouponGuide.getFont();
@@ -96,6 +99,7 @@ public class PaymentPageDesign extends JFrame {
 		add(orderPrice);
 		add(won);
 		add(btnCheckCoupon);
+		add(usedCoup);
 		add(lblCheckCouponGuide);
 		add(jspOrderMenuList);
 		add(jlTotalPrice);
@@ -157,8 +161,26 @@ public class PaymentPageDesign extends JFrame {
 		return dtmOrderMemuList;
 	}
 
-	public static void main(String[] args) {
-		new PaymentPageDesign();
-	}// main
+	public JLabel getUsedCoup() {
+		return usedCoup;
+	}
+
+	public void setUsedCoup(JLabel usedCoup) {
+		this.usedCoup = usedCoup;
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	
+	
+
+//	public static void main(String[] args) {
+//		new PaymentPageDesign();
+//	}// main
 
 }// class

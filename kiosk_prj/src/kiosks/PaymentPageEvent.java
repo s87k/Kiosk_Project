@@ -21,25 +21,30 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 	private JTable orderMenuList;
 	private DefaultTableModel dtmOrderMemuList;
 	
+	private String phoneNum;
+	
 	public PaymentPageEvent(PaymentPageDesign ppd) {
 		this.ppd = ppd;
 		
 		orderMenuList = ppd.getOrderMenuList();
 		dtmOrderMemuList = ppd.getDtmOrderMemuList();
+		
 	}//PaymentPageEvent
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == ppd.getBtnCheckCoupon()) {
-			PhoneNumDesign pnd = new PhoneNumDesign(ppd, "번호 조회", ppd.getTotalPrice().getText());
-			pnd.getOrderAmount().setText(ppd.getOrderPrice().getText()+" 원");
+			PhoneNumDesign pnd = new PhoneNumDesign(ppd);
 		}
 		if(e.getSource() == ppd.getCreditCard()) {
-			new CompletePayPageDesign();
+			phoneNum = ppd.getPhoneNum();
+			new CompletePayPageDesign(phoneNum);
+			
 			ppd.dispose();
 		}
 		if(e.getSource() == ppd.getCash()) {
-			new CompletePayPageDesign();
+			phoneNum = ppd.getPhoneNum();
+			new CompletePayPageDesign(phoneNum);
 			ppd.dispose();
 		}
 	}//actionPerformed

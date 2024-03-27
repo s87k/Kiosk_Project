@@ -2,6 +2,7 @@ package kiosks.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,6 +35,23 @@ public class DbConnection {
 		con = DriverManager.getConnection(url, id, pass);
 		return con;
 	}// getConnection
+	
+	public void test() throws SQLException {
+		Connection con=getConnection("Kiosk", "4");
+		PreparedStatement s1=con.prepareStatement("drop sequence test");
+		s1.execute();
+		PreparedStatement s=con.prepareStatement("create sequence test increment by 1 start with 1 maxvalue 99999");
+		s.execute();
+		
+	}
+	
+	public static void main(String[] args) {
+		try {
+			DbConnection.getInstance().test();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void dbClose(ResultSet rs, Statement stmt, Connection con) throws SQLException {
 		try {
