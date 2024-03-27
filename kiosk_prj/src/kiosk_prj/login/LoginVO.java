@@ -1,4 +1,4 @@
-package kiosk_prj.vo;
+package kiosk_prj.login;
 
 public class LoginVO {
     private String id;
@@ -16,6 +16,5 @@ public class LoginVO {
     public String getPw() {
         return pw;
     }
-
 }
 

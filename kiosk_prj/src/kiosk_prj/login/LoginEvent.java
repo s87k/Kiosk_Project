@@ -1,4 +1,4 @@
-package kiosk_prj.controller;
+package kiosk_prj.login;
 
 
 import java.awt.event.ActionEvent;
@@ -10,9 +10,7 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import kiosk_prj.view.AdminMainPageDesign;
-import kiosk_prj.view.LoginDesign;
-import kiosk_prj.vo.LoginVO;
+import kiosk_prj.adminMain.AdminMainPageDesign;
 
 public class LoginEvent extends WindowAdapter implements ActionListener {
 	private LoginDesign ld;
@@ -65,7 +63,7 @@ public class LoginEvent extends WindowAdapter implements ActionListener {
 				System.out.println(pw);
 			} else {
 				ld.dispose();
-				new AdminMainPageDesign();
+				new AdminMainPageDesign(id);
 			}//end else
 		} else {
 			JOptionPane.showMessageDialog(null, "존재하지 않는 아이디 입니다.");
