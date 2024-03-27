@@ -21,5 +21,5 @@
 - **이희윤** : 메뉴관리 담당
 
 ## 개발환경
-- **Version** : Java 17
+- **Version** : <code><img height="20" src =https://github.com/github/explore/blob/main/topics/java/java.png></code>Java 17
 
