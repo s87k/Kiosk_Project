@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import kiosk_prj.coupon.UpdateDefaultModelImpl;
 import kiosk_prj.coupon.dao.CoupConditionTypeDAO;
@@ -37,9 +38,8 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener,
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == pcd.getJbtnGoMain()) {		// 메인으로 가기 버튼
+		if(ae.getSource() == pcd.getJbtnGoBack()) {		// 닫기 버튼
 			closeDialog();
-			pcd.getMcd().dispose();
 		} // end if
 		if(ae.getSource() == pcd.getJbtnPublish()) {	// 발급 버튼
 			publishCoupon();
@@ -50,6 +50,7 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener,
 	} // actionPerformed
 	
 	public void closeDialog() {
+		pcd.getMcd().getMce().changeBtnIcon(-1);
 		pcd.dispose();
 	} // closeDialog
 
@@ -98,22 +99,31 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener,
 
 	@Override
 	public void searchAllCoupPubConditionType() throws SQLException {
+		if(pcd.getDcmPubCondition() == null) {
+			return;
+		} // end if
+		pcd.getDcmPubCondition().removeAllElements();
 		CoupConditionTypeDAO cctDAO = CoupConditionTypeDAO.getInstance();
 		List<CoupConditionTypeVO> listCctVO = cctDAO.selectAllCoupConditionType();
 		for (int i = 0; i < listCctVO.size(); i++) {
-			pcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName());	
+			pcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName().replace("{}", "N"));	
 		} // end for
 	} // searchAllCoupPubConditionType
 	
 	public void searchPublishableCouponType() throws SQLException {
+		DefaultTableModel dtm = pcd.getDtmCoupKind();
+		if(dtm == null) {
+			return;
+		} // end if
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		List<CouponKindVO> ckList;
 		ckList = ckDAO.selectAllCoupKind();
 		
 		CouponKindVO ckVO = null;
+		dtm.setRowCount(0);
 		for (int i = 0; i < ckList.size(); i++) {
 			ckVO = ckList.get(i);
-			pcd.getDtmCoupKind().addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
+			dtm.addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
 		} // end for
 	} // searchPublishableCouponType
 	

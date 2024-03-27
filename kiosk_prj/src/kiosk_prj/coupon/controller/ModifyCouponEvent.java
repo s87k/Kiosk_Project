@@ -67,15 +67,17 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 			return;
 		} // end if
 		
-		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
-		int cnt = ckDAO.deleteCoupKind(coupKindNo);
-		if(cnt == 1) {
-			msg = "쿠폰 삭제되었습니다";
-		} else {
-			msg = "쿠폰 삭제에 실패했습니다";
-		} // end else
-		JOptionPane.showMessageDialog(mcd, msg);
-		
+		switch(JOptionPane.showConfirmDialog(mcd, "정말 삭제하시겠습니까?")) {
+		case JOptionPane.OK_OPTION:
+			CouponKindDAO ckDAO = CouponKindDAO.getInstance();
+			int cnt = ckDAO.deleteCoupKind(coupKindNo);
+			if(cnt == 1) {
+				msg = "쿠폰 삭제되었습니다";
+			} else {
+				msg = "쿠폰 삭제에 실패했습니다";
+			} // end else
+			JOptionPane.showMessageDialog(mcd, msg);
+		} // end case
 	} // deleteCoupon
 	
 	public void modifyCoupon() throws SQLException {
@@ -149,7 +151,7 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 		CoupConditionTypeDAO cctDAO = CoupConditionTypeDAO.getInstance();
 		List<CoupConditionTypeVO> listCctVO = cctDAO.selectAllCoupConditionType();
 		for (int i = 0; i < listCctVO.size(); i++) {
-			mcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName());	
+			mcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName().replace("{}", "N"));	
 		} // end for
 	} // searchAllCoupPubConditionType
 

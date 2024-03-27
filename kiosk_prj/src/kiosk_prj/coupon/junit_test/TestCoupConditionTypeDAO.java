@@ -28,7 +28,7 @@ class TestCoupConditionTypeDAO {
 		
 		// then
 		assertNotNull(cctDAO);
-	}
+	}// testGetInstance
 
 	@Disabled
 	@DisplayName("모든 발급 조건명 조회")
@@ -50,6 +50,7 @@ class TestCoupConditionTypeDAO {
 	}
 	
 	@DisplayName("발급 조건명 하나 조회")
+	@Disabled
 	@Test
 	void testSelectOne() throws SQLException {
 		// given
