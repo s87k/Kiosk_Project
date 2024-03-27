@@ -24,7 +24,7 @@ class TestCouponHeldDAO {
 		assertNotNull(chDAO);
 	}
 
-//	@Disabled
+	@Disabled
 	@Test
 	void testInsertCoupHeld() {
 		// given
@@ -85,7 +85,7 @@ class TestCouponHeldDAO {
 		}
 	}
 	
-	@Disabled
+//	@Disabled
 	@Test
 	void testSelectUserCoupHeld() throws SQLException {
 		// given

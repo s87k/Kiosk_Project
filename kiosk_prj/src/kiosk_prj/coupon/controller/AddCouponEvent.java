@@ -6,15 +6,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import kiosk_prj.coupon.UpdateIcon;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.view.AddCouponDesign;
 import kiosk_prj.coupon.vo.CouponKindVO;
+import kiosk_prj.coupon.vo.ExpirePeriod;
+import kiosk_prj.coupon.vo.ManageButton;
 
 import static java.lang.Integer.parseInt;
 
-public class AddCouponEvent extends WindowAdapter implements ActionListener {
+public class AddCouponEvent extends WindowAdapter implements ActionListener, UpdateIcon{
 	
 	private AddCouponDesign acd;
 	private int periodMonth;
@@ -24,9 +29,9 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener {
 	} // AddCouponEvent
 	
 	public void enablePeriodSetting(boolean flag) {
-		acd.getJbtnMonth1().setEnabled(flag);
-		acd.getJbtnMonth3().setEnabled(flag);
-		acd.getJbtnYear1().setEnabled(flag);
+		acd.getArrJbtnPeriod()[ExpirePeriod.MONTH1.ordinal()].setEnabled(flag);
+		acd.getArrJbtnPeriod()[ExpirePeriod.MONTH3.ordinal()].setEnabled(flag);
+		acd.getArrJbtnPeriod()[ExpirePeriod.YEAR1.ordinal()].setEnabled(flag);
 		acd.getJcbPeriodDetail().setEnabled(!flag);
 	} // enablePeriodDefault
 	
@@ -38,25 +43,27 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener {
 		if(ae.getSource() == acd.getJrbPeriodDetail()) {	// 이용기간 - 상세 설정 JRadioButton
 			enablePeriodSetting(false);
 		} // end if
-		if(ae.getSource() == acd.getJbtnGoMain()) {			// 메인으로 가기 버튼
+		if(ae.getSource() == acd.getJbtnGoMain()) {			// 닫기 버튼
 			closeDialog();
-			acd.getMcd().dispose();
 		} // end if
 		if(ae.getSource() == acd.getJbtnAddCoupon()) {		// 등록 버튼
 			addCouponKind();
 		} // end if
 		if(ae.getSource() == acd.getJbtnCancel()) {			// 취소 버튼
-			acd.dispose();
+			closeDialog();
 		} // end if
-		if(ae.getSource() == acd.getJbtnMonth1()) {			// 이용기간 - 기본 설정 - 1개월 JButton
+		if(ae.getSource() == acd.getArrJbtnPeriod()[ExpirePeriod.MONTH1.ordinal()]) {			// 이용기간 - 기본 설정 - 1개월 JButton
+			changeBtnIcon(ExpirePeriod.MONTH1.ordinal());
 			acd.getJcbPeriodDetail().setSelectedIndex(acd.getDcbmPeriodDetail().getIndexOf("1개월"));
 			periodMonth = 1;
 		} // end if
-		if(ae.getSource() == acd.getJbtnMonth3()) {			// 이용기간 - 기본 설정 - 3개월 JButton
+		if(ae.getSource() == acd.getArrJbtnPeriod()[ExpirePeriod.MONTH3.ordinal()]) {			// 이용기간 - 기본 설정 - 3개월 JButton
+			changeBtnIcon(ExpirePeriod.MONTH3.ordinal());
 			acd.getJcbPeriodDetail().setSelectedIndex(acd.getDcbmPeriodDetail().getIndexOf("3개월"));
 			periodMonth = 3;
 		} // end if
-		if(ae.getSource() == acd.getJbtnYear1()) {			// 이용기간 - 기본 설정 - 1년 JButton
+		if(ae.getSource() == acd.getArrJbtnPeriod()[ExpirePeriod.YEAR1.ordinal()]) {			// 이용기간 - 기본 설정 - 1년 JButton
+			changeBtnIcon(ExpirePeriod.YEAR1.ordinal());
 			acd.getJcbPeriodDetail().setSelectedIndex(acd.getDcbmPeriodDetail().getIndexOf("12개월"));
 			periodMonth = 12;
 		} // end if
@@ -72,8 +79,8 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener {
 			JOptionPane.showMessageDialog(acd, "쿠폰 이름을 입력해주세요");
 			return;
 		} // end if
-		if(coupKindName.length() > 33) {
-			JOptionPane.showMessageDialog(acd, "쿠폰 이름은 33자 이내로 작성해주세요");
+		if(coupKindName.length() > 31) {
+			JOptionPane.showMessageDialog(acd, "쿠폰 이름은 31자 이내로 작성해주세요");
 			return;
 		} // end if
 		
@@ -112,6 +119,7 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener {
 	} // publishCoupon
 	
 	public void closeDialog() {
+		acd.getMcd().getMce().changeBtnIcon(-1);
 		acd.dispose();
 	} // closeDialog
 
@@ -120,4 +128,18 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener {
 		closeDialog();
 	}
 
+	@Override
+	public void changeBtnIcon(int indexBtn) {
+		ImageIcon[] arrIiBtn = acd.getArrIiBtnPeriod();
+		ImageIcon[] arrIiBtnClick = acd.getArrIiBtnPeriodClick();
+		JButton[] arrJbtn = acd.getArrJbtnPeriod();
+		
+		for(int i = 0; i < arrIiBtn.length; i++) {
+			if(i == indexBtn) {
+				arrJbtn[i].setIcon(arrIiBtnClick[i]);
+			} else {
+				arrJbtn[i].setIcon(arrIiBtn[i]);
+			}
+		} // end for
+	} // changeBtnIcon
 } // class
