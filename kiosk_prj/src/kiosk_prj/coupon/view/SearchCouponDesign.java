@@ -15,7 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kiosk_prj.coupon.controller.ConvertCouponRadix;
 import kiosk_prj.coupon.controller.SearchCouponEvent;
@@ -26,6 +29,8 @@ import kiosk_prj.coupon.vo.CouponPublishVO;
 import kiosk_prj.coupon.vo.StatusUse;
 
 import static java.lang.String.valueOf;
+
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class SearchCouponDesign extends JPanel {
@@ -46,7 +51,10 @@ public class SearchCouponDesign extends JPanel {
 	public SearchCouponDesign(ManageCouponDesign mcd, int tabMode) {
 		this.mcd = mcd;
 		
+		Font font = new Font("맑은 고딕", Font.BOLD, 20);
+		
 		jtbpCoupSearch = new JTabbedPane();
+		jtbpCoupSearch.setFont(font);
 		
 		String[] columnName = {"번호", "쿠폰 번호", "쿠폰 이름", "할인액", "이름", "연락처", "상태", "발급일", "사용일", "만료일"};
 		SearchCouponEvent sce = new SearchCouponEvent(this);
@@ -63,6 +71,17 @@ public class SearchCouponDesign extends JPanel {
 		};
 		jtabCoupKind = new JTable(dtmCoupKind);
 		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		DefaultTableCellRenderer dtcrCenter = new DefaultTableCellRenderer();
+		DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
+		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER); 
+		dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT); 
+		TableColumnModel tcmCoupKind = jtabCoupKind.getColumnModel();
+		
+		tcmCoupKind.getColumn(0).setCellRenderer(dtcrRight);
+		tcmCoupKind.getColumn(1).setCellRenderer(dtcrRight);
+		tcmCoupKind.getColumn(3).setCellRenderer(dtcrRight);
+		tcmCoupKind.getColumn(4).setCellRenderer(dtcrRight);
+		tcmCoupKind.getColumn(5).setCellRenderer(dtcrCenter);
 		
 		dtmCoupIssue = new DefaultTableModel(null, new String[] {"번호", "식별 코드", "쿠폰 이름", "할인액", "자동 발급 활성화", "이용 기간", "발급 조건"}) {
 			@Override
@@ -72,6 +91,14 @@ public class SearchCouponDesign extends JPanel {
 		};
 		jtabCoupIssue = new JTable(dtmCoupIssue);
 		jtabCoupIssue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtabCoupIssue.getColumn("식별 코드").setPreferredWidth(100);
+		jtabCoupIssue.getColumn("발급 조건").setPreferredWidth(300);
+		TableColumnModel tcmCoupIssue = jtabCoupIssue.getColumnModel();
+		
+		tcmCoupIssue.getColumn(0).setCellRenderer(dtcrRight);
+		tcmCoupIssue.getColumn(3).setCellRenderer(dtcrRight);
+		tcmCoupIssue.getColumn(4).setCellRenderer(dtcrCenter);
+		tcmCoupIssue.getColumn(5).setCellRenderer(dtcrRight);
 		
 		JScrollPane jspCoupKind = new JScrollPane(jtabCoupKind);
 		JScrollPane jspCoupIssue = new JScrollPane(jtabCoupIssue);
@@ -131,6 +158,23 @@ public class SearchCouponDesign extends JPanel {
 			jtabCoupPub.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			jtabCoupPubUsable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			jtabCoupPubUnusable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			
+			JTable[] arrJtab = new JTable[] {jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable};
+			TableColumnModel tcm = null;
+			for(int i = 0; i < arrJtab.length; i++) {
+				tcm = arrJtab[i].getColumnModel();
+				
+				tcm.getColumn(0).setCellRenderer(dtcrRight);
+				tcm.getColumn(3).setCellRenderer(dtcrRight);
+				tcm.getColumn(6).setCellRenderer(dtcrCenter);
+				arrJtab[i].getColumn(columnName[0]).setPreferredWidth(1);
+				arrJtab[i].getColumn(columnName[1]).setPreferredWidth(80);
+				arrJtab[i].getColumn(columnName[3]).setPreferredWidth(5);
+				arrJtab[i].getColumn(columnName[4]).setPreferredWidth(10);
+				arrJtab[i].getColumn(columnName[5]).setPreferredWidth(50);
+				arrJtab[i].getColumn(columnName[6]).setPreferredWidth(25);
+				arrJtab[i].getColumn(columnName[9]).setPreferredWidth(25);
+			} // end for
 			
 			jtabCoupPub.addMouseListener(null);
 			jtabCoupPubUsable.addMouseListener(null);

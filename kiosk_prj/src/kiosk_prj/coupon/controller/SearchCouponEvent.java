@@ -26,6 +26,7 @@ import kiosk_prj.coupon.vo.CouponAddedInfoVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPubInfoVO;
 import kiosk_prj.coupon.vo.CouponPublishVO;
+import kiosk_prj.coupon.vo.ManageButton;
 import kiosk_prj.coupon.vo.StatusUse;
 
 public class SearchCouponEvent implements MouseListener, ChangeListener{
@@ -44,7 +45,7 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 	
 	@Override
 	public void mousePressed(MouseEvent me) {
-		if (scd.getMcd().getLastClickedButton() == ManageCouponDesign.BUTTON_MODIFY) {
+		if (scd.getMcd().getLastClickedButton() == ManageButton.MODIFY.ordinal()) {
 			CouponPublishVO cpVO = null;
 			if(indexTab == COUPON_ISSUE) {
 				ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
@@ -78,19 +79,28 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 	}
 	
 	public void renewPublishableCouponType() throws SQLException {
+		DefaultTableModel dtm = scd.getDtmCoupKind();
+		if(dtm == null) {
+			return;
+		} // end if
+		
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		List<CouponKindVO> ckList;
 		ckList = ckDAO.selectAllCoupKind();
 		
 		CouponKindVO ckVO = null;
-		scd.getDtmCoupKind().setRowCount(0);
+		dtm.setRowCount(0);
 		for (int i = 0; i < ckList.size(); i++) {
 			ckVO = ckList.get(i);
-			scd.getDtmCoupKind().addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
+			dtm.addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
 		} // end for
 	} // searchPublishableCouponType
 	
 	public void renewCoupIssueTable() throws SQLException {
+		DefaultTableModel dtm = scd.getDtmCoupIssue();
+		if(dtm == null) {
+			return;
+		} // end if
 		CouponInfoViewDAO civDAO = CouponInfoViewDAO.getInstance();
 		List<CouponAddedInfoVO> listCaivVO = civDAO.searchAllAddedCouponView();
 		Iterator<CouponAddedInfoVO> itaCaiv = listCaivVO.iterator();
@@ -98,11 +108,11 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 		String couponCode = "";
 		ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
 		int num = 1;
-		scd.getDtmCoupIssue().setRowCount(0);
+		dtm.setRowCount(0);
 		while(itaCaiv.hasNext()) {
 			caivVO = itaCaiv.next();
 			couponCode = ccr.CouponPublishVOToRadix62(new CouponPublishVO(caivVO.getConditionPrice(), caivVO.getConditionTypeNo(), caivVO.getCoupKindNo()));
-			scd.getDtmCoupIssue().addRow(new Object[] {num++, couponCode, 
+			dtm.addRow(new Object[] {num++, couponCode, 
 					caivVO.getCoupKindName(), caivVO.getDiscount(), 
 					caivVO.getFlagDisable() == false ? "X": "O", 
 					caivVO.getExpiresPeriod(), caivVO.getCondition()});
@@ -138,8 +148,8 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 		Date useCoupDate = null;
 		Date expireDate = null;
 		
-		SimpleDateFormat sdfFull = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfFull = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdfYMD = new SimpleDateFormat("yy-MM-dd");
 		
 		int cnt = 1;
 		while(itaCpi.hasNext()) {
