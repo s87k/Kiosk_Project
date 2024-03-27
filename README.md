@@ -3,6 +3,9 @@
 ## 프로젝트 소개
 "카페 키오스크 및 포스기 어플입니다. Java 기반으로 이루어져 있으며, 보이는 view 부분은 Swing으로 이루어져 있습니다."
 
+## 사용 언어
+<code><img height="60" src =https://github.com/github/explore/blob/main/topics/java/java.png></code>
+
 ## 개발기간
 - 2024.03.08(금) ~ 2024.03.29(금)
 - 업무 분장
@@ -21,5 +24,5 @@
 - **이희윤** : 메뉴관리 담당
 
 ## 개발환경
-- **Version** : <code><img height="40" src =https://github.com/github/explore/blob/main/topics/java/java.png></code>17
+- **Version** : Java17
 
