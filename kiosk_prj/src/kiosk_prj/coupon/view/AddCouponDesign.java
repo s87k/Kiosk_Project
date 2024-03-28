@@ -59,18 +59,21 @@ public class AddCouponDesign extends JDialog{
 		arrIiBtnPeriod = new ImageIcon[ExpirePeriod.values().length];
 		arrIiBtnPeriodClick = new ImageIcon[ExpirePeriod.values().length];
 		
-		arrIiBtnPeriod[ExpirePeriod.MONTH1.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_month_1_select_not.png");
-		arrIiBtnPeriod[ExpirePeriod.MONTH3.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_month_3_select_not.png");
-		arrIiBtnPeriod[ExpirePeriod.YEAR1.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_year_1_select_not.png");
+		arrIiBtnPeriod[ExpirePeriod.MONTH1.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_month_1_select_not.png"));
+		arrIiBtnPeriod[ExpirePeriod.MONTH3.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_month_3_select_not.png"));
+		arrIiBtnPeriod[ExpirePeriod.YEAR1.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_year_1_select_not.png"));
 		
-		arrIiBtnPeriodClick[ExpirePeriod.MONTH1.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_month_1_select.png");
-		arrIiBtnPeriodClick[ExpirePeriod.MONTH3.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_month_3_select.png");
-		arrIiBtnPeriodClick[ExpirePeriod.YEAR1.ordinal()] = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_year_1_select.png");
+		arrIiBtnPeriodClick[ExpirePeriod.MONTH1.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_month_1_select.png"));
+		arrIiBtnPeriodClick[ExpirePeriod.MONTH3.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_month_3_select.png"));
+		arrIiBtnPeriodClick[ExpirePeriod.YEAR1.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("btn_year_1_select.png"));
 	
 		arrJbtnPeriod = new JButton[3];
-		arrJbtnPeriod[ExpirePeriod.MONTH1.ordinal()] = new JButton(arrIiBtnPeriod[ExpirePeriod.MONTH1.ordinal()]);
-		arrJbtnPeriod[ExpirePeriod.MONTH3.ordinal()] = new JButton(arrIiBtnPeriod[ExpirePeriod.MONTH3.ordinal()]);
-		arrJbtnPeriod[ExpirePeriod.YEAR1.ordinal()] = new JButton(arrIiBtnPeriod[ExpirePeriod.YEAR1.ordinal()]);
+		arrJbtnPeriod[ExpirePeriod.MONTH1.ordinal()] = new JButton("1개월");
+		arrJbtnPeriod[ExpirePeriod.MONTH3.ordinal()] = new JButton("3개월");
+		arrJbtnPeriod[ExpirePeriod.YEAR1.ordinal()] = new JButton("1년");
+		arrJbtnPeriod[ExpirePeriod.MONTH1.ordinal()].setIcon((arrIiBtnPeriod[ExpirePeriod.MONTH1.ordinal()]));
+		arrJbtnPeriod[ExpirePeriod.MONTH3.ordinal()].setIcon((arrIiBtnPeriod[ExpirePeriod.MONTH3.ordinal()]));
+		arrJbtnPeriod[ExpirePeriod.YEAR1.ordinal()].setIcon((arrIiBtnPeriod[ExpirePeriod.YEAR1.ordinal()]));
 		
 		jrbPeriodDefault = new JRadioButton("기본 설정");
 		jrbPeriodDefault.setSelected(true);
@@ -100,13 +103,17 @@ public class AddCouponDesign extends JDialog{
 		bgPublishOption.add(jrbPublishableOk);
 		bgPublishOption.add(jrbPublishableNo);
 		
-		ImageIcon iiGoMain = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_go_back.png");
-		ImageIcon iiAddCoupon = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_add.png");
-		ImageIcon iiCancel = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_cancel.png");
+		ImageIcon iiGoMain = new ImageIcon(getClass().getClassLoader().getResource("btn_go_back.png"));
+		ImageIcon iiAddCoupon = new ImageIcon(getClass().getClassLoader().getResource("btn_add.png"));
+		ImageIcon iiCancel = new ImageIcon(getClass().getClassLoader().getResource("btn_cancel.png"));
 		
-		jbtnGoMain = new JButton(iiGoMain);
-		jbtnAddCoupon = new JButton(iiAddCoupon);
-		jbtnCancel = new JButton(iiCancel);
+		jbtnGoMain = new JButton("<-");
+		jbtnAddCoupon = new JButton("등록");
+		jbtnCancel = new JButton("취소");
+		
+		jbtnGoMain.setIcon(iiGoMain);
+		jbtnAddCoupon.setIcon(iiAddCoupon);
+		jbtnCancel.setIcon(iiCancel);
 		
 		AddCouponEvent ace = new AddCouponEvent(this);
 		jrbPeriodDefault.addActionListener(ace);

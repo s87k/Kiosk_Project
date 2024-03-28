@@ -99,8 +99,8 @@ public class ModifyCouponDesign extends JDialog {
 		bgPublishCondition.add(jrbPublishableOk);
 		bgPublishCondition.add(jrbPublishableNo);
 		
-		ImageIcon iiOk = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_modify.png");
-		ImageIcon iiCancel = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_cancel.png");
+		ImageIcon iiOk = new ImageIcon(getClass().getClassLoader().getResource("btn_modify.png"));
+		ImageIcon iiCancel = new ImageIcon(getClass().getClassLoader().getResource("btn_cancel.png"));
 		
 		jbtnOk = new JButton(iiOk);
 		jbtnCancel = new JButton(iiCancel);
@@ -147,7 +147,7 @@ public class ModifyCouponDesign extends JDialog {
 			} else {
 				jrbPublishableNo.setSelected(true);
 			} // end else
-			ImageIcon iiDeleteCoup = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_delete.png");
+			ImageIcon iiDeleteCoup = new ImageIcon(getClass().getClassLoader().getResource("btn_delete.png"));
 			jbtnDeleteCoup = new JButton(iiDeleteCoup);
 			jbtnDeleteCoup.addActionListener(mce);
 			jbtnDeleteCoup.setBounds(175, 500, 120, 80);	
