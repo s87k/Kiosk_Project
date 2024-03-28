@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import easterEgg.EasterEggDesign;
-import kiosk_prj.coupon.ManageCouponDesign;
+import kiosk_prj.coupon.view.ManageCouponDesign;
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.orderStatus.OrderStatusDesign;
 import kiosk_prj.settlement.SettlementDesign;
@@ -101,7 +101,7 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		} // end if
 
 		if (e.getSource() == jbCoupon) {
-			new ManageCouponDesign(amod, null);
+			new ManageCouponDesign(amod);
 		} // end if
 		if (e.getSource() == jbTrends) {
 			new TrendDesign(amod, null);
