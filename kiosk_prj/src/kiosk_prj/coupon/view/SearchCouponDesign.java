@@ -63,7 +63,7 @@ public class SearchCouponDesign extends JPanel {
 		JPanel jpCoupKind = new JPanel();
 		JPanel jpCoupIssue = new JPanel();
 		
-		dtmCoupKind = new DefaultTableModel(null, new String[] {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"}) {
+		dtmCoupKind = new DefaultTableModel(null, new String[] {"번호", "등록번호", "쿠폰 이름", "이용 가능 기간", "할인액", "발급가능"}) {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -118,7 +118,7 @@ public class SearchCouponDesign extends JPanel {
 		jtbpCoupSearch.add("발급된 쿠폰", jpCoupIssue);
 		jtbpCoupSearch.addChangeListener(sce);
 		try {
-			sce.renewPublishableCouponType();
+			sce.renewPublishableCouponKind();
 			sce.renewCoupIssueTable();
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -201,9 +201,9 @@ public class SearchCouponDesign extends JPanel {
 			jtbpCoupSearch.add("사용불가 쿠폰", jpCoupUnusable);
 			
 			try {
-				sce.renewRow2DtmCoupPub(dtmCoupPub, civDAO.searchPubCouponView());
-				sce.renewRow2DtmCoupPub(dtmCoupPubUsable, civDAO.searchPubCouponView(StatusUse.USABLE.getIntVal()));
-				sce.renewRow2DtmCoupPub(dtmCoupPubUnUsable, civDAO.searchPubCouponView(StatusUse.UN_USABLE.getIntVal()));
+				sce.renewRow2DtmCoupPub(dtmCoupPub, civDAO.selectPubCouponView());
+				sce.renewRow2DtmCoupPub(dtmCoupPubUsable, civDAO.selectPubCouponView(StatusUse.USABLE.getIntVal()));
+				sce.renewRow2DtmCoupPub(dtmCoupPubUnUsable, civDAO.selectPubCouponView(StatusUse.UN_USABLE.getIntVal()));
 			} catch (SQLException se) {
 				se.printStackTrace();
 				JOptionPane.showMessageDialog(mcd, "발급된 쿠폰 조회에 실패했습니다");

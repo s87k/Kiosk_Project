@@ -19,7 +19,6 @@ public class ManageCouponDesign extends JDialog {
 	private JButton jbtnGoToMain;
 	private SearchCouponDesign scdSearch, scdModify;
 	private ImageIcon[] arrIiBtn, arrIiBtnClick;
-	private ImageIcon iiBtnGoToMain;
 	
 	private int lastClickedButton;
 	
@@ -42,7 +41,7 @@ public class ManageCouponDesign extends JDialog {
 		arrIiBtnClick[ManageButton.SEARCH.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/btn_search_select.png"));
 		arrIiBtnClick[ManageButton.MODIFY.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/btn_modify_select.png"));
 		
-		iiBtnGoToMain = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/btn_go_main.png"));
+		ImageIcon iiBtnGoToMain = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/btn_go_main.png"));
 		ImageIcon iiBackground = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/bg_manage_coupon.png"));
 		
 		arrJbtnFunc = new JButton[4];
@@ -109,10 +108,6 @@ public class ManageCouponDesign extends JDialog {
 
 	public void setLastClickedButton(int lastClickedButton) {
 		this.lastClickedButton = lastClickedButton;
-	}
-
-	public ImageIcon getIiBtnGoToMain() {
-		return iiBtnGoToMain;
 	}
 
 	public ImageIcon[] getArrIiBtn() {

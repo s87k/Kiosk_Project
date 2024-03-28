@@ -10,16 +10,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import kiosk_prj.coupon.UpdateIcon;
+import kiosk_prj.coupon.UpdateIconImpl;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.view.AddCouponDesign;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.ExpirePeriod;
-import kiosk_prj.coupon.vo.ManageButton;
 
 import static java.lang.Integer.parseInt;
 
-public class AddCouponEvent extends WindowAdapter implements ActionListener, UpdateIcon{
+public class AddCouponEvent extends WindowAdapter implements ActionListener, UpdateIconImpl{
 	
 	private AddCouponDesign acd;
 	private int periodMonth;
@@ -105,7 +104,8 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		boolean flagPublishable = acd.getJrbPublishableOk().isSelected() == true ? true : false;
 		
 		
-		ckVO = new CouponKindVO("김병년", coupKindName, discount, period, flagPublishable);
+		/*아이디 받아와야함*/
+		ckVO = new CouponKindVO(acd.getMcd().getAmpd().getAdminId(), coupKindName, discount, period, flagPublishable);
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		try {
 			ckDAO.insertCoupKind(ckVO);

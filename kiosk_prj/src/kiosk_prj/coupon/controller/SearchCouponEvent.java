@@ -7,7 +7,6 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import kiosk_prj.coupon.dao.CouponInfoViewDAO;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.dao.CouponPublishDAO;
-import kiosk_prj.coupon.view.ManageCouponDesign;
 import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.view.SearchCouponDesign;
 import kiosk_prj.coupon.vo.CouponAddedInfoVO;
@@ -46,24 +44,28 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 	@Override
 	public void mousePressed(MouseEvent me) {
 		if (scd.getMcd().getLastClickedButton() == ManageButton.MODIFY.ordinal()) {
-			CouponPublishVO cpVO = null;
-			if(indexTab == COUPON_ISSUE) {
-				ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
-				cpVO = ccr.Radix62ToCouponPublishVO(scd.getDtmCoupIssue().getValueAt(scd.getJtabCoupIssue().getSelectedRow(), COUPON_CODE).toString());
-				try {
-					cpVO = CouponPublishDAO.getInstance().selectOneCoupPub(cpVO.getConditionPrice(), cpVO.getConditionTypeNo(), cpVO.getCoupKindNo());
-				} catch (SQLException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(scd, "선택된 쿠폰 정보를 가져오는 데 실패했습니다");
-					return;
-				} // end catch
-			} else {
-				cpVO = new CouponPublishVO(0, 0, Integer.parseInt(scd.getDtmCoupKind().getValueAt(scd.getJtabCoupKind().getSelectedRow(), COUPON_CODE).toString()));
-			} // end else
-			new ModifyCouponDesign(scd.getMcd(), cpVO);
+			runModifyCouponDesign();
 			renewAllTable();
 		} // end if
 	} // mousePressed
+	
+	public void runModifyCouponDesign() {
+		CouponPublishVO cpVO = null;
+		if(indexTab == COUPON_ISSUE) {
+			ConvertCouponRadix ccr = ConvertCouponRadix.getInstance();
+			cpVO = ccr.Radix62ToCouponPublishVO(scd.getDtmCoupIssue().getValueAt(scd.getJtabCoupIssue().getSelectedRow(), COUPON_CODE).toString());
+			try {
+				cpVO = CouponPublishDAO.getInstance().selectOneCoupPub(cpVO.getConditionPrice(), cpVO.getConditionTypeNo(), cpVO.getCoupKindNo());
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(scd, "선택된 쿠폰 정보를 가져오는 데 실패했습니다");
+				return;
+			} // end catch
+		} else {
+			cpVO = new CouponPublishVO(0, 0, Integer.parseInt(scd.getDtmCoupKind().getValueAt(scd.getJtabCoupKind().getSelectedRow(), COUPON_CODE).toString()));
+		} // end else
+		new ModifyCouponDesign(scd.getMcd(), cpVO);
+	} // runModifyCouponDesign
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -78,7 +80,7 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 	public void mouseExited(MouseEvent e) {
 	}
 	
-	public void renewPublishableCouponType() throws SQLException {
+	public void renewPublishableCouponKind() throws SQLException {
 		DefaultTableModel dtm = scd.getDtmCoupKind();
 		if(dtm == null) {
 			return;
@@ -122,11 +124,11 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 	public void renewAllTable() {
 		CouponInfoViewDAO civDAO = CouponInfoViewDAO.getInstance();
 		try {
-			renewPublishableCouponType();
+			renewPublishableCouponKind();
 			renewCoupIssueTable();
-			renewRow2DtmCoupPub(scd.getDtmCoupPub(), civDAO.searchPubCouponView());
-			renewRow2DtmCoupPub(scd.getDtmCoupPubUsable(), civDAO.searchPubCouponView(StatusUse.USABLE.getIntVal()));
-			renewRow2DtmCoupPub(scd.getDtmCoupPubUnusable(), civDAO.searchPubCouponView(StatusUse.UN_USABLE.getIntVal()));
+			renewRow2DtmCoupPub(scd.getDtmCoupPub(), civDAO.selectPubCouponView());
+			renewRow2DtmCoupPub(scd.getDtmCoupPubUsable(), civDAO.selectPubCouponView(StatusUse.USABLE.getIntVal()));
+			renewRow2DtmCoupPub(scd.getDtmCoupPubUnusable(), civDAO.selectPubCouponView(StatusUse.UN_USABLE.getIntVal()));
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(scd, "쿠폰 조회에 실패했습니다");
 			e.printStackTrace();
@@ -173,19 +175,19 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 		try {
 			switch (indexTab) {
 			case 0: 
-				renewPublishableCouponType();
+				renewPublishableCouponKind();
 				break;
 			case 1:
 				renewCoupIssueTable();
 				break;
 			case 2:
-				renewRow2DtmCoupPub(scd.getDtmCoupPub(), civDAO.searchPubCouponView());
+				renewRow2DtmCoupPub(scd.getDtmCoupPub(), civDAO.selectPubCouponView());
 				break;
 			case 3:
-				renewRow2DtmCoupPub(scd.getDtmCoupPubUsable(), civDAO.searchPubCouponView(StatusUse.USABLE.getIntVal()));
+				renewRow2DtmCoupPub(scd.getDtmCoupPubUsable(), civDAO.selectPubCouponView(StatusUse.USABLE.getIntVal()));
 				break;
 			case 4:
-				renewRow2DtmCoupPub(scd.getDtmCoupPubUnusable(), civDAO.searchPubCouponView(StatusUse.UN_USABLE.getIntVal()));
+				renewRow2DtmCoupPub(scd.getDtmCoupPubUnusable(), civDAO.selectPubCouponView(StatusUse.UN_USABLE.getIntVal()));
 				break;
 			} // end switch
 		} catch (SQLException se) {

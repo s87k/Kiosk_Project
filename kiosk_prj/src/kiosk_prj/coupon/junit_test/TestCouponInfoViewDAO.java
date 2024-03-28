@@ -63,13 +63,13 @@ class TestCouponInfoViewDAO {
 		
 		// when
 		// then
-		assertDoesNotThrow(()-> civDAO.searchPubCouponView());
+		assertDoesNotThrow(()-> civDAO.selectPubCouponView());
 		
 		// when
 		try {
 //			listCpiVO = civDAO.searchPubCouponView();
 //			listCpiVO = civDAO.searchPubCouponView(CouponInfoViewDAO.STATUS_EXPIRE);
-			listCpiVO = civDAO.searchPubCouponView(StatusUse.ALL.getIntVal());
+			listCpiVO = civDAO.selectPubCouponView(StatusUse.ALL.getIntVal());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

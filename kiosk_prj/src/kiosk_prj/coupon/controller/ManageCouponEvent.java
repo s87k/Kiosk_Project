@@ -8,14 +8,14 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import kiosk_prj.coupon.UpdateIcon;
+import kiosk_prj.coupon.UpdateIconImpl;
 import kiosk_prj.coupon.view.AddCouponDesign;
 import kiosk_prj.coupon.view.ManageCouponDesign;
 import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.view.PublishCouponDesign;
 import kiosk_prj.coupon.vo.ManageButton;
 
-public class ManageCouponEvent extends WindowAdapter implements ActionListener, UpdateIcon {
+public class ManageCouponEvent extends WindowAdapter implements ActionListener, UpdateIconImpl {
 	
 	private ManageCouponDesign mcd;
 	
@@ -27,30 +27,46 @@ public class ManageCouponEvent extends WindowAdapter implements ActionListener, 
 		mcd.getScdSearch().getJtbpCoupSearch().setVisible(flagSearch);
 		mcd.getScdModify().getJtbpCoupSearch().setVisible(flagModify);
 	} // setSCDsVisible
+	
+	private void addCouponKind() {
+		mcd.setLastClickedButton(ManageButton.ADD.ordinal());   
+		setSCDsVisible(false, false);
+		changeBtnIcon(ManageButton.ADD.ordinal());
+		new AddCouponDesign(mcd);
+	} // addCouponKind
+	
+	private void publishCoupon() {
+		mcd.setLastClickedButton(ManageButton.PUBLISH.ordinal());
+		setSCDsVisible(false, false);
+		changeBtnIcon(ManageButton.PUBLISH.ordinal());
+		new PublishCouponDesign(mcd);
+	} // publishCoupon
+	
+	private void searchCoupon() {
+		mcd.setLastClickedButton(ManageButton.SEARCH.ordinal());
+		setSCDsVisible(true, false);
+		changeBtnIcon(ManageButton.SEARCH.ordinal());	
+	} // searchCoupon
 
+	private void modifyCoupon() {
+		mcd.setLastClickedButton(ManageButton.MODIFY.ordinal());
+		setSCDsVisible(false, true);
+		changeBtnIcon(ManageButton.MODIFY.ordinal());
+	} // modifyCoupon
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.ADD.ordinal()]) {
-			mcd.setLastClickedButton(ManageButton.ADD.ordinal());   
-			setSCDsVisible(false, false);
-			changeBtnIcon(ManageButton.ADD.ordinal());
-			new AddCouponDesign(mcd);
+		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.ADD.ordinal()]) {		// 쿠폰 추가 
+			addCouponKind();
 		} // end if
-		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.PUBLISH.ordinal()]) {
-			mcd.setLastClickedButton(ManageButton.PUBLISH.ordinal());
-			setSCDsVisible(false, false);
-			changeBtnIcon(ManageButton.PUBLISH.ordinal());
-			new PublishCouponDesign(mcd);
+		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.PUBLISH.ordinal()]) {	// 쿠폰 발급
+			publishCoupon();
 		} // end if
-		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.SEARCH.ordinal()]) {
-			mcd.setLastClickedButton(ManageButton.SEARCH.ordinal());
-			setSCDsVisible(true, false);
-			changeBtnIcon(ManageButton.SEARCH.ordinal());
+		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.SEARCH.ordinal()]) {		// 쿠폰 조회
+			searchCoupon();
 		} // end if
-		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.MODIFY.ordinal()]) {
-			mcd.setLastClickedButton(ManageButton.MODIFY.ordinal());
-			setSCDsVisible(false, true);
-			changeBtnIcon(ManageButton.MODIFY.ordinal());
+		if(ae.getSource() == mcd.getArrJbtnFunc()[ManageButton.MODIFY.ordinal()]) {		// 쿠폰 수정
+			modifyCoupon();
 			// 쿠폰 조회 다이얼로그를 호출하는 건 SearchCouponEvent.java
 		} // end if
 		if(ae.getSource() == mcd.getJbtnGoToMain()) {

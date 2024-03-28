@@ -1,14 +1,14 @@
 package kiosk_prj.coupon.vo;
 
 public class CouponAutoPubVO {
-	String phoneNumber;
-	String coupKindName;
-	int discount;
-	int expiresPeriod;
-	String conditionMsg;
-	int conditionPrice;
-	int conditionTypeNo;
-	int coupKindNo;
+	private String phoneNumber;
+	private String coupKindName;
+	private int discount;
+	private int expiresPeriod;
+	private String conditionMsg;
+	private int conditionPrice;
+	private int conditionTypeNo;
+	private int coupKindNo;
 	
 	public CouponAutoPubVO() {
 	}
