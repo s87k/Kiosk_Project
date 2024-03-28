@@ -76,7 +76,9 @@ public class PublishCouponDesign extends JDialog {
 		JScrollPane jspCoupKind = new JScrollPane(jtabCoupKind);
 		
 		JLabel jlblCondition = new JLabel("조건"); 
-		JLabel jlblValue = new JLabel("값"); 
+		jlblCondition.setFont(font);
+		JLabel jlblValue = new JLabel("값");
+		jlblValue.setFont(font);
 		dcmPubCondition = new DefaultComboBoxModel<String>();
 		jcbPubCondition = new JComboBox<String>(dcmPubCondition);
 		jcbPubCondition.setFont(font);
@@ -101,19 +103,21 @@ public class PublishCouponDesign extends JDialog {
 		
 		JPanel jpPubCondition = new JPanel();
 		jpPubCondition.setLayout(null);
-		jlblCondition.setBounds(30, 20, 50, 60);
-		jlblValue.setBounds(480, 20, 60, 60);
-		jcbPubCondition.setBounds(80, 20, 370, 60);
-		jtfPubConditonVal.setBounds(510, 20, 150, 60);
+		jlblCondition.setBounds(30, 40, 50, 60);
+		jlblValue.setBounds(480, 40, 60, 60);
+		jcbPubCondition.setBounds(80, 40, 370, 60);
+		jtfPubConditonVal.setBounds(510, 40, 150, 60);
 		jpPubCondition.add(jlblCondition);
 		jpPubCondition.add(jlblValue);
 		jpPubCondition.add(jcbPubCondition);
 		jpPubCondition.add(jtfPubConditonVal);
-		jpPubCondition.setBorder(new TitledBorder("발급 조건"));
+		TitledBorder tbCondition = new TitledBorder("발급 조건");
+		tbCondition.setTitleFont(font);
+		jpPubCondition.setBorder(tbCondition);
 		
 		setLayout(null);
 		jspCoupKind.setBounds(30, 30, 680, 250);
-		jpPubCondition.setBounds(30, 300, 680, 100);
+		jpPubCondition.setBounds(30, 300, 680, 140);
 		jbtnGoBack.setBounds(175, 500, 120, 80);
 		jbtnPublish.setBounds(315, 500, 120, 80);
 		jbtnCancel.setBounds(455, 500, 120, 80);
@@ -125,7 +129,7 @@ public class PublishCouponDesign extends JDialog {
 		add(jbtnCancel);
 		
 		try {
-			pce.searchPublishableCouponType();
+			pce.searchPublishableCouponKind();
 		} catch (SQLException se) {
 			JOptionPane.showMessageDialog(mcd, "추가된 쿠폰을 목록을 조회하는 데 문제가 발생했습니다");
 			se.printStackTrace();

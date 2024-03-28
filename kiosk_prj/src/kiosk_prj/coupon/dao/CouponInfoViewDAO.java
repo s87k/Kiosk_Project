@@ -65,11 +65,11 @@ public class CouponInfoViewDAO {
 		return listCaivVO;
 	} // searchAllAddedCouponView
 	
-	public List<CouponPubInfoVO> searchPubCouponView() throws SQLException {
-		return searchPubCouponView(StatusUse.ALL.getIntVal());
+	public List<CouponPubInfoVO> selectPubCouponView() throws SQLException {
+		return selectPubCouponView(StatusUse.ALL.getIntVal());
 	} // searchPubCouponView
 	
-	public List<CouponPubInfoVO> searchPubCouponView(int mode) throws SQLException {
+	public List<CouponPubInfoVO> selectPubCouponView(int mode) throws SQLException {
 		List<CouponPubInfoVO> listCpiVO = new ArrayList<CouponPubInfoVO>();
 		
 		// 1. 드라이버 로딩
@@ -89,14 +89,15 @@ public class CouponInfoViewDAO {
 			StringBuilder selectCoupKind = new StringBuilder("select COUP_PUB_CODE, COUP_KIND_NAME, DISCOUNT, MEMBER_NAME, PHONE_NUMBER, STATUS_USE, PUBLISH_DATE, USE_COUP_DATE, EXPIRE_DATE from COUPON_PUBLISH_INFO_VIEW	");
 			
 			if(mode == StatusUse.USABLE.getIntVal()) {
-				selectCoupKind.append("	where status_use='0'");
+				selectCoupKind.append("	where status_use='0' ");
 			} else if (mode == StatusUse.ALREADY_USE.getIntVal()) {
-				selectCoupKind.append("	where status_use='1'");	
+				selectCoupKind.append("	where status_use='1' ");	
 			} else if (mode == StatusUse.EXPIRE.getIntVal()) {
-				selectCoupKind.append("	where status_use='2'");	
+				selectCoupKind.append("	where status_use='2' ");	
 			} else if (mode == StatusUse.UN_USABLE.getIntVal()) {
-				selectCoupKind.append("	where status_use='1' or status_use='2'");	
+				selectCoupKind.append("	where status_use='1' or status_use='2' ");	
 			} // end else if
+			selectCoupKind.append(" order by status_use ");
 			pstmt = con.prepareStatement(selectCoupKind.toString());
 			
 			// 4. 바인드 변수에 값 설정

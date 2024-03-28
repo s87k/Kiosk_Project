@@ -15,11 +15,9 @@ import kiosk_prj.coupon.dao.CoupConditionTypeDAO;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.dao.CouponPublishDAO;
 import kiosk_prj.coupon.view.PublishCouponDesign;
-import kiosk_prj.coupon.vo.CoupConditionPriceVO;
 import kiosk_prj.coupon.vo.CoupConditionTypeVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPublishVO;
-import kiosk_prj.coupon.vo.ResultVO;
 
 import static java.lang.String.valueOf;
 import static java.lang.Integer.parseInt;
@@ -110,7 +108,7 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener,
 		} // end for
 	} // searchAllCoupPubConditionType
 	
-	public void searchPublishableCouponType() throws SQLException {
+	public void searchPublishableCouponKind() throws SQLException {
 		DefaultTableModel dtm = pcd.getDtmCoupKind();
 		if(dtm == null) {
 			return;

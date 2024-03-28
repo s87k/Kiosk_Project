@@ -13,7 +13,6 @@ import kiosk_prj.coupon.UpdateDefaultModelImpl;
 import kiosk_prj.coupon.dao.CoupConditionTypeDAO;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.dao.CouponPublishDAO;
-import kiosk_prj.coupon.view.ManageCouponDesign;
 import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.vo.CoupConditionTypeVO;
 import kiosk_prj.coupon.vo.CouponKindVO;
@@ -46,15 +45,11 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 			} // end catch
 		} // end if 
 		if(ae.getSource() == mcd.getJbtnDeleteCoup()) {
-			try {
-				deleteCoupon();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} // end catch
+			deleteCoupon();
 		} // end if 
 	} // actionPerformed
 	
-	public void deleteCoupon() throws SQLException {
+	public void deleteCoupon() {
 		if(mcd.getCpVO().getConditionTypeNo() != ModifyCouponDesign.PUBLISH_NOT) {
 			return;
 		}
@@ -62,20 +57,30 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 		String msg = "발급된 쿠폰은 삭제할 수 없습니다.\n이 쿠폰을 더이상 자동 발급 조건에 등록하지 못하도록 발급가능을 '아니오'로 변경해주세요";
 		
 		CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
-		if(cpDAO.isCoupKindPublished(coupKindNo)) {
-			JOptionPane.showMessageDialog(mcd, msg);
+		try {
+			if(cpDAO.isCoupKindPublished(coupKindNo)) {
+				JOptionPane.showMessageDialog(mcd, msg);
+				return;
+			} // end if
+		} catch (SQLException se) {
+			JOptionPane.showMessageDialog(mcd, "삭제 조건 조회에 실패했습니다");
 			return;
-		} // end if
+		} // end catch
 		
 		switch(JOptionPane.showConfirmDialog(mcd, "정말 삭제하시겠습니까?")) {
 		case JOptionPane.OK_OPTION:
 			CouponKindDAO ckDAO = CouponKindDAO.getInstance();
-			int cnt = ckDAO.deleteCoupKind(coupKindNo);
-			if(cnt == 1) {
-				msg = "쿠폰 삭제되었습니다";
-			} else {
+			int cnt = 0;
+			try {
+				cnt = ckDAO.deleteCoupKind(coupKindNo);
+				if(cnt == 1) {
+					msg = "쿠폰 삭제되었습니다";
+				} else {
+					msg = "쿠폰 삭제에 실패했습니다";
+				} // end else
+			} catch (SQLException se) {
 				msg = "쿠폰 삭제에 실패했습니다";
-			} // end else
+			} // end catch
 			JOptionPane.showMessageDialog(mcd, msg);
 		} // end case
 	} // deleteCoupon
