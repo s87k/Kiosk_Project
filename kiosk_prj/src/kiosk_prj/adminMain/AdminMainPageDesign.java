@@ -17,11 +17,12 @@ public class AdminMainPageDesign extends JFrame {
 	private JTable jtStatus;
 	private JButton[] arrJbMenuFilter;
 	private JButton jbMeniInfo, jbOrderStatus, jbSales, jbOpen, jbClosd, jbUserManagement, jbOperate, jbCoupon,
-			jbTrends;
+			jbTrends, jbEasterEgg;
 	private DefaultTableModel dtmStatus;
 	private JLabel jlOpenDate, sumAmount;
 
 	private String adminId;
+	
 	public AdminMainPageDesign(String adminId) {
 		super("main");
 		this.adminId = adminId;
@@ -51,6 +52,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbOperate = new JButton("운영");
 		jbCoupon = new JButton("쿠폰 관리");
 		jbTrends = new JButton("소비 트렌드");
+		jbEasterEgg = new JButton();
 		JLabel lbBackground = new JLabel(imgBackground);
 		jlOpenDate = new JLabel("영업일자 : 개점설정이 필요합니다"); // 영업일자 바뀔때마다 업데이트되어야함.
 		sumAmount = new JLabel("오늘 매출 : ");
@@ -93,6 +95,7 @@ public class AdminMainPageDesign extends JFrame {
 		jbOperate.setBounds(buttonX2, 440, 170, 60);
 		jbCoupon.setBounds(buttonX1, 510, 170, 60);
 		jbTrends.setBounds(buttonX2, 510, 170, 60);
+		jbEasterEgg.setBounds(0, 0, 50, 50);
 		jlOpenDate.setBounds(500, 30, 490, 30);
 		lbBackground.setBounds(0, 0, 1024, 768);
 		
@@ -113,26 +116,30 @@ public class AdminMainPageDesign extends JFrame {
 		add(jbOperate);
 		add(jbCoupon);
 		add(jbTrends);
+		add(jbEasterEgg);
+		jbEasterEgg.setBorderPainted(false);
+		jbEasterEgg.setContentAreaFilled(false);
 		add(jlOpenDate);
 		add(lbBackground);
 
 		// 이벤트 등록
 		
-		AdminMainPageEvent ampetest = new AdminMainPageEvent(this);
-		arrJbMenuFilter[0].addActionListener(ampetest); // Coffee
-		arrJbMenuFilter[1].addActionListener(ampetest); // Non Coffee
-		arrJbMenuFilter[2].addActionListener(ampetest); // Tea
-		arrJbMenuFilter[3].addActionListener(ampetest); // Smoothie
-		arrJbMenuFilter[4].addActionListener(ampetest); // 전체
-		jbMeniInfo.addActionListener(ampetest);
-		jbOrderStatus.addActionListener(ampetest);
-		jbSales.addActionListener(ampetest);
-		jbOpen.addActionListener(ampetest);
-		jbClosd.addActionListener(ampetest);
-		jbUserManagement.addActionListener(ampetest);
-		jbOperate.addActionListener(ampetest);
-		jbCoupon.addActionListener(ampetest);
-		jbTrends.addActionListener(ampetest);
+		AdminMainPageEvent ampe = new AdminMainPageEvent(this);
+		arrJbMenuFilter[0].addActionListener(ampe); // Coffee
+		arrJbMenuFilter[1].addActionListener(ampe); // Non Coffee
+		arrJbMenuFilter[2].addActionListener(ampe); // Tea
+		arrJbMenuFilter[3].addActionListener(ampe); // Smoothie
+		arrJbMenuFilter[4].addActionListener(ampe); // 전체
+		jbMeniInfo.addActionListener(ampe);
+		jbOrderStatus.addActionListener(ampe);
+		jbSales.addActionListener(ampe);
+		jbOpen.addActionListener(ampe);
+		jbClosd.addActionListener(ampe);
+		jbUserManagement.addActionListener(ampe);
+		jbOperate.addActionListener(ampe);
+		jbCoupon.addActionListener(ampe);
+		jbEasterEgg.addActionListener(ampe);
+		jbTrends.addActionListener(ampe);
 
 		setVisible(true);
 		setSize(1024,768);
@@ -140,6 +147,14 @@ public class AdminMainPageDesign extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //Management.addActionListener(le);
+	}
+
+	public JButton getJbEasterEgg() {
+		return jbEasterEgg;
+	}
+
+	public void setJbEasterEgg(JButton jbEasterEgg) {
+		this.jbEasterEgg = jbEasterEgg;
 	}
 
 	public JLabel getSumAmount() {

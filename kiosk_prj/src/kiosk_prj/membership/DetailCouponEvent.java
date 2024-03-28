@@ -53,7 +53,7 @@ public class DetailCouponEvent extends WindowAdapter implements ActionListener{
 				// 5-1 쿠폰 만료일 설정을 위해 쿠폰 발급일을 가져옴
 				String publishDate = mscVO.getPublishDate();
 				// 5-2 DB에 설정되어 있는 쿠폰 만료일의 값을 int로 파싱
-				int expireDateValue = Integer.parseInt(mscVO.getExpireDate());
+				int expireDateValue = mscVO.getExpiresPeriod();
 				// 5-3 쿠폰 만료일의 값을 발급일에 추가하기 위해 "-"를 기준으로 발급일을 자름
 				String[] publishDateParts = publishDate.split("-");
 				// 5-4 쿠폰 만료일을 더했을 때, 12월이 넘어가면 연도의 값을 더해줘야 하므로, 발급일의 연도의 값을 가져옴

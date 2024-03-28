@@ -131,7 +131,11 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String allMember = "select MEMBER_NAME, PHONE_NUMBER, MEMBER_BIRTH, MEMBER_GRADE from MEMBERSHIP WHERE FLAG_DELETE = '0' AND PHONE_NUMBER like ?";
+			String allMember = ""
+					+ "select MEMBER_NAME, "
+					+ "PHONE_NUMBER, MEMBER_BIRTH, "
+					+ "MEMBER_GRADE from MEMBERSHIP "
+					+ "WHERE FLAG_DELETE = '0' AND PHONE_NUMBER like ?";
 			pstmt = con.prepareStatement(allMember);
 			// 4.
 			pstmt.setString(1, "%" + phoneNumber);
@@ -298,8 +302,9 @@ public class MemberShipDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String memberCoupon = "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ct.date_expire, ch.use_coup_date, ch.status_use "
-					+ "FROM coupon_held ch, coupon_type ct " + "WHERE ch.coup_kind_no = ct.coup_kind_no "
+			String memberCoupon = 
+					  "SELECT ct.coup_kind_name, ct.discount, ch.publish_date, ct.expires_period, ch.use_coup_date, ch.status_use "
+					+ "FROM coupon_held ch, coupon_kind ct " + "WHERE ch.coup_kind_no = ct.coup_kind_no "
 					+ "AND ch.phone_number = ?";
 			// 4.
 			pstmt = con.prepareStatement(memberCoupon);
@@ -309,8 +314,12 @@ public class MemberShipDAO {
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				mscVO = new MemberShipCouponVO(rs.getString("coup_kind_name"), rs.getInt("discount"),
-						rs.getString("publish_date"), rs.getString("use_coup_date"), rs.getString("date_expire"),
+				mscVO = new MemberShipCouponVO(
+						rs.getString("coup_kind_name"), 
+						rs.getInt("discount"),
+						rs.getString("publish_date"), 
+						rs.getInt("expires_period"),
+						rs.getString("use_coup_date"), 
 						rs.getString("status_use"));
 				list.add(mscVO);
 			}

@@ -1,5 +1,7 @@
 package kiosk_prj.trend;
 
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
@@ -19,6 +21,7 @@ public class TrendDesign extends JDialog{
 		
 		//컴포넌트
 		trendArea = new JTextArea("전체 소비자 트렌드 분석");
+		trendArea.setEditable(false);
 		JScrollPane jsTrend = new JScrollPane(trendArea);
 		exit = new JButton("나가기");
 		
@@ -32,7 +35,7 @@ public class TrendDesign extends JDialog{
 		add(exit);
 		
 		TrendEvent te = new TrendEvent(this);
-	
+		
 		exit.addActionListener(te);	
 		
 		setBounds(getX(), getY(), 600, 600);
