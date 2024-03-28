@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JButton;
 
+import easterEgg.EasterEggDesign;
 import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.orderStatus.OrderStatusDesign;
@@ -50,10 +51,13 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 			System.out.println("open");
 		}//end if
 		if(e.getSource() == jbUserManagement) {
-			new MemberShipDesign(amod, null);
+			new MemberShipDesign(amod, null, null);
 		}
 		if(e.getSource() == jbOrderStatus) {
 			new OrderStatusDesign(amod);
+		}
+		if(e.getSource() == amod.getJbEasterEgg()) {
+			new EasterEggDesign(amod, "");
 		}
 	}//actionPerformed
 
