@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosk_prj.coupon.controller.ManageCouponEvent;
 import kiosk_prj.coupon.vo.ManageButton;
 
@@ -126,9 +127,9 @@ public class ManageCouponDesign extends JDialog {
 		return mce;
 	}
 
-	public static void main(String[] args) {
-		// 테스트용 
-		new ManageCouponDesign(new AdminMainPageDesign());
-	} // main
+//	public static void main(String[] args) {
+//		// 테스트용 
+//		new ManageCouponDesign(new AdminMainPageDesign("김병년"));
+//	} // main
 	
 } // class
