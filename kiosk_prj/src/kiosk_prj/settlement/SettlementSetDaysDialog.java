@@ -24,9 +24,9 @@ public class SettlementSetDaysDialog extends JDialog {
 		
 
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/DialogPeriodSetting.png");
-		ImageIcon imgBTok = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTconfirm.png");
-		ImageIcon imgBTno = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTcancle.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("DialogPeriodSetting.png"));
+		ImageIcon imgBTok = new ImageIcon(getClass().getClassLoader().getResource("BTconfirm.png"));
+		ImageIcon imgBTno = new ImageIcon(getClass().getClassLoader().getResource("BTcancle.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

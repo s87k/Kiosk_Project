@@ -1,5 +1,8 @@
 package kiosk_prj.membership;
 
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -12,18 +15,32 @@ public class DetailMemberDesign extends JDialog {
 		super(MemberShipDesign, "회원 상세", true);
 		this.phoneNum = phoneNum;
 		
+		//이미지
+		ImageIcon imgOrderList = new ImageIcon(getClass().getClassLoader().getResource("BTorderlist.png"));
+		ImageIcon imgCoupon = new ImageIcon(getClass().getClassLoader().getResource("BTcoupon.png"));
+		ImageIcon imgPattern = new ImageIcon(getClass().getClassLoader().getResource("BTpattern.png"));
+		
 		//컴포넌트
-		jOrderList = new JButton("주문 내역");
-		jCouponList = new JButton("보유 쿠폰");
-		jConsumeTrend = new JButton("소비 패턴");
+		jOrderList = new JButton(imgOrderList);
+		jCouponList = new JButton(imgCoupon);
+		jConsumeTrend = new JButton(imgPattern);
 		
 		//배치 관리자 해제
 		setLayout(null);
 		
 		//컴포넌트 배치
-		jOrderList.setBounds(50, 250, 100, 100);
-		jCouponList.setBounds(200, 250, 100, 100);
-		jConsumeTrend.setBounds(350, 250, 100, 100);
+		jOrderList.setBounds(87, 220, 100, 100);
+		jCouponList.setBounds(237, 220, 100, 100);
+		jConsumeTrend.setBounds(387, 220, 100, 100);
+		
+		jOrderList.setBorderPainted(false);
+		jCouponList.setBorderPainted(false);
+		jConsumeTrend.setBorderPainted(false);
+		
+		jOrderList.setContentAreaFilled(false);
+		jCouponList.setContentAreaFilled(false);
+		jConsumeTrend.setContentAreaFilled(false);
+		
 		
 		//컴포넌트 추가
 		add(jOrderList);
@@ -37,6 +54,7 @@ public class DetailMemberDesign extends JDialog {
 		jConsumeTrend.addActionListener(dme);
 		
 		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}

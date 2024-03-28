@@ -49,11 +49,11 @@ public class SettlementDesign extends JDialog {
 		super(ampd, "매출 정보", true);
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/settlement.png");
-		ImageIcon imgExit = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTexit.png");
-		ImageIcon imgL = new ImageIcon("kiosk_prj/src/kiosk_prj/image/L.png");
-		ImageIcon imgR = new ImageIcon("kiosk_prj/src/kiosk_prj/image/R.png");
-		ImageIcon imgSetPeriod = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTsetPeriod.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("settlement.png"));
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTexit.png"));
+		ImageIcon imgL = new ImageIcon(getClass().getClassLoader().getResource("L.png"));
+		ImageIcon imgR = new ImageIcon(getClass().getClassLoader().getResource("R.png"));
+		ImageIcon imgSetPeriod = new ImageIcon(getClass().getClassLoader().getResource("BTsetPeriod.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

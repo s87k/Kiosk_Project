@@ -1,5 +1,8 @@
 package kiosk_prj.membership;
 
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
@@ -21,11 +24,13 @@ public class DetailCouponDesign extends JDialog {
 		dtmCouponTable = new DefaultTableModel(cspColumns, 0);
 		couponTable = new JTable(dtmCouponTable);
 		JScrollPane jspConsumePattern = new JScrollPane(couponTable);
+		
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTback.png"));
 
-		back = new JButton("돌아가기");
+		back = new JButton(imgExit);
 		// 컴포넌트 배치
-		jspConsumePattern.setBounds(10, 10, 500, 480);
-		back.setBounds(300, 500, 100, 100);
+		jspConsumePattern.setBounds(32, 10, 500, 480);
+		back.setBounds(237,500,100,100);
 		// 컴포넌트 추가
 		add(jspConsumePattern);
 		add(back);
@@ -34,7 +39,8 @@ public class DetailCouponDesign extends JDialog {
 		// ActionListener 등록
 		DetailCouponEvent dce = new DetailCouponEvent(this);
 		back.addActionListener(dce);
-
+		
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setBounds(dmd.getX(), dmd.getY(), 574, 648);
 		setVisible(true);
 	}

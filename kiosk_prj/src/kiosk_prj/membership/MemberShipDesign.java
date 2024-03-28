@@ -1,7 +1,9 @@
 package kiosk_prj.membership;
 
+import java.awt.Font;
 import java.awt.Frame;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -29,36 +31,54 @@ public class MemberShipDesign extends JDialog {
 	public MemberShipDesign(AdminMainPageDesign ampd, String title, String openDate) {
 		super(ampd, "회원관리");
 		this.openDate = openDate;
-		
 		openDate = ampd.getJlOpenDate().getText();
 		
-		// 컴포넌트
-		// 숫자 입력 버튼 설정
+		//이미지
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("membership.png"));
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTexit.png"));
+		ImageIcon imgSelect = new ImageIcon(getClass().getClassLoader().getResource("BTmembershipSelect.png"));
+		
 		inputNumber = new JButton[12];
-		inputNumber[0] = new JButton("0");
-		inputNumber[1] = new JButton("1");
-		inputNumber[2] = new JButton("2");
-		inputNumber[3] = new JButton("3");
-		inputNumber[4] = new JButton("4");
-		inputNumber[5] = new JButton("5");
-		inputNumber[6] = new JButton("6");
-		inputNumber[7] = new JButton("7");
-		inputNumber[8] = new JButton("8");
-		inputNumber[9] = new JButton("9");
-		inputNumber[10] = new JButton("<-");
-		inputNumber[11] = new JButton("C");
+		for(int i=0 ; i<10 ; i++) {
+			ImageIcon imgNumPad = new ImageIcon(getClass().getClassLoader().getResource
+					("num" + i + ".png"));
+			inputNumber[i] = new JButton(imgNumPad);
+			inputNumber[i].setBorderPainted(false);
+			inputNumber[i].setContentAreaFilled(false);
+
+		}//end for
+		
+		ImageIcon imgDel = new ImageIcon(getClass().getClassLoader().getResource("numDel.png"));
+		ImageIcon imgDelDel = new ImageIcon(getClass().getClassLoader().getResource("numDelDel.png"));
+		
+		ImageIcon imgMember1 = new ImageIcon(getClass().getClassLoader().getResource("member1.png"));
+		ImageIcon imgMember2 = new ImageIcon(getClass().getClassLoader().getResource("member2.png"));
+		ImageIcon imgMember3 = new ImageIcon(getClass().getClassLoader().getResource("member3.png"));
+		ImageIcon imgMember4 = new ImageIcon(getClass().getClassLoader().getResource("member4.png"));
+		
+		// 컴포넌트
+		JLabel lbBackground = new JLabel(imgBackground);
+		
+		// 숫자 입력 버튼 설정
+		inputNumber[10] = new JButton(imgDel);
+		inputNumber[11] = new JButton(imgDelDel);
+		
+		inputNumber[10].setBorderPainted(false);
+		inputNumber[10].setContentAreaFilled(false);
+		inputNumber[11].setBorderPainted(false);
+		inputNumber[11].setContentAreaFilled(false);
 		
 		// 회원 정보 조회 옵션
-		searchMember = new JButton("회원목록");
-		addMember = new JButton("회원등록");
-		detailMember = new JButton("회원상세");
-		modifyMember = new JButton("회원수정");
+		searchMember = new JButton(imgMember1);
+		addMember = new JButton(imgMember2);
+		detailMember = new JButton(imgMember3);
+		modifyMember = new JButton(imgMember4);
 
 		// 회원 정보 입력창
 		jName = new JTextField();
 		jPhoneNum = new JTextField();
-		checkMember = new JButton("조회");
-
+		checkMember = new JButton(imgSelect);
+		
 		// 회원 정보 조회 테이블
 		String[] memberColumn = { "번호", "이름", "연락처", "생년월일","등급"};
 		dtmMemberList = new DefaultTableModel(memberColumn, 0);
@@ -74,18 +94,20 @@ public class MemberShipDesign extends JDialog {
 		// 회원 정보 밑 쿠폰 목록 리스트 조회
 		// 주문목록과 쿠폰 조회를 위한 tabPane 설정
 		listTab = new JTabbedPane();
+		memberList.setRowHeight(28);
 
 		// 주문 목록 컬럼
-
 		String[] orderColumn = { "대기번호", "주문시간", "상품명", "결제금액" };
 		dtmOrderList = new DefaultTableModel(orderColumn, 0);
 		orderList = new JTable(dtmOrderList);
+		orderList.setRowHeight(28);
 		JScrollPane jspOrderList = new JScrollPane(orderList);
 
 		// 쿠폰 목록 컬럼
 		String[] couponColumn = { "번호", "쿠폰명", "할인액", "발급일", "만료일", "상태" };
 		dtmCouponList = new DefaultTableModel(couponColumn, 0);
 		couponList = new JTable(dtmCouponList);
+		couponList.setRowHeight(28);
 		JScrollPane jspCouponList = new JScrollPane(couponList);
 		couponList.getColumnModel().getColumn(0).setPreferredWidth(10);
 		couponList.getColumnModel().getColumn(1).setPreferredWidth(60);
@@ -98,49 +120,65 @@ public class MemberShipDesign extends JDialog {
 		listTab.add("쿠폰목록", jspCouponList);
 		
 		// 나가기 버튼
-		exit = new JButton("나가기");
+		exit = new JButton(imgExit);
 
 		// 배치 관리자 해제
 		setLayout(null);
+		
 		// 컴포넌트 배치
 		// 숫자 입력 버튼
-		inputNumber[0].setBounds(90, 450, 50, 50);
-		inputNumber[10].setBounds(140, 450, 50, 50);
-		inputNumber[11].setBounds(190, 450, 50, 50);
-		inputNumber[1].setBounds(90, 400, 50, 50);
-		inputNumber[2].setBounds(140, 400, 50, 50);
-		inputNumber[3].setBounds(190, 400, 50, 50);
-		inputNumber[4].setBounds(90, 350, 50, 50);
-		inputNumber[5].setBounds(140, 350, 50, 50);
-		inputNumber[6].setBounds(190, 350, 50, 50);
-		inputNumber[7].setBounds(90, 300, 50, 50);
-		inputNumber[8].setBounds(140, 300, 50, 50);
-		inputNumber[9].setBounds(190, 300, 50, 50);
+		int x = 125;
+		int y = 550;
+		inputNumber[0].setBounds(x, y, 50, 50);
+		inputNumber[10].setBounds(x+50, y, 50, 50);
+		inputNumber[11].setBounds(x+100, y, 50, 50);
+		inputNumber[1].setBounds(x, y-50, 50, 50);
+		inputNumber[2].setBounds(x+50, y-50, 50, 50);
+		inputNumber[3].setBounds(x+100, y-50, 50, 50);
+		inputNumber[4].setBounds(x, y-100, 50, 50);
+		inputNumber[5].setBounds(x+50, y-100, 50, 50);
+		inputNumber[6].setBounds(x+100, y-100, 50, 50);
+		inputNumber[7].setBounds(x, y-150, 50, 50);
+		inputNumber[8].setBounds(x+50, y-150, 50, 50);
+		inputNumber[9].setBounds(x+100, y-150, 50, 50);
 
 		// 회원정보 조회 옵션
-		searchMember.setBounds(240, 300, 100, 50);
-		addMember.setBounds(240, 350, 100, 50);
-		detailMember.setBounds(240, 400, 100, 50);
-		modifyMember.setBounds(240, 450, 100, 50);
+		searchMember.setBounds(x+150, y-150, 100, 50);
+		addMember.setBounds(x+150, y-100, 100, 50);
+		detailMember.setBounds(x+150, y-50, 100, 50);
+		modifyMember.setBounds(x+150, y, 100, 50);
 
 		// 회원 조회 밑 입력창
 		JLabel nameLabel = new JLabel("이름");
 		JLabel phoneLabel = new JLabel("연락처");
+		nameLabel.setHorizontalAlignment(JLabel.RIGHT);
+		phoneLabel.setHorizontalAlignment(JLabel.RIGHT);
+		
+		//글꼴
+		Font biiiiiig = new Font("맑은 고딕",Font.BOLD,23);
+		nameLabel.setFont(biiiiiig);
+		phoneLabel.setFont(biiiiiig);
+		jName.setFont(biiiiiig);
+		jPhoneNum.setFont(biiiiiig);
+		
+		couponList.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+		memberList.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 
-		nameLabel.setBounds(50, 50, 50, 40);
-		jName.setBounds(90, 50, 150, 50);
-		phoneLabel.setBounds(50, 100, 50, 40);
-		jPhoneNum.setBounds(90, 100, 150, 50);
-		checkMember.setBounds(240, 50, 100, 100);
+		nameLabel.setBounds(40, 100, 80, 50);
+		phoneLabel.setBounds(40, 135, 80, 80);
+		jName.setBounds(125, 105, 150, 50);
+		jPhoneNum.setBounds(125, 155, 150, 50);
+		checkMember.setBounds(275, 105, 100, 99);
 
 		// 회원 정보 테이블
-		jspMemberList.setBounds(350, 50, 500, 200);
+		jspMemberList.setBounds(420, 100, 500, 200);
 
 		// 주문 목록, 쿠폰 목록 테이블
-		listTab.setBounds(350, 250, 500, 350);
+		listTab.setBounds(420, 300, 500, 350);
 
 		// 나가기 버튼
-		exit.setBounds(750, 620, 100, 50);
+		exit.setBounds(755, 665, 165, 43);
+		lbBackground.setBounds(0,0,1024,768);
 
 		add(inputNumber[0]);
 		add(inputNumber[1]);
@@ -170,6 +208,7 @@ public class MemberShipDesign extends JDialog {
 		add(listTab);
 
 		add(exit);
+		add(lbBackground);
 
 		// 이벤트 등록
 		MemberShipEvent mse = new MemberShipEvent(this);
@@ -196,7 +235,7 @@ public class MemberShipDesign extends JDialog {
 		memberList.addMouseListener(mse);
 
 		// 다이얼로그 위치 설정
-		setBounds(ampd.getX(), ampd.getY(), 924, 768);
+		setBounds(ampd.getX(), ampd.getY(), 1024,768);
 		setVisible(true);
 
 	}

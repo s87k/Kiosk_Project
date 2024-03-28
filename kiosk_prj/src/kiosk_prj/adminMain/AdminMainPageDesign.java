@@ -27,10 +27,27 @@ public class AdminMainPageDesign extends JFrame {
 		super("main");
 		this.adminId = adminId;
 
-		// 이미지
-
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/main.png");
-
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("main.png"));
+		
+		//아이콘 이미지
+		ImageIcon imgIcon1 = new ImageIcon(getClass().getClassLoader().getResource("mainCoffee.png"));
+		ImageIcon imgIcon2 = new ImageIcon(getClass().getClassLoader().getResource("mainNonCoffee.png"));
+		ImageIcon imgIcon3 = new ImageIcon(getClass().getClassLoader().getResource("mainTea.png"));
+		ImageIcon imgIcon4 = new ImageIcon(getClass().getClassLoader().getResource("mainSmoothie.png"));
+		ImageIcon imgIcon5 = new ImageIcon(getClass().getClassLoader().getResource("mainAll.png"));
+		
+		ImageIcon imgIcon6 = new ImageIcon(getClass().getClassLoader().getResource("mainMenuManage.png"));
+		ImageIcon imgIcon7 = new ImageIcon(getClass().getClassLoader().getResource("mainProgress.png"));
+		ImageIcon imgIcon8 = new ImageIcon(getClass().getClassLoader().getResource("mainSettlement.png"));
+		ImageIcon imgIcon9 = new ImageIcon(getClass().getClassLoader().getResource("mainShopOpen.png"));
+		ImageIcon imgIcon10 = new ImageIcon(getClass().getClassLoader().getResource("mainShopClose.png"));
+		
+		ImageIcon imgIcon11 = new ImageIcon(getClass().getClassLoader().getResource("mainMemberShip.png"));
+		ImageIcon imgIcon12 = new ImageIcon(getClass().getClassLoader().getResource("mainKiosk.png"));
+		ImageIcon imgIcon13 = new ImageIcon(getClass().getClassLoader().getResource("mainCoupon.png"));
+		ImageIcon imgIcon14 = new ImageIcon(getClass().getClassLoader().getResource("mainTrend.png"));
+		
+		
 		// 컴포넌트
 		String[] coluumnName = { "종류", "상품명", "가격" };
 		dtmStatus = new DefaultTableModel(coluumnName, 0);
@@ -38,20 +55,20 @@ public class AdminMainPageDesign extends JFrame {
 		JScrollPane jspJtOrderResult = new JScrollPane(jtStatus);
 
 		arrJbMenuFilter = new JButton[5];
-		arrJbMenuFilter[0] = new JButton("Coffee");
-		arrJbMenuFilter[1] = new JButton("Non Coffee");
-		arrJbMenuFilter[2] = new JButton("Tea");
-		arrJbMenuFilter[3] = new JButton("Smoothie");
-		arrJbMenuFilter[4] = new JButton("전체");
-		jbMeniInfo = new JButton("메뉴정보");
-		jbOrderStatus = new JButton("주문현황");
-		jbSales = new JButton("매출");
-		jbOpen = new JButton("개점");
-		jbClosd = new JButton("마감");
-		jbUserManagement = new JButton("사용자관리");
-		jbOperate = new JButton("운영");
-		jbCoupon = new JButton("쿠폰 관리");
-		jbTrends = new JButton("소비 트렌드");
+		arrJbMenuFilter[0] = new JButton("Cofee",imgIcon1);
+		arrJbMenuFilter[1] = new JButton("Non Coffee",imgIcon2);
+		arrJbMenuFilter[2] = new JButton("Tea",imgIcon3);
+		arrJbMenuFilter[3] = new JButton("Smoothie",imgIcon4);
+		arrJbMenuFilter[4] = new JButton("전체",imgIcon5);
+		jbMeniInfo = new JButton("메뉴정보",imgIcon6);
+		jbOrderStatus = new JButton("주문현황",imgIcon7);
+		jbSales = new JButton("매출",imgIcon8);
+		jbOpen = new JButton("개점",imgIcon9);
+		jbClosd = new JButton("마감",imgIcon10);
+		jbUserManagement = new JButton("사용자관리",imgIcon11);
+		jbOperate = new JButton("운영",imgIcon12);
+		jbCoupon = new JButton("쿠폰 관리",imgIcon13);
+		jbTrends = new JButton("소비 트렌드",imgIcon14);
 		jbEasterEgg = new JButton();
 		JLabel lbBackground = new JLabel(imgBackground);
 		jlOpenDate = new JLabel("영업일자 : 개점설정이 필요합니다"); // 영업일자 바뀔때마다 업데이트되어야함.

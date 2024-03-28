@@ -228,7 +228,7 @@ public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 	}//setDate
 	
 	/**
-	 * 개점일을 insert하는 method
+	 * 개점일을 insert하고, 시퀀스를 삭제했다가 추가해서 초기화시키는 method
 	 */
 	private void insertOpenDate(String openData) {
 		
@@ -237,6 +237,7 @@ public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 		ShopOpenCloseDAO soDAO = ShopOpenCloseDAO.getInstance();
 		try {
 			soDAO.insertOpenDate(openDate);
+			soDAO.updateSequence();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}//end catch

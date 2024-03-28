@@ -1,6 +1,10 @@
 package kiosk_prj.membership;
 
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -15,8 +19,9 @@ public class AddMemberDesign extends JDialog {
 	public AddMemberDesign(JDialog MemberShipDesign, String title) {
 		super(MemberShipDesign, "회원등록");
 		
-		//컴포넌트
-		//콤보박스 아이템 설정
+		//이미지
+		ImageIcon imgAdd = new ImageIcon(getClass().getClassLoader().getResource("BTadd.png"));
+		ImageIcon imgCancle = new ImageIcon(getClass().getClassLoader().getResource("BTaddCancle.png"));
 		
 		/**
 		 * 텍스트 필드 설정
@@ -24,6 +29,10 @@ public class AddMemberDesign extends JDialog {
 		JLabel jlPhone = new JLabel("연락처");
 		JLabel jlName = new JLabel("이름");
 		JLabel jlBirthDay = new JLabel("생년월일");
+		
+		jlPhone.setHorizontalAlignment(JLabel.RIGHT);
+		jlName.setHorizontalAlignment(JLabel.RIGHT);
+		jlBirthDay.setHorizontalAlignment(JLabel.RIGHT);
 		
 		jPhoneNum = new JTextField();
 		jName = new JTextField();
@@ -33,8 +42,22 @@ public class AddMemberDesign extends JDialog {
 		/**
 		 * 버튼 설정
 		 */
-		add = new JButton("등록");
-		exit = new JButton("취소");
+		add = new JButton(imgAdd);
+		exit = new JButton(imgCancle);
+		
+		add.setBorderPainted(false);
+		add.setContentAreaFilled(false);
+		exit.setBorderPainted(false);
+		exit.setContentAreaFilled(false);
+		
+		//폰트
+		Font Biiig = new Font("맑은 고딕",Font.BOLD,23);
+		jlPhone.setFont(Biiig);
+		jlName.setFont(Biiig);
+		jlBirthDay.setFont(Biiig);
+		jPhoneNum.setFont(Biiig);
+		jName.setFont(Biiig);
+		birthDay.setFont(Biiig);
 		
 		/**
 		 * 배치 관리자 해제 
@@ -43,28 +66,29 @@ public class AddMemberDesign extends JDialog {
 		//컴포넌트 배치
 		
 		//텍스트 필드
-		jlPhone.setBounds(100, 50, 50, 40);
-		jPhoneNum.setBounds(150, 50, 250, 50);
-		jlName.setBounds(100, 110, 50, 40);
-		jName.setBounds(150, 110, 250, 50);
-		jlBirthDay.setBounds(100, 170, 50, 40);
-		birthDay.setBounds(150, 170, 250, 50);
+		jlPhone.setHorizontalAlignment(JLabel.RIGHT);
+		jlName.setHorizontalAlignment(JLabel.RIGHT);
+		jlBirthDay.setHorizontalAlignment(JLabel.RIGHT);
+		
+		jlPhone.setBounds(58, 150, 120, 40);
+		jlName.setBounds(58, 200, 120, 40);
+		jlBirthDay.setBounds(58, 250, 120, 40);
+		
+		jPhoneNum.setBounds(180, 150, 250, 50);
+		jName.setBounds(180, 200, 250, 50);
+		birthDay.setBounds(180, 250, 250, 50);
 		
 		
 		//버튼
-		add.setBounds(150, 500, 100, 100);
-		exit.setBounds(300, 500, 100, 100);
+		add.setBounds(150, 440, 100, 100);
+		exit.setBounds(310, 440, 100, 100);
 		
-	
 		add(jlPhone);
 		add(jPhoneNum);
 		add(jlName);
 		add(jName);
 		add(jlBirthDay);
 		add(birthDay);
-	
-		
-		
 		add(add);
 		add(exit);
 		
@@ -74,8 +98,9 @@ public class AddMemberDesign extends JDialog {
 		AddMemberEvent ame = new AddMemberEvent(this);
 		add.addActionListener(ame);
 		exit.addActionListener(ame);
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setVisible(true);
-		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
+		setBounds(MemberShipDesign.getX()+230, MemberShipDesign.getY()+40, 574,648);
 	}
 
 	public JTextField getjPhoneNum() {

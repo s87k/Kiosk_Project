@@ -1,5 +1,8 @@
 package kiosk_prj.membership;
 
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
@@ -22,10 +25,12 @@ public class ConsumePatternDesign extends JDialog{
 		consumePattern = new JTable(dtmConsumePattern);
 		JScrollPane  jspConsumePattern = new JScrollPane(consumePattern);
 		
-		back = new JButton("돌아가기");
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTback.png"));
+		
+		back = new JButton(imgExit);
 		//컴포넌트 배치
-		jspConsumePattern.setBounds(10, 10, 500, 480);
-		back.setBounds(300, 500, 100, 100);
+		jspConsumePattern.setBounds(32, 10, 500, 480);
+		back.setBounds(237,500,100,100);
 		//컴포넌트 추가
 		add(jspConsumePattern);
 		add(back);
@@ -35,6 +40,7 @@ public class ConsumePatternDesign extends JDialog{
 		ConsumePatternEvent cpe = new ConsumePatternEvent(this);
 		back.addActionListener(cpe);
 		
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setBounds(dmd.getX(), dmd.getY(), 574, 648);
 		setVisible(true);
 	}

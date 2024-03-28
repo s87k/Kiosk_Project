@@ -25,9 +25,9 @@ public class ShopOpenConfirmDesign extends JDialog {
 		this.openDate = openDate;
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/DialogConfirm.png");
-		ImageIcon imgOK = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTok.png");
-		ImageIcon imgNO = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTno.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("DialogConfirm.png"));
+		ImageIcon imgOK = new ImageIcon(getClass().getClassLoader().getResource("BTok.png"));
+		ImageIcon imgNO = new ImageIcon(getClass().getClassLoader().getResource("BTno.png"));
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);
 		jbOk = new JButton(imgOK);
