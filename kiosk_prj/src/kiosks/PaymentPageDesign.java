@@ -15,6 +15,7 @@ public class PaymentPageDesign extends JFrame {
 	private DefaultTableModel dtmOrderMemuList;
 	private Font font;
 	private String phoneNum;
+	public static String coupPubCode;
 
 	public PaymentPageDesign() {
 		// 수동 배치

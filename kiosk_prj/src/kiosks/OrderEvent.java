@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -102,17 +103,10 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 			int count = 0;
 			for (Map.Entry<String, Integer> entry : sortedMenuCountList) {
 				if (count < 3) {
-					JButton btnName = new JButton(entry.getKey());
+					JButton btnName = new JButton();
 
-					System.out.println("C:/Users/user/git/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/drink/americano.jpg");
-					System.out.println(entry.getKey());
-					System.out.println(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
 					// 버튼에 이미지 추가
-					ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
-//					ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
-//					ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/drink/" + entry.getKey()));
-//					ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("/kiosk_prj/src/kiosk_prj/image/drink/" + entry.getKey()));
-					System.out.println(icon);
+					ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(entry.getKey()));
 					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 					btnName.setIcon(new ImageIcon(image));
 					btnName.setName(entry.getKey());
@@ -168,21 +162,20 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 
 					// 버튼에 이미지 추가
 					ImageIcon icon = null;
-					String imagePath = "/kiosk_prj/image/drink/" + omVO.getMenuImg();
-					if(getClass().getResource(imagePath) != null) {
-						icon = new ImageIcon(getClass().getResource(imagePath));
+					String imagePath = omVO.getMenuImg();
+					if(getClass().getClassLoader().getResource(imagePath) != null) {
+						icon = new ImageIcon(getClass().getClassLoader().getResource(imagePath));
 					}else {
 						//이미지가 없으면 버튼에 경로를 추가
-						icon = new ImageIcon(omVO.getMenuImg());
+						btnName.setText(imagePath);
 					}
-					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-					btnName.setIcon(new ImageIcon(image));
+					
+					btnName.setIcon(icon);
 					btnName.setName(omVO.getMenuImg());
 
 					// 버튼 이벤트 등록
 					btnName.addActionListener(this);
 					targetPanel.add(btnName);
-
 				}
 			}
 		} catch (SQLException e) {
@@ -201,7 +194,8 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 				OrderDetailDesgin odd = new OrderDetailDesgin(od, "옵션선택");
 
 				// 이미지 경로 변경
-				ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + menuImg));
+				ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(menuImg));
+//				ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + menuImg));
 				Image image = icon.getImage();
 				Image scaledImage = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 				ImageIcon scaledIcon = new ImageIcon(scaledImage);

@@ -48,12 +48,12 @@ public class UsingCouponDesign extends JDialog {
 		couponList = new JTable(dtmCouponList);
 		
 		//테이블 정렬 : 유효기간을 기준으로 오름차순 정렬
-		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtmCouponList);
-		sorter.setComparator(1, (Object o1, Object o2) -> ((String) o1).compareTo((String) o2));
-		sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
-		
-		couponList.setRowSorter(sorter);
-		
+//		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtmCouponList);
+//		sorter.setComparator(1, (Object o1, Object o2) -> ((String) o1).compareTo((String) o2));
+//		sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+//		
+//		couponList.setRowSorter(sorter);
+//		
 		// 열 이동 불가
 		couponList.getTableHeader().setReorderingAllowed(false);
 		
