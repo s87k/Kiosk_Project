@@ -38,13 +38,19 @@ public class ShopCloseDesign extends JDialog {
 		JLabel lbBackground = new JLabel(imgBackground);
 		String[] coluumnName = {"그룹","메뉴","수량","금액"};
 		dtmClose = new DefaultTableModel(coluumnName,0);
-		jtClose = new JTable(dtmClose);
-		JScrollPane jspJtClose = new JScrollPane(jtClose);
 		jbInsertClose = new JButton(imginsertClose);
 		jbExit = new JButton(imgExit);
 		jlTitle = new JLabel("  메뉴별 집계");
 		jlTotalCount = new JLabel("00잔 ");
 		jlTotalAmount = new JLabel(" 00,000원");
+		jtClose = new JTable(dtmClose){
+			//테이블 수정 불가설정
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JScrollPane jspJtClose = new JScrollPane(jtClose);
 		
 		//테이블 컬럼 넓이 변경
 		jtClose.getColumnModel().getColumn(0).setPreferredWidth(100);
