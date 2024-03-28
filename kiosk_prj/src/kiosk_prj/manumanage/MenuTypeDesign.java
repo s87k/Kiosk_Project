@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+
 @SuppressWarnings("serial")
 public class MenuTypeDesign extends JDialog  {
 	
