@@ -96,6 +96,7 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 			ppd.getTotalPrice().setText(resultStr);
 			// 쿠폰을 사용한 회원의 전화번호로 재설정
 			ppd.setPhoneNum(phoneNum);
+			
 		}
 	}// setDiscount
 
@@ -147,9 +148,9 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 				
 				rowData[2] = String.valueOf(scVO.getDisCount());
 				rowData[3] = scVO.getCoupPubCode();
-				
 				dtm.addRow(rowData);
 			}
+//			PaymentPageDesign.coupPubCode = scVO.getCoupPubCode();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
