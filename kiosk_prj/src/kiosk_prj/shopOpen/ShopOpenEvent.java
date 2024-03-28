@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 
@@ -232,7 +233,6 @@ public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 	private void insertOpenDate(String openData) {
 		
 		sod.getMainJlOpenDate().setText("영업일자 : " + openData);
-		
 		
 		ShopOpenCloseDAO soDAO = ShopOpenCloseDAO.getInstance();
 		try {

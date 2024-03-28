@@ -1,8 +1,10 @@
 package kiosk_prj.settlement;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
@@ -11,6 +13,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import kiosk_prj.adminMain.AdminMainPageDesign;
@@ -29,8 +33,8 @@ public class SettlementDesign extends JDialog {
 	private int calDayOfMon;
 	private int calLastDate;
 	
-	private JTextArea[][] jtaDates; //일 부분
-	private JTextArea jtaMonthly; //월 매출 합산
+	private JTextPane[][] jtpDates; //일 부분
+	private JTextPane jtpMonthly; //월 매출 합산
 	private JButton jbLeftMonth; //달 감소버튼
 	private JButton jbRightMonth; //달 증가 버튼
 	private JButton jbSetPeriod; //기간설정버튼
@@ -54,14 +58,18 @@ public class SettlementDesign extends JDialog {
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);
 		jbExit = new JButton(imgExit);
+//		jbExit = new JButton("", imgExit);
 		jbLeftMonth = new JButton(imgL);
 		jbRightMonth = new JButton(imgR);
 		jbSetPeriod = new JButton(imgSetPeriod);
 		jlInquiryYearMonth = new JLabel("조회 년월 : ");
 		jlViewYearMonth = new JLabel("24.03.");
-		jtaDates = new JTextArea[6][7];
-		jtaMonthly = new JTextArea("월 매출 합산");
-	
+		jtpDates = new JTextPane[6][7];
+		jtpMonthly = new JTextPane();
+		
+		//JTextPane html스타일로 설정
+		jtpMonthly.setContentType("text/html");
+		
 		//버튼 테두리 삭제ㅠㅠ
 		jbExit.setBorderPainted(false);
 		jbLeftMonth.setBorderPainted(false);
@@ -108,13 +116,14 @@ public class SettlementDesign extends JDialog {
 		
 		for(int i=0 ; i<CAL_HEIGHT ; i++) { //일 부분 버튼
 			for(int j=0 ; j<CAL_WIDTH ; j++) {
-				jtaDates[i][j] = new JTextArea();
-				jtaDates[i][j].setEditable(false);
-				jtaDates[i][j].setBackground(Color.WHITE);
-				jtaDates[i][j].setOpaque(true);
-				jPanelCalendar.add(jtaDates[i][j]);
+				jtpDates[i][j] = new JTextPane();
+				jtpDates[i][j].setContentType("text/html");
+				jtpDates[i][j].setEditable(false);
+				jtpDates[i][j].setBackground(Color.WHITE);
+				jtpDates[i][j].setOpaque(true);
+				jPanelCalendar.add(jtpDates[i][j]);
 				
-				jtaDates[i][j].setFont(defaultFont);
+//				jtaDates[i][j].setFont(defaultFont);
 			}//end for
 		}//end for
 		sme.setDate();
@@ -123,21 +132,29 @@ public class SettlementDesign extends JDialog {
 		jlViewYearMonth.setHorizontalAlignment(JLabel.CENTER);
 		
 		// 테두리
-		jPanelCalendar.setBorder(new LineBorder(Color.GRAY, 1));
+		LineBorder lb = new LineBorder(Color.GRAY, 1);
+		jPanelCalendar.setBorder(lb);
+		
+		//여백 주기위한 패널..
+		jtpMonthly.setBorder(new EmptyBorder(4,10,5,5));
+		JPanel jPanelMonthly = new JPanel();
+		jPanelMonthly.add(jtpMonthly);
+		jPanelMonthly.setBorder(lb);
 		
 		//배치관리자
 		jPanelCalendar.setLayout(new GridLayout(0, 7, 2, 2));
+		jPanelMonthly.setLayout(new GridLayout());
 		setLayout(null);
 		
 		//컴포넌트 배치
-		jPanelCalendar.setBounds(30,140,945,440);
+		jPanelCalendar.setBounds(30,122,945,478);
 		jbExit.setBounds(800,10,165,43);
-		jbLeftMonth.setBounds(200,70,65,65);
-		jbRightMonth.setBounds(395,70,65,65);
-		jbSetPeriod.setBounds(30,600,200,105);
-		jlInquiryYearMonth.setBounds(32,70,200,65);
-		jlViewYearMonth.setBounds(270,80,120,45);
-		jtaMonthly.setBounds(730,600,245,105);
+		jbLeftMonth.setBounds(200,60,65,65);
+		jbRightMonth.setBounds(395,60,65,65);
+		jbSetPeriod.setBounds(30,610,200,105);
+		jlInquiryYearMonth.setBounds(32,60,200,65);
+		jlViewYearMonth.setBounds(270,70,120,45);
+		jPanelMonthly.setBounds(730,610,245,105);
 		jlToday.setBounds(565,18,220,35);
 		lbBackground.setBounds(0,0,1024,768);
 		
@@ -150,7 +167,7 @@ public class SettlementDesign extends JDialog {
 		add(jbSetPeriod);
 		add(jlInquiryYearMonth);
 		add(jlViewYearMonth);
-		add(jtaMonthly);
+		add(jPanelMonthly);
 		add(jlToday);
 		add(lbBackground);
 		
@@ -198,12 +215,12 @@ public class SettlementDesign extends JDialog {
 		return calLastDate;
 	}
 
-	public JTextArea[][] getJtaDates() {
-		return jtaDates;
+	public JTextPane[][] getJtpDates() {
+		return jtpDates;
 	}
 
-	public JTextArea getJtaMonthly() {
-		return jtaMonthly;
+	public JTextPane getJtpMonthly() {
+		return jtpMonthly;
 	}
 
 	public JButton getJbLeftMonth() {
