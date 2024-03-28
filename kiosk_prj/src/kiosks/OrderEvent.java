@@ -1,8 +1,11 @@
 package kiosks;
 
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -62,8 +66,8 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 
 		// 메뉴 선택
 		JButton clickedBtn = (JButton) ae.getSource();
-		String btnText = clickedBtn.getText();
-		if (!btnText.isEmpty()) {
+		String btnText = clickedBtn.getName();
+		if (btnText != null && (btnText.endsWith(".jpg") || btnText.endsWith(".png"))) {
 			menuDetail(btnText);
 		}
 
@@ -99,6 +103,19 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 			for (Map.Entry<String, Integer> entry : sortedMenuCountList) {
 				if (count < 3) {
 					JButton btnName = new JButton(entry.getKey());
+
+					System.out.println("C:/Users/user/git/Kiosk_Project/kiosk_prj/src/kiosk_prj/image/drink/americano.jpg");
+					System.out.println(entry.getKey());
+					System.out.println(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
+					// 버튼에 이미지 추가
+					ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
+//					ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + entry.getKey()));
+//					ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("kiosk_prj/image/drink/" + entry.getKey()));
+//					ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("/kiosk_prj/src/kiosk_prj/image/drink/" + entry.getKey()));
+					System.out.println(icon);
+					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+					btnName.setIcon(new ImageIcon(image));
+					btnName.setName(entry.getKey());
 
 					// 버튼 이벤트 등록
 					od.getPanel0().add(btnName);
@@ -147,22 +164,27 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 			if (targetPanel != null) {
 				// 해당 패널에 메뉴 버튼 추가
 				for (OrderMenuVO omVO : list) {
-
-//					String btnName = menu.getMenuCode();
-					JButton btnName = new JButton(omVO.getMenuImg());
+					JButton btnName = new JButton();
 
 					// 버튼에 이미지 추가
-//					ImageIcon icon = new ImageIcon(menu.getMenuImg());
-//					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-//					menuButton.setIcon(new ImageIcon(image));
+					ImageIcon icon = null;
+					String imagePath = "/kiosk_prj/image/drink/" + omVO.getMenuImg();
+					if(getClass().getResource(imagePath) != null) {
+						icon = new ImageIcon(getClass().getResource(imagePath));
+					}else {
+						//이미지가 없으면 버튼에 경로를 추가
+						icon = new ImageIcon(omVO.getMenuImg());
+					}
+					Image image = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+					btnName.setIcon(new ImageIcon(image));
+					btnName.setName(omVO.getMenuImg());
 
 					// 버튼 이벤트 등록
-					targetPanel.add(btnName);
 					btnName.addActionListener(this);
+					targetPanel.add(btnName);
 
 				}
-			} // end if
-
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -178,6 +200,14 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 
 				OrderDetailDesgin odd = new OrderDetailDesgin(od, "옵션선택");
 
+				// 이미지 경로 변경
+				ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + menuImg));
+				Image image = icon.getImage();
+				Image scaledImage = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+				ImageIcon scaledIcon = new ImageIcon(scaledImage);
+				odd.getMenuImg().setIcon(scaledIcon);
+
+				// 메뉴명, 메뉴 가격 설정
 				odd.getMenuName().setText(omVO.getMenuName());
 				odd.getMenuPrice().setText(Integer.toString(omVO.getMenuPrice()));
 				odd.getAddMenu().setText(Integer.toString(omVO.getMenuPrice()) + "원 담기");

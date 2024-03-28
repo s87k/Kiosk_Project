@@ -21,32 +21,36 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 	public CompletePayPageEvent(CompletePayPageDesign cppd) {
 		this.cppd = cppd;
 		phoneNum = cppd.getPhoneNum();
-		System.out.println(phoneNum + "결제창까지 들어오나");//번호 잘 들어옴.
 		//결제완료 후 보유 쿠폰 개수
 		heldCoup(phoneNum);
-		//결제 완료 후 주문내역 DBupdate
-		orderUpdate();
+		//발급된 쿠폰 보여주기
+		newPublishCoup();
 	}//CompletePayPageEvent
 	
+	/**
+	 * 결제 후 발급된 쿠폰 이름 보여주기
+	 */
+	private void newPublishCoup() {
+		
+	}//orderUpdate
+	
+	/**
+	 * 보유쿠폰 개수 보여주기(결제 후 발급받은 쿠폰 개수 포함)
+	 * @param phonNum
+	 */
 	private void heldCoup(String phonNum) {
 		SelectCouponDAO scDAO = SelectCouponDAO.getInstance();
 		try {
 			List<SelectCouponVO> list = scDAO.searchCoupByPhoneNum(phoneNum);
 			if(!list.isEmpty()) {
-//				_님의 현재 보유 쿠폰 N장
 				cppd.getMemberCoup().setText(
 						phoneNum + " 님의 현재 보유 쿠폰 : " + list.size() + " 장");
 			}
-			
-			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}//heldCoup
 	
-	private void orderUpdate() {
-		
-	}//orderUpdate
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

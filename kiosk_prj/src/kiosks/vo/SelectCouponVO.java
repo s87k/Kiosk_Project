@@ -2,13 +2,24 @@ package kiosks.vo;
 
 public class SelectCouponVO {
 
-	private String couponName, publishDate, expireDate, useDate, useStatus;
+	private String coupPubCode, couponName, publishDate, expireDate, useDate, useStatus;
 	private int disCount;
 	
 	public SelectCouponVO() {
 		
 	}
 	
+	public SelectCouponVO(String coupPubCode, String couponName, String publishDate, String expireDate, String useDate,
+			String useStatus, int disCount) {
+		this.coupPubCode = coupPubCode;
+		this.couponName = couponName;
+		this.publishDate = publishDate;
+		this.expireDate = expireDate;
+		this.useDate = useDate;
+		this.useStatus = useStatus;
+		this.disCount = disCount;
+	}
+
 	public SelectCouponVO(String couponName, String publishDate, String expireDate, String useDate, String useStatus,
 			int disCount) {
 		super();
@@ -26,12 +37,31 @@ public class SelectCouponVO {
 		this.publishDate = publishDate;
 		this.expireDate = expireDate;
 	}
+	public SelectCouponVO(String coupPubCode, int disCount, String couponName, String publishDate, String expireDate) {
+		this.coupPubCode = coupPubCode;
+		this.couponName = couponName;
+		this.publishDate = publishDate;
+		this.expireDate = expireDate;
+		this.disCount = disCount;
+	}
 	
-	
+	public SelectCouponVO(String useDate, String useStatus) {
+		super();
+		this.useDate = useDate;
+		this.useStatus = useStatus;
+	}
 
 	public SelectCouponVO(int disCount) {
 		super();
 		this.disCount = disCount;
+	}
+
+	public String getCoupPubCode() {
+		return coupPubCode;
+	}
+
+	public void setCoupPubCode(String coupPubCode) {
+		this.coupPubCode = coupPubCode;
 	}
 
 	public String getCouponName() {

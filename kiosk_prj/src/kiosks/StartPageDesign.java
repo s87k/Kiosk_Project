@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 import kiosk_prj.adminMain.AdminMainPageDesign;
 import kiosks.StartPageEvent;
+import kiosks.vo.SummaryOrderVO;
 
 @SuppressWarnings("serial")
 public class StartPageDesign extends JFrame{
@@ -19,6 +20,8 @@ public class StartPageDesign extends JFrame{
 	}//StartPageDesign
 	public StartPageDesign(AdminMainPageDesign ampd) {
 		design();
+		SummaryOrderVO soVO = new SummaryOrderVO();
+		soVO.setShopOpen(ampd.getJlOpenDate().getText());
 	}//StartPageDesign
 	
 	private void design() {

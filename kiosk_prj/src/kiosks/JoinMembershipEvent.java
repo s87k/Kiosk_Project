@@ -59,6 +59,7 @@ public class JoinMembershipEvent extends WindowAdapter implements ActionListener
 				JOptionPane.showMessageDialog(jmd, "회원 등록이 완료되었습니다.");
 				pnd.dispose();// 결제창으로 돌아감.
 			} catch (SQLException e) {
+				e.printStackTrace();
 				JOptionPane.showMessageDialog(jmd, "회원 등록에 실패했습니다.");
 				return;
 			}// end catch

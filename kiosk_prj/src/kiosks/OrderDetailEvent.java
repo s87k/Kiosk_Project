@@ -139,7 +139,7 @@ public class OrderDetailEvent extends WindowAdapter implements ActionListener, I
 			totalPrice = menuPrice*count;
 			option
 			.append(cup)
-			.append(", ")
+			.append(",")
 			.append(temp);
 			if (odd.getShotOption().isSelected()) {
 				totalPrice += 500;

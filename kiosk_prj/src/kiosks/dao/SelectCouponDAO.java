@@ -12,50 +12,49 @@ import kiosks.vo.SelectCouponVO;
 public class SelectCouponDAO {
 
 	private static SelectCouponDAO scDAO;
-	
+
 	private SelectCouponDAO() {
-		
+
 	}
-	
+
 	public static SelectCouponDAO getInstance() {
-		if(scDAO == null) {
+		if (scDAO == null) {
 			scDAO = new SelectCouponDAO();
-		}// end if
+		} // end if
 		return scDAO;
-	}//getInstance
-	
+	}// getInstance
+
 	/**
 	 * 회원 번호로 사용가능한 보유 쿠폰 조회
+	 * 
 	 * @param phoneNumber
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<SelectCouponVO> searchCoupByPhoneNum(String phoneNumber) throws SQLException{
+	public List<SelectCouponVO> searchCoupByPhoneNum(String phoneNumber) throws SQLException {
 		List<SelectCouponVO> list = new ArrayList<SelectCouponVO>();
-		
+
 		DbConnection dbCon = DbConnection.getInstance();
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			String id = "Kiosk";
 			String pass = "4";
-			con = dbCon.getConnection(id, pass); 
-			
-			String searchCoup = 
-					" select ck.coup_kind_name, ch.publish_date, ck.expires_period "
-					+ " from COUPON_HELD ch, COUPON_KIND ck "
-					+ " where ch.coup_kind_no = ck.coup_kind_no "
-					+ " and ch.status_use = '0' and ch.phone_number = ? ";
+			con = dbCon.getConnection(id, pass);
+
+			String searchCoup = " select ck.discount, ch.COUP_PUB_CODE, ck.coup_kind_name, ch.publish_date, ck.expires_period "
+					+ " from COUPON_HELD ch, COUPON_KIND ck " + " where ch.coup_kind_no = ck.coup_kind_no "
+					+ " and ch.status_use = '0' and ch.phone_number = ? order by ck.coup_kind_name";
 			pstmt = con.prepareStatement(searchCoup);
 			pstmt.setString(1, phoneNumber);
 			SelectCouponVO scVO = null;
-			
+
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				scVO = new SelectCouponVO(rs.getString("coup_kind_name"), rs.getString("publish_date"), 
+			while (rs.next()) {
+				scVO = new SelectCouponVO(rs.getString("COUP_PUB_CODE"), rs.getInt("discount"), rs.getString("coup_kind_name"), rs.getString("publish_date"),
 						rs.getString("expires_period"));
 				list.add(scVO);
 			}
@@ -63,32 +62,29 @@ public class SelectCouponDAO {
 			dbCon.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}//searchCoupByPhoneNum
-	
-	public List<SelectCouponVO> searchDiscount(String couponName) throws SQLException{
+	}// searchCoupByPhoneNum
+
+	public List<SelectCouponVO> searchDiscount(String couponName) throws SQLException {
 		List<SelectCouponVO> list = new ArrayList<SelectCouponVO>();
-		
+
 		DbConnection dbCon = DbConnection.getInstance();
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			String id = "Kiosk";
 			String pass = "4";
-			con = dbCon.getConnection(id, pass); 
-			
-			String searchCoup = 
-					" select DISCOUNT "
-					+ " from   COUPON_KIND "
-					+ " where coup_kind_name=? ";
+			con = dbCon.getConnection(id, pass);
+
+			String searchCoup = " select DISCOUNT " + " from   COUPON_KIND " + " where coup_kind_name=? ";
 			pstmt = con.prepareStatement(searchCoup);
 			pstmt.setString(1, couponName);
 			SelectCouponVO scVO = null;
-			
+
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				scVO = new SelectCouponVO(rs.getInt("DISCOUNT"));
 				list.add(scVO);
 			}
@@ -96,6 +92,37 @@ public class SelectCouponDAO {
 			dbCon.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}//searchDiscount
-	
-}//class
+	}// searchDiscount
+
+	public void updateUsedCoup(SelectCouponVO scVO) throws SQLException {
+		DbConnection dbCon = DbConnection.getInstance();
+
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			
+			// 3. 쿼리문 생성객체 얻기
+			String updateCoup = "";
+
+			pstmt = con.prepareStatement(updateCoup);
+			
+			// 4. 바인드변수에 값 설정
+			pstmt.setString(1, scVO.getCouponName());
+			pstmt.setString(2, scVO.getPublishDate());
+
+			// 5. 쿼리문 수행 후 결과 얻기
+			pstmt.executeUpdate();
+		} finally {
+			// 6. 연결 끊기
+			dbCon.dbClose(null, pstmt, con);
+		} // end finally
+	}//updateUsedCoup
+
+}
+// class
