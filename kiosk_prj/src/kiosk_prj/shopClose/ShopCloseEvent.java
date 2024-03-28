@@ -6,10 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -107,7 +104,7 @@ public class ShopCloseEvent extends WindowAdapter implements ActionListener {
 			String[] rowData = new String[4];
 			ShopCloseVO scVO = list.get(0);
 			String lastMenuName = scVO.getMenuName();
-			String lastMenuType = "";
+			String lastMenuType = scVO.getMenuType();
 			int amount = 0;
 			int totalAmount = 0;
 			int count = 0;
@@ -119,9 +116,9 @@ public class ShopCloseEvent extends WindowAdapter implements ActionListener {
 				if(!scVO.getMenuName().equals(lastMenuName)) { //목록에 없는 메뉴라면
 					
 					if(!scVO.getMenuType().equals(lastMenuType)) { //목록에 없는 종류라면
-						rowData[0] = scVO.getMenuType();
+						rowData[0] = "";
 					}else {
-						rowData[0] = " ";
+						rowData[0] = lastMenuType;
 					}//end else
 					rowData[1] = lastMenuName;
 					rowData[2] = String.valueOf(count);
@@ -130,8 +127,8 @@ public class ShopCloseEvent extends WindowAdapter implements ActionListener {
 					//Model객체의 행으로 등록
 					dtmClose.addRow(rowData);
 					
-					lastMenuType = scVO.getMenuType();
 					lastMenuName = scVO.getMenuName();
+					lastMenuType = scVO.getMenuType();
 					count = 1;
 					totalCount++;
 					amount = scVO.getAmount();
@@ -146,11 +143,17 @@ public class ShopCloseEvent extends WindowAdapter implements ActionListener {
 			}//end for
 			
 			//마지막꺼 테이블에 올리기~
-			if(!scVO.getMenuType().equals(lastMenuType)) { //목록에 없는 종류라면
-				rowData[0] = scVO.getMenuType();
+			if(dtmClose.getRowCount()>0) {
+				lastMenuType = dtmClose.getValueAt(dtmClose.getRowCount()-1, 0).toString();
+				if(!scVO.getMenuType().equals(lastMenuType)) {
+					rowData[0] = scVO.getMenuType();
+				}else {
+					rowData[0] = "";
+				}//end else
 			}else {
-				rowData[0] = " ";
+				rowData[0] = scVO.getMenuType();
 			}//end else
+			
 			rowData[1] = scVO.getMenuName();
 			rowData[2] = String.valueOf(count);
 			rowData[3] = String.valueOf(amount);

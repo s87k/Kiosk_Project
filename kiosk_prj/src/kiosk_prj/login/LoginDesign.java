@@ -21,16 +21,16 @@ public class LoginDesign extends JFrame{
 		super("로그인");
 		
 		//이미지
-//		ImageIcon iLogin = new ImageIcon(getClass().getClassLoader().getResource("login.png"));
-		ImageIcon logo = new ImageIcon("D:/dev/workspace/java_se/src/kiosk_prj/image/login_logo.png");
+		ImageIcon imgLogin = new ImageIcon(getClass().getClassLoader().getResource("login.png"));
+		ImageIcon imgLogo = new ImageIcon(getClass().getClassLoader().getResource("login_logo.png"));
 		
 		//컴포넌트
 		JLabel jlId = new JLabel("ID");
 		JLabel jlPw = new JLabel("PW");
-		JLabel jlLogo = new JLabel(logo);
+		JLabel jlLogo = new JLabel(imgLogo);
 		iD = new JTextField(15);
 		password = new JPasswordField(15);
-		login = new JButton("로그인");
+		login = new JButton("로그인",imgLogin);
 		
 		// 텍스트 중앙에 정렬
 		jlId.setHorizontalAlignment(JLabel.CENTER);
