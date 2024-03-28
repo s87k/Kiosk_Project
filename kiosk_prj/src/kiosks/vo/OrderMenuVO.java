@@ -35,7 +35,11 @@ public class OrderMenuVO {
 		this.menuImg = menuImg;
 	}
 	
-	
+	public OrderMenuVO(String menuCode, String typeCode) {
+		super();
+		this.menuCode = menuCode;
+		this.typeCode = typeCode;
+	}
 
 	public String getMenuCode() {
 		return menuCode;

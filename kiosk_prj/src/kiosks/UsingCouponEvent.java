@@ -1,5 +1,6 @@
 package kiosks;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -9,9 +10,13 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.coupon.dao.CouponHeldDAO;
+import kiosk_prj.coupon.vo.CouponHeldVO;
+import kiosk_prj.coupon.vo.StatusUse;
 import kiosks.PaymentPageDesign;
 import kiosks.PhoneNumDesign;
 import kiosks.UsingCouponDesign;
@@ -22,13 +27,13 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 
 	private UsingCouponDesign ucd;
 	private PaymentPageDesign ppd;
-	
+
 	private String phoneNum;
-	
+
 	public UsingCouponEvent(UsingCouponDesign ucd, PaymentPageDesign ppd) {
 		this.ucd = ucd;
 		this.ppd = ppd;
-	
+
 		phoneNum = ucd.getPhoneNumber();
 		setCouponList(phoneNum);
 	}// UsingCouponEvent
@@ -50,10 +55,17 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 	private void useCoup() {
 		int select = ucd.getCouponList().getSelectedRow();
 		if (select != -1) {
-			String couponName = ucd.getCouponList().getValueAt(ucd.getCouponList().getSelectedRow(), 0).toString();
-			setDiscount(couponName);
-			ppd.getBtnCheckCoupon().setVisible(false);//쿠폰조회버튼 안보이게...아 쿠폰 한개밖에 적용안된다고!!!!
-			ppd.getLblCheckCouponGuide().setText("쿠폰이 적용되었습니다.");
+//			String couponName = ucd.getCouponList().getValueAt(ucd.getCouponList().getSelectedRow(), 0).toString();
+			setDiscount(Integer.parseInt(ucd.getDtmCouponList().getValueAt(ucd.getCouponList().getSelectedRow(), 2).toString()));
+			// 쿠폰 사용후 조회버튼과 안내메시지 안보이게
+			ppd.getBtnCheckCoupon().setVisible(false);
+			ppd.getLblCheckCouponGuide().setVisible(false);
+			// 쿠폰 적용 후 안내메시지 재설정
+			ppd.getUsedCoup().setText("쿠폰이 적용되었습니다.");
+			Font font = ppd.getUsedCoup().getFont();
+			ppd.getUsedCoup().setFont(font.deriveFont(Font.BOLD, 15));
+			ppd.getUsedCoup().setBounds(210, 125, 200, 30);
+			//쿠폰 선택창 종료
 			ucd.dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, "사용할 쿠폰을 선택해주세요.");
@@ -64,66 +76,51 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 	/**
 	 * 선택한 쿠폰의 할인 가격 적용하기
 	 * 
-	 * @param couponName
+	 * @param discount
 	 */
-	private void setDiscount(String couponName) {
-
-		SelectCouponDAO scDAO = SelectCouponDAO.getInstance();
-		try {
-			List<SelectCouponVO> list = scDAO.searchDiscount(couponName);
-			if (!list.isEmpty()) {
-				SelectCouponVO scVO;
-				scVO = list.get(0);
-
-				// 결제창의 총 결제 금액 가져오기
-				String totalPriceText = ppd.getTotalPrice().getText();
-				if (!totalPriceText.isEmpty()) {
-					int totalPrice = Integer.parseInt(totalPriceText);
-					// 할인금액이 결제 금액보다 큰지 확인
-					if (totalPrice < scVO.getDisCount()) {
-						JOptionPane.showMessageDialog(ucd, "결제금액보다 할인금액이 큰 쿠폰을 사용하실 수 없습니다.");
-						return;
-					}
-					// 할인 금액 빼기
-					int result = totalPrice - scVO.getDisCount();
-					// 결제 금액 문자열로 전환
-					String resultStr = String.valueOf(result);
-					// 할인된 금액을 총 결제 금액으로 설정
-					ppd.getTotalPrice().setText(resultStr);
-					//쿠폰을 사용한 회원의 전화번호로 재설정
-					ppd.setPhoneNum(phoneNum);
-					//쿠폰 사용 후 보유 쿠폰 개수 보여주기
-					int coups = ucd.getDtmCouponList().getRowCount();
-					ppd.getUsedCoup().setText("보유쿠폰 " + (coups - 1) + " 장");
-				}
+	private void setDiscount(int discount) {
+		// 결제창의 총 결제 금액 가져오기
+		String totalPriceText = ppd.getTotalPrice().getText();
+		if (!totalPriceText.isEmpty()) {
+			int totalPrice = Integer.parseInt(totalPriceText);
+			// 할인금액이 결제 금액보다 큰지 확인
+			if (totalPrice < discount) {
+				JOptionPane.showMessageDialog(ucd, "결제금액보다 할인금액이 큰 쿠폰을 사용하실 수 없습니다.");
+				return;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			// 할인 금액 빼기
+			int result = totalPrice - discount;
+			// 결제 금액 문자열로 전환
+			String resultStr = String.valueOf(result);
+			// 할인된 금액을 총 결제 금액으로 설정
+			ppd.getTotalPrice().setText(resultStr);
+			// 쿠폰을 사용한 회원의 전화번호로 재설정
+			ppd.setPhoneNum(phoneNum);
 		}
-	}//setDiscount
-	
+	}// setDiscount
+
 	/**
 	 * 전화번호로 보유쿠폰 조회
+	 * 
 	 * @param phoneNum
 	 */
 	public void setCouponList(String phoneNum) {
 		SelectCouponDAO scDAO = SelectCouponDAO.getInstance();
 		try {
 			List<SelectCouponVO> list = scDAO.searchCoupByPhoneNum(phoneNum);
-			if(list.isEmpty()) {
+			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(ucd, "사용 가능한 쿠폰이 없습니다.");
 				ucd.dispose();
 			}
-			
-			
+
 			DefaultTableModel dtm = ucd.getDtmCouponList();
 			dtm.setRowCount(0);
-			
+
 			String[] rowData = null;
 			SelectCouponVO scVO = null;
-			for(int i=0; i < list.size(); i++) {
+			for (int i = 0; i < list.size(); i++) {
 				scVO = list.get(i);
-				rowData = new String[2];
+				rowData = new String[4];
 				// 1. 쿠폰 이름
 				rowData[0] = scVO.getCouponName();
 				// 2. 만료일 설정
@@ -146,13 +143,17 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 				// 2-8 만료일의 출력 형식을 발급일의 출력 형식에 맞게 바꿔줌
 				String adjustDate = adjustedYear + "-" + adjustedMonth + "-" + publishDateParts[2];
 				// 2-9 쿠폰 만료일
-				rowData[1] = adjustDate+" 까지";
+				rowData[1] = adjustDate + " 까지";
+				
+				rowData[2] = String.valueOf(scVO.getDisCount());
+				rowData[3] = scVO.getCoupPubCode();
+				
 				dtm.addRow(rowData);
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}//setCouponList
+	}// setCouponList
 
 	@Override
 	public void windowClosing(WindowEvent e) {

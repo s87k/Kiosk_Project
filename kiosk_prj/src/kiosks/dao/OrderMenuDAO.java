@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kiosks.vo.DetailedOrderVO;
 import kiosks.vo.OrderMenuVO;
 import kiosks.vo.SummaryOrderVO;
 
@@ -25,6 +26,37 @@ public class OrderMenuDAO {
 		return odDAO;
 	}// getInstance
 
+	public String selectOrderNum() throws SQLException {
+		String orderNum="";
+		DbConnection dbCon = DbConnection.getInstance();
+
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+
+			// 3. 쿼리문 생성객체 얻기
+			pstmt = con.prepareStatement("select SEQ_ORDER_NUMBER.nextval val from dual");
+
+			// 4. 바인드 변수에 값넣기
+
+			// 5. 쿼리문 수행 후 결과 얻기
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				orderNum=rs.getString("val");
+			} // end while
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally
+		return orderNum;
+	}
+	
 	/**
 	 * 메뉴 이미지 가져오기
 	 * 
@@ -179,14 +211,17 @@ public class OrderMenuDAO {
 			StringBuilder insertOrder = new StringBuilder();
 			insertOrder
 			.append("insert into summary_order(ORDER_NUMBER, SHOP_OPEN, ORDER_TIME, AMOUNT, PROGRESS, ORDER_FORM, PHONE_NUMBER) ")
-			.append(" values(seq_order_number.nextval, ?, ?, ?, ?, ?, ?)");
+			.append(" values(?, ?, ?, ?, ?, ?, ?)");//1
 			pstmt = con.prepareStatement(insertOrder.toString());
 
 			// 4. 바인드변수에 값 설정
-//			pstmt.setString(1, soVO.getShopOpen());
-//			pstmt.setString(2, soVO.getOrderTime());
-//			pstmt.setString(2, soVO.getOrderTime());
-//			pstmt.setString(2, soVO.getOrderTime());
+			pstmt.setString(1, soVO.getOrderNumber());
+			pstmt.setString(2, soVO.getShopOpen());
+			pstmt.setTimestamp(3, soVO.getOrderTime());
+			pstmt.setInt(4, soVO.getAmount());
+			pstmt.setString(5, soVO.getProgress());
+			pstmt.setString(6, soVO.getOrderForm());
+			pstmt.setString(7, soVO.getPhoneNumber());
 
 			// 5. 쿼리문 수행 후 결과 얻기
 			pstmt.executeUpdate();
@@ -194,33 +229,81 @@ public class OrderMenuDAO {
 			// 6. 연결 끊기
 			dbCon.dbClose(null, pstmt, con);
 		} // end finally
-	}
-/*
-//	public void insertOrder(OrderMenuVO omVO) throws SQLException {
-//		DbConnection dbCon = DbConnection.getInstance();
-//
-//		// 1. 드라이버 로딩
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//			// 2. 커넥션 얻기
-//			String id = "kiosk";
-//			String pass = "4";
-//			con = dbCon.getConnection(id, pass);
-//			pstmt = con.prepareStatement(insertOrder);
-//
-//			// 4. 바인드변수에 값 설정
-//			pstmt.setString(1, omVO.getPhoneNumber());
-//			pstmt.setString(2, omVO.getMemberName());
-//			pstmt.setString(3, omVO.getMemberBirth());
-//
-//			// 5. 쿼리문 수행 후 결과 얻기
-//			pstmt.executeUpdate();
-//		} finally {
-//			// 6. 연결 끊기
-//			dbCon.dbClose(null, pstmt, con);
-//		} // end finally
-//	}
-*/
+	}//insertSummaryOrder
+	
+	public void insertDetailedOrder(DetailedOrderVO doVO) throws SQLException {
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			StringBuilder insertOrder = new StringBuilder();
+			insertOrder
+			.append(" insert into DETAILED_ORDER(ORDER_NUMBER, SHOP_OPEN, WAITING_NUMBER, CUP_SIZE, TEMP, SHOT, MENU_CODE, TYPE_CODE, NUM) ")
+			.append(" values(?, ?, WAITING_NUMBER.nextval, ?, ?, ?, ?, ?, DETAILED_ORDER_SEQ.nextval) ");
+			pstmt = con.prepareStatement(insertOrder.toString());
+			
+			// 4. 바인드변수에 값 설정
+			pstmt.setString(1, doVO.getOrderNumber());
+			pstmt.setString(2, doVO.getShopOpen());
+			pstmt.setString(3, doVO.getCupSize());
+			pstmt.setString(4, doVO.getTemp());
+			pstmt.setInt(5, doVO.getShot());
+			pstmt.setString(6, doVO.getMenuCode());
+			pstmt.setString(7, doVO.getTypeCode());
+			
+			// 5. 쿼리문 수행 후 결과 얻기
+			pstmt.executeUpdate();
+		} finally {
+			// 6. 연결 끊기
+			dbCon.dbClose(null, pstmt, con);
+		} // end finally
+	}//insertSummaryOrder
+	
+	public List<OrderMenuVO> selectCodes(String menuName) throws SQLException {
+		List<OrderMenuVO> list = new ArrayList<OrderMenuVO>();
+
+		DbConnection dbCon = DbConnection.getInstance();
+
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+
+			// 3. 쿼리문 생성객체 얻기
+			StringBuilder selectAllMenu = new StringBuilder();
+			selectAllMenu.append(" select MENU_CODE, TYPE_CODE ").append(" from BEVERAGE_MANAGEMENT ")
+					.append(" where MENU_NAME = ? ");
+
+			pstmt = con.prepareStatement(selectAllMenu.toString());
+
+			// 4. 바인드 변수에 값넣기
+			pstmt.setString(1, menuName);
+
+			// 5. 쿼리문 수행 후 결과 얻기
+			rs = pstmt.executeQuery();
+
+			OrderMenuVO omVO = null;
+			while (rs.next()) {
+				omVO = new OrderMenuVO(rs.getString("MENU_CODE"), rs.getString("TYPE_CODE"));
+				list.add(omVO);
+			} // end while
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally
+		return list;
+	}// selectMenuDetail
+	
 }// class

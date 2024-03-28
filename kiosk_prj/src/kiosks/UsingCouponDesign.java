@@ -37,7 +37,7 @@ public class UsingCouponDesign extends JDialog {
 		availableCoupon.setBounds(160, 50, 200, 50);
 
 		// 보유 쿠폰 JTable
-		String[] couponTable = { "쿠폰 이름", "유효기간" };
+		String[] couponTable = { "쿠폰 이름", "유효기간", "할인액", "쿠폰번호" };
 		dtmCouponList = new DefaultTableModel(couponTable, 0) {
 			// 셀 수정 불가
 			public boolean isCellEditable(int row, int colum) {

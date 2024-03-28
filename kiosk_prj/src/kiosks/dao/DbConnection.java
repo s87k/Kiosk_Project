@@ -36,22 +36,23 @@ public class DbConnection {
 		return con;
 	}// getConnection
 	
-	public void test() throws SQLException {
-		Connection con=getConnection("Kiosk", "4");
-		PreparedStatement s1=con.prepareStatement("drop sequence test");
-		s1.execute();
-		PreparedStatement s=con.prepareStatement("create sequence test increment by 1 start with 1 maxvalue 99999");
-		s.execute();
-		
-	}
-	
-	public static void main(String[] args) {
-		try {
-			DbConnection.getInstance().test();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void test() throws SQLException {
+//		Connection con=getConnection("Kiosk", "4");
+//		PreparedStatement s1=con.prepareStatement("drop sequence seq_order_number");
+//		s1.execute();
+//		PreparedStatement s=con.prepareStatement("create sequence seq_order_number increment by 1 start with 1 maxvalue 99999");
+//		s.execute();
+//		
+//		
+//	}
+//	
+//	public static void main(String[] args) {
+//		try {
+//			DbConnection.getInstance().test();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public void dbClose(ResultSet rs, Statement stmt, Connection con) throws SQLException {
 		try {
