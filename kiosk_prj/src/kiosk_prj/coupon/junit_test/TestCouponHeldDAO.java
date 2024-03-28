@@ -87,7 +87,7 @@ class TestCouponHeldDAO {
 	
 //	@Disabled
 	@Test
-	void TestSelectUserCoupHeld() throws SQLException {
+	void testSelectUserCoupHeld() throws SQLException {
 		// given
 		List<CouponHeldVO> list = new ArrayList<CouponHeldVO>();
 		String phoneNumber = "01012345678";
@@ -102,6 +102,19 @@ class TestCouponHeldDAO {
 				System.out.println(list.get(i));
 			}
 		}
+	}
+	
+	@Disabled
+	@Test
+	void testUpdateExpireCoupon() throws SQLException {
+		// given
+		int cnt = 0;
+		
+		// when
+		cnt = chDAO.updateExpireCoupon();
+		
+		// then
+		assertEquals(2, cnt);
 	}
 
 }

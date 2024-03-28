@@ -11,9 +11,11 @@ public class ConsumePatternDesign extends JDialog{
 	private JTable consumePattern;
 	private JButton back;
 	private DefaultTableModel dtmConsumePattern;
+	private String phoneNum;
 	
-	public ConsumePatternDesign(JDialog DetailMemberDesign, String title) {
-		super(DetailMemberDesign, "회원상세 >>> 소비패턴" );
+	public ConsumePatternDesign(DetailMemberDesign dmd, String title, String phoneNum) {
+		super(dmd, "회원상세 >>> 소비패턴", true );
+		this.phoneNum = phoneNum;
 		String[] cspColumns = {"번호", "메뉴명", "판매량", "판매비율", "판매액", "비율"};
 		
 		dtmConsumePattern = new DefaultTableModel(cspColumns, 0);
@@ -33,8 +35,16 @@ public class ConsumePatternDesign extends JDialog{
 		ConsumePatternEvent cpe = new ConsumePatternEvent(this);
 		back.addActionListener(cpe);
 		
+		setBounds(dmd.getX(), dmd.getY(), 574, 648);
 		setVisible(true);
-		setBounds(DetailMemberDesign.getX(), DetailMemberDesign.getY(), 574, 648);
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 
 	public JTable getConsumePattern() {

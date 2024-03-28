@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.coupon.UpdateDefaultModelImpl;
 import kiosk_prj.coupon.dao.CoupConditionTypeDAO;
 import kiosk_prj.coupon.dao.CouponKindDAO;
 import kiosk_prj.coupon.dao.CouponPublishDAO;
@@ -22,7 +24,7 @@ import kiosk_prj.coupon.vo.ResultVO;
 import static java.lang.String.valueOf;
 import static java.lang.Integer.parseInt;
 
-public class PublishCouponEvent extends WindowAdapter implements ActionListener {
+public class PublishCouponEvent extends WindowAdapter implements ActionListener, UpdateDefaultModelImpl {
 
 	private PublishCouponDesign pcd;
 	
@@ -36,9 +38,8 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener 
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == pcd.getJbtnGoMain()) {		// 메인으로 가기 버튼
+		if(ae.getSource() == pcd.getJbtnGoBack()) {		// 닫기 버튼
 			closeDialog();
-			pcd.getMcd().dispose();
 		} // end if
 		if(ae.getSource() == pcd.getJbtnPublish()) {	// 발급 버튼
 			publishCoupon();
@@ -49,6 +50,7 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener 
 	} // actionPerformed
 	
 	public void closeDialog() {
+		pcd.getMcd().getMce().changeBtnIcon(-1);
 		pcd.dispose();
 	} // closeDialog
 
@@ -58,16 +60,16 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener 
 	} // windowClosing
 	
 	public void publishCoupon() {
-		int selectedIndex = pcd.getJtabCoupType().getSelectedRow();
+		int selectedIndex = pcd.getJtabCoupKind().getSelectedRow();
 		if(selectedIndex == -1) {
 			JOptionPane.showMessageDialog(pcd, "발급할 쿠폰을 선택해주세요");
 			return;
 		} // end if
-		if(!pcd.getDtmCoupType().getValueAt(selectedIndex, IND_FLAG_PUBLISHABLE).toString().equals("O")) {
+		if(!pcd.getDtmCoupKind().getValueAt(selectedIndex, IND_FLAG_PUBLISHABLE).toString().equals("O")) {
 			JOptionPane.showMessageDialog(pcd, "해당 쿠폰은 발급할 수 없습니다");
 			return;
 		} // end if
-		int couponKindNo = parseInt(pcd.getDtmCoupType().getValueAt(selectedIndex, IND_COUP_TYPE).toString());
+		int couponKindNo = parseInt(pcd.getDtmCoupKind().getValueAt(selectedIndex, IND_COUP_TYPE).toString());
 		
 		String strConditionPrice = pcd.getJtfPubConditonVal().getText().trim();
 		if(strConditionPrice == null || strConditionPrice.equals("")) {
@@ -95,23 +97,33 @@ public class PublishCouponEvent extends WindowAdapter implements ActionListener 
 		
 	} // publishCoupon
 
+	@Override
 	public void searchAllCoupPubConditionType() throws SQLException {
+		if(pcd.getDcmPubCondition() == null) {
+			return;
+		} // end if
+		pcd.getDcmPubCondition().removeAllElements();
 		CoupConditionTypeDAO cctDAO = CoupConditionTypeDAO.getInstance();
 		List<CoupConditionTypeVO> listCctVO = cctDAO.selectAllCoupConditionType();
 		for (int i = 0; i < listCctVO.size(); i++) {
-			pcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName());	
+			pcd.getDcmPubCondition().addElement(listCctVO.get(i).getConditionTypeName().replace("{}", "N"));	
 		} // end for
 	} // searchAllCoupPubConditionType
 	
 	public void searchPublishableCouponType() throws SQLException {
+		DefaultTableModel dtm = pcd.getDtmCoupKind();
+		if(dtm == null) {
+			return;
+		} // end if
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		List<CouponKindVO> ckList;
 		ckList = ckDAO.selectAllCoupKind();
 		
 		CouponKindVO ckVO = null;
+		dtm.setRowCount(0);
 		for (int i = 0; i < ckList.size(); i++) {
 			ckVO = ckList.get(i);
-			pcd.getDtmCoupType().addRow(new String[] {valueOf(i), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
+			dtm.addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
 		} // end for
 	} // searchPublishableCouponType
 	

@@ -18,7 +18,9 @@ public class AddMemberDesign extends JDialog {
 		//컴포넌트
 		//콤보박스 아이템 설정
 		
-		//텍스트 필드 설정
+		/**
+		 * 텍스트 필드 설정
+		 */
 		JLabel jlPhone = new JLabel("연락처");
 		JLabel jlName = new JLabel("이름");
 		JLabel jlBirthDay = new JLabel("생년월일");
@@ -28,13 +30,18 @@ public class AddMemberDesign extends JDialog {
 		birthDay = new JTextField();
 		
 		
-		//버튼 설정
+		/**
+		 * 버튼 설정
+		 */
 		add = new JButton("등록");
 		exit = new JButton("취소");
 		
-		//배치 관리자 해제
+		/**
+		 * 배치 관리자 해제 
+		 */
 		setLayout(null);
 		//컴포넌트 배치
+		
 		//텍스트 필드
 		jlPhone.setBounds(100, 50, 50, 40);
 		jPhoneNum.setBounds(150, 50, 250, 50);
@@ -61,6 +68,9 @@ public class AddMemberDesign extends JDialog {
 		add(add);
 		add(exit);
 		
+		/**
+		 * action_event 등록 
+		 */
 		AddMemberEvent ame = new AddMemberEvent(this);
 		add.addActionListener(ame);
 		exit.addActionListener(ame);

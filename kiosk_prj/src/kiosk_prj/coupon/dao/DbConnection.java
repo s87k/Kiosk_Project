@@ -9,9 +9,12 @@ import java.sql.Statement;
 
 public class DbConnection {
 	
-	static final String ID = "prj1kiosk";
-	static final String PASS = "tiger";
-	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+//	static final String ID = "prj1kiosk";
+//	static final String PASS = "tiger";
+//	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+	static final String ID = "Kiosk";
+	static final String PASS = "4";
+	static final String URL = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
 	
 	private static DbConnection dbCon;
 	
@@ -39,7 +42,7 @@ public class DbConnection {
 	}//getConnection
 	
 	public Connection getConnection(String id, String pass)throws SQLException{
-		return DriverManager.getConnection("jdbc:oracle:thin:@192.168.10.220:1521:orcl", id, pass);
+		return DriverManager.getConnection(URL, id, pass);
 	}//getConnection
 	
 	public void dbClose(ResultSet rs, Statement stmt, Connection con)throws SQLException{

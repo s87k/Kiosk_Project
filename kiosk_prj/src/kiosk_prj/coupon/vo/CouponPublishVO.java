@@ -1,9 +1,13 @@
 package kiosk_prj.coupon.vo;
 
+import java.sql.Date;
+
 public class CouponPublishVO {
 	private int conditionPrice;
 	private int conditionTypeNo;
 	private int coupKindNo;
+	private boolean flagDisable;
+	private Date disableDate;
 	
 	public CouponPublishVO() {
 	}
@@ -12,6 +16,14 @@ public class CouponPublishVO {
 		this.conditionPrice = conditionPrice;
 		this.conditionTypeNo = conditionTypeNo;
 		this.coupKindNo = coupKindNo;
+	}
+	public CouponPublishVO(int conditionPrice, int conditionTypeNo, int coupKindNo, boolean flagDisable,
+			Date disableDate) {
+		this.conditionPrice = conditionPrice;
+		this.conditionTypeNo = conditionTypeNo;
+		this.coupKindNo = coupKindNo;
+		this.flagDisable = flagDisable;
+		this.disableDate = disableDate;
 	}
 
 	public int getConditionPrice() {
@@ -38,10 +50,25 @@ public class CouponPublishVO {
 		this.coupKindNo = coupKindNo;
 	}
 
+	public boolean isFlagDisable() {
+		return flagDisable;
+	}
+
+	public void setFlagDisable(boolean flagDisable) {
+		this.flagDisable = flagDisable;
+	}
+
+	public Date getDisableDate() {
+		return disableDate;
+	}
+
+	public void setDisableDate(Date disableDate) {
+		this.disableDate = disableDate;
+	}
+
 	@Override
 	public String toString() {
 		return "CouponPublishVO [conditionPrice=" + conditionPrice + ", conditionTypeNo=" + conditionTypeNo
-				+ ", coupKindNo=" + coupKindNo + "]";
+				+ ", coupKindNo=" + coupKindNo + ", flagDisable=" + flagDisable + ", disableDate=" + disableDate + "]";
 	}
-	
 }

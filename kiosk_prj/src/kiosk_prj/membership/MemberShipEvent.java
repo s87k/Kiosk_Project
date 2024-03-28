@@ -29,7 +29,6 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 	
 	public MemberShipEvent(MemberShipDesign msd) {
 		this.msd = msd;
-		
 	}
 		
 	@Override
@@ -39,6 +38,7 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 		String phoneNum = msd.getjPhoneNum().getText();
 		String name = msd.getjName().getText();
 
+		
 		// 숫자 입력 버튼 for문 설정하여 코드 가독성 향상
 		if (currentText.length() <= 10) {
 			for (int i = 0; i <= 9; i++) {
@@ -172,6 +172,10 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 	}// setMemberOrder
 
 	public void setCouponList(String phoneNum) {
+		
+		String openDate = msd.getOpenDate();
+        String[] parts = openDate.split(":");
+        String dateOnly = parts[1].trim();
 
 		MemberShipDAO msDAO = MemberShipDAO.getInstance();
 		try {
@@ -198,7 +202,7 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 				// 5-1 쿠폰 만료일 설정을 위해 쿠폰 발급일을 가져옴
 				String publishDate = mscVO.getPublishDate();
 				// 5-2 DB에 설정되어 있는 쿠폰 만료일의 값을 int로 파싱
-				int expireDateValue = Integer.parseInt(mscVO.getExpireDate());
+				int expireDateValue = mscVO.getExpiresPeriod();
 				// 5-3 쿠폰 만료일의 값을 발급일에 추가하기 위해 "-"를 기준으로 발급일을 자름
 				String[] publishDateParts = publishDate.split("-");
 				// 5-4 쿠폰 만료일을 더했을 때, 12월이 넘어가면 연도의 값을 더해줘야 하므로, 발급일의 연도의 값을 가져옴
@@ -215,7 +219,16 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 				String adjustDate = adjustedYear + "-" + adjustedMonth + "-" + publishDateParts[2];
 				// 5-9 쿠폰 만료일
 				rowData[4] = adjustDate;
-
+				
+				//5-10 개점일 "-" 기준으로 자르기
+				String[] openDateParts = dateOnly.split("-");
+				//5-11 개점
+				int openDateYear = Integer.parseInt(openDateParts[0]);
+				int openDateMonth = Integer.parseInt(openDateParts[1]);
+				int openDateDay = Integer.parseInt(openDateParts[2]);
+				
+				String[] pdp = publishDateParts[2].split(" ");
+				int adJustDay = Integer.parseInt(pdp[0]);
 				// 6 쿠폰 상태(나중에 개점 날짜에 따라 쿠폰 사용 가능 여부 바꿔줄 것)
 				// 6-1 쿠폰 사용여부를 받기 위해 getUseStatus의 값을 int로 파싱해줌
 				int useStatus = Integer.parseInt(mscVO.getUseStatus());
@@ -228,12 +241,17 @@ public class MemberShipEvent extends WindowAdapter implements ActionListener, Mo
 				case 1: {
 					// 6-3 쿠폰 사용 여부의 값이 1일 경우
 					rowData[5] = "사용완료";
+					break;
 				}
 				case 2: {
 					// 6-4 쿠폰 사용 여부의 값이 2일 경우
 					// 이 값은 개점설정된 일자와 쿠폰 만료일의 값을 비교하여 개점 날짜가 만료일의 값을 지났을 때 설정해
 					rowData[5] = "만료됨";
+					break;
 				}
+				}
+				if((openDateYear > adjustedYear)||(openDateMonth > adjustedMonth) || (openDateDay > adJustDay)) {
+					rowData[5] = "만료됨";
 				}
 				dtm.addRow(rowData);
 			}

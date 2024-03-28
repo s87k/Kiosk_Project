@@ -1,16 +1,16 @@
 package kiosk_prj.membership.vo;
 
 public class MemberShipCouponVO {
-	private String couponName, publishDate, useDate, expireDate, useStatus;
-	private int disCount;
+	private String couponName, publishDate, useDate, useStatus;
+	private int disCount, expiresPeriod;
 
-	public MemberShipCouponVO(String couponName, int disCount, String publishDate, String useDate, String expireDate,
+	public MemberShipCouponVO(String couponName, int disCount, String publishDate, int expiresPeriod, String useDate,
 			String useStauts) {
 		this.couponName = couponName;
 		this.disCount = disCount;
 		this.publishDate = publishDate;
 		this.useDate = useDate;
-		this.expireDate = expireDate;
+		this.expiresPeriod = expiresPeriod;
 		this.useStatus = useStauts;
 	}
 
@@ -37,13 +37,13 @@ public class MemberShipCouponVO {
 	public void setUseDate(String useDate) {
 		this.useDate = useDate;
 	}
-
-	public String getExpireDate() {
-		return expireDate;
+	
+	public int getExpiresPeriod() {
+		return expiresPeriod;
 	}
 
-	public void setExpireDate(String expireDate) {
-		this.expireDate = expireDate;
+	public void setExpiresPeriod(int expiresPeriod) {
+		this.expiresPeriod = expiresPeriod;
 	}
 
 	public String getUseStatus() {
@@ -65,7 +65,8 @@ public class MemberShipCouponVO {
 	@Override
 	public String toString() {
 		return "MemberShipCouponVO [couponName=" + couponName + ", publishDate=" + publishDate + ", useDate=" + useDate
-				+ ", expireDate=" + expireDate + ", useStatus=" + useStatus + ", disCount=" + disCount + "]";
+				+ ", useStatus=" + useStatus + ", disCount=" + disCount + ", expiresPeriod=" + expiresPeriod + "]";
 	}
+
 
 }

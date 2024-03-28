@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import kiosk_prj.adminMain.AdminMainPageDesign;
+
 @SuppressWarnings("serial")
 public class MemberShipDesign extends JDialog {
 	private JTextField jPhoneNum, jName, memberNum;
@@ -22,9 +24,13 @@ public class MemberShipDesign extends JDialog {
 	private JTable memberList, orderList, couponList;
 	private JTabbedPane listTab;
 	private DefaultTableModel dtmMemberList, dtmOrderList, dtmCouponList;
-	
-	public MemberShipDesign(JFrame AdminMainPageDesign, String title) {
-		super(AdminMainPageDesign, "회원관리");
+	private String openDate;
+
+	public MemberShipDesign(AdminMainPageDesign ampd, String title, String openDate) {
+		super(ampd, "회원관리");
+		this.openDate = openDate;
+		
+		openDate = ampd.getJlOpenDate().getText();
 		
 		// 컴포넌트
 		// 숫자 입력 버튼 설정
@@ -190,8 +196,8 @@ public class MemberShipDesign extends JDialog {
 		memberList.addMouseListener(mse);
 
 		// 다이얼로그 위치 설정
+		setBounds(ampd.getX(), ampd.getY(), 924, 768);
 		setVisible(true);
-		setBounds(AdminMainPageDesign.getX(), AdminMainPageDesign.getY(), 924, 768);
 
 	}
 	
@@ -209,6 +215,14 @@ public class MemberShipDesign extends JDialog {
 
 	public void setjName(String name) {
 		jName.setText(name);
+	}
+	
+	public String getOpenDate() {
+		return openDate;
+	}
+	
+	public void setOpenDate(String openDate) {
+		this.openDate = openDate;
 	}
 
 	public JTextField getMemberNum() {

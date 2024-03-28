@@ -38,7 +38,7 @@ public class currentOrderDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String searchStatus = "SELECT mt.TYPE_NAME, bm.MENU_NAME, bm.MENU_PRICE "
+			String searchStatus = "SELECT mt.TYPE_NAME, bm.MENU_NAME, bm.MENU_PRICE + (dto.SHOT*500) menu_price "
 					+ "FROM DETAILED_ORDER dto, BEVERAGE_MANAGEMENT bm, MENU_TYPE mt "
 					+ "WHERE mt.TYPE_CODE=bm.TYPE_CODE AND dto.menu_code = bm.menu_code AND SHOP_OPEN= ?";
 			pstmt = con.prepareStatement(searchStatus);
@@ -49,7 +49,7 @@ public class currentOrderDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				coVO = new currentOrderVO(rs.getString("TYPE_NAME"), rs.getString("MENU_NAME"),
-						rs.getInt("MENU_PRICE"));
+						rs.getInt("menu_price"));
 				list.add(coVO);
 			}
 		} finally {
@@ -73,9 +73,12 @@ public class currentOrderDAO {
 			String pass = "4";
 			con = dbCon.getConnection(id, pass);
 			// 3.
-			String sumAmount = "SELECT SUM(bm.MENU_PRICE) AS total_price " + "FROM DETAILED_ORDER dto "
-					+ "INNER JOIN BEVERAGE_MANAGEMENT bm ON dto.menu_code = bm.menu_code "
-					+ "INNER JOIN MENU_TYPE mt ON mt.TYPE_CODE = bm.TYPE_CODE " + "WHERE SHOP_OPEN = ? ";
+			String sumAmount = 
+					"SELECT SUM(bm.MENU_PRICE + (dto.SHOT * 500)) AS total_menu_price "
+		                       + "FROM DETAILED_ORDER dto "
+		                       + "JOIN BEVERAGE_MANAGEMENT bm ON dto.menu_code = bm.menu_code "
+		                       + "JOIN MENU_TYPE mt ON mt.TYPE_CODE = bm.TYPE_CODE "
+		                       + "WHERE SHOP_OPEN = ?";
 			pstmt = con.prepareStatement(sumAmount);
 			// 4.
 			pstmt.setString(1, openDate);
@@ -83,7 +86,7 @@ public class currentOrderDAO {
 			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				coVO = new currentOrderVO(rs.getInt("total_price"));
+				coVO = new currentOrderVO(rs.getInt("total_menu_price"));
 			}
 		} finally {
 			dbCon.dbClose(rs, pstmt, con);

@@ -115,7 +115,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String deleteCoupKind = "delete from coupon_kind where coup_kind_no=?";
+			String deleteCoupKind = "update coupon_kind set FLAG_PUBLISHABLE='0', DELETE_DATE=sysdate, FLAG_DELETE='1' where coup_kind_no=?";
 			pstmt = con.prepareStatement(deleteCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -152,7 +152,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where coup_kind_no=?";
+			String selectCoupKind = "select ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where coup_kind_no=? and flag_delete='0'";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -192,7 +192,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind";
+			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where flag_delete='0' order by FLAG_PUBLISHABLE desc, COUP_KIND_NAME";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정
@@ -232,7 +232,7 @@ public class CouponKindDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where flag_publishable=?";
+			String selectCoupKind = "select COUP_KIND_NO, ID, COUP_KIND_NAME, DISCOUNT, expires_period, INPUT_DATE, FLAG_PUBLISHABLE, DELETE_DATE, FLAG_DELETE from coupon_kind where flag_publishable=? and flag_delete='0'";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정

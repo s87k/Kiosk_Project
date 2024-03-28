@@ -1,8 +1,10 @@
 package kiosk_prj.coupon.view;
 
+import java.awt.Font;
 import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -13,8 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kiosk_prj.coupon.UnsignedIntegerDocument;
 import kiosk_prj.coupon.controller.PublishCouponEvent;
@@ -24,38 +29,72 @@ public class PublishCouponDesign extends JDialog {
 	
 	private ManageCouponDesign mcd;
 	
-	private JTable jtabCoupType;
-	private DefaultTableModel dtmCoupType;
+	private JTable jtabCoupKind;
+	private DefaultTableModel dtmCoupKind;
 	private JComboBox<String> jcbPubCondition;
 	private DefaultComboBoxModel<String> dcmPubCondition;
 	private JTextField jtfPubConditonVal;
-	private JButton jbtnGoMain, jbtnPublish, jbtnCancel;
+	private JButton jbtnGoBack, jbtnPublish, jbtnCancel;
 	
 	public PublishCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 발급", true);
 		
 		this.mcd= mcd;
 		
+		Font font = new Font("맑은 고딕", Font.BOLD, 20);
+		
 		String[] columnName = {"번호", "종류코드", "쿠폰명", "이용기간", "할인액", "발급가능"};
-		dtmCoupType = new DefaultTableModel(null, columnName);
-		jtabCoupType = new JTable(dtmCoupType);
-		jtabCoupType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane jspCoupType = new JScrollPane(jtabCoupType);
+		dtmCoupKind = new DefaultTableModel(null, columnName) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
+		jtabCoupKind = new JTable(dtmCoupKind);
+		jtabCoupKind.setFont(font);
+		jtabCoupKind.setRowHeight(25);
+		jtabCoupKind.getColumn(columnName[0]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnName[1]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnName[2]).setPreferredWidth(200);
+		jtabCoupKind.getColumn(columnName[3]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnName[4]).setPreferredWidth(60);
+		jtabCoupKind.getColumn(columnName[5]).setPreferredWidth(20);
+		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		DefaultTableCellRenderer dtcrCenter = new DefaultTableCellRenderer();
+		DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
+		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER); 
+		dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT); 
+		TableColumnModel tcm = jtabCoupKind.getColumnModel();
+		
+		tcm.getColumn(0).setCellRenderer(dtcrRight);
+		tcm.getColumn(1).setCellRenderer(dtcrRight);
+		tcm.getColumn(3).setCellRenderer(dtcrRight);
+		tcm.getColumn(4).setCellRenderer(dtcrRight);
+		tcm.getColumn(5).setCellRenderer(dtcrCenter);
+
+		JScrollPane jspCoupKind = new JScrollPane(jtabCoupKind);
 		
 		JLabel jlblCondition = new JLabel("조건"); 
 		JLabel jlblValue = new JLabel("값"); 
 		dcmPubCondition = new DefaultComboBoxModel<String>();
 		jcbPubCondition = new JComboBox<String>(dcmPubCondition);
+		jcbPubCondition.setFont(font);
 		
 		jtfPubConditonVal = new JTextField(10);
 		jtfPubConditonVal.setDocument(new UnsignedIntegerDocument(8, 1, 99999999));
+		jtfPubConditonVal.setFont(font);
 		
-		jbtnGoMain = new JButton("메인으로");
-		jbtnPublish = new JButton("발급");
-		jbtnCancel = new JButton("취소");
+		ImageIcon iiGoBack = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_go_back.png");
+		ImageIcon iiPublish = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_pub.png");
+		ImageIcon iiCancel = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_cancel.png");
+		
+		jbtnGoBack = new JButton(iiGoBack);
+		jbtnPublish = new JButton(iiPublish);
+		jbtnCancel = new JButton(iiCancel);
 		
 		PublishCouponEvent pce = new PublishCouponEvent(this);
-		jbtnGoMain.addActionListener(pce);
+		jbtnGoBack.addActionListener(pce);
 		jbtnPublish.addActionListener(pce);
 		jbtnCancel.addActionListener(pce);
 		addWindowListener(pce);
@@ -73,15 +112,15 @@ public class PublishCouponDesign extends JDialog {
 		jpPubCondition.setBorder(new TitledBorder("발급 조건"));
 		
 		setLayout(null);
-		jspCoupType.setBounds(30, 30, 680, 250);
+		jspCoupKind.setBounds(30, 30, 680, 250);
 		jpPubCondition.setBounds(30, 300, 680, 100);
-		jbtnGoMain.setBounds(175, 500, 120, 80);
+		jbtnGoBack.setBounds(175, 500, 120, 80);
 		jbtnPublish.setBounds(315, 500, 120, 80);
 		jbtnCancel.setBounds(455, 500, 120, 80);
 		
-		add(jspCoupType);
+		add(jspCoupKind);
 		add(jpPubCondition);
-		add(jbtnGoMain);
+		add(jbtnGoBack);
 		add(jbtnPublish);
 		add(jbtnCancel);
 		
@@ -107,12 +146,12 @@ public class PublishCouponDesign extends JDialog {
 		return mcd;
 	}
 
-	public JTable getJtabCoupType() {
-		return jtabCoupType;
+	public JTable getJtabCoupKind() {
+		return jtabCoupKind;
 	}
 
-	public DefaultTableModel getDtmCoupType() {
-		return dtmCoupType;
+	public DefaultTableModel getDtmCoupKind() {
+		return dtmCoupKind;
 	}
 
 	public JComboBox<String> getJcbPubCondition() {
@@ -127,8 +166,8 @@ public class PublishCouponDesign extends JDialog {
 		return jtfPubConditonVal;
 	}
 
-	public JButton getJbtnGoMain() {
-		return jbtnGoMain;
+	public JButton getJbtnGoBack() {
+		return jbtnGoBack;
 	}
 
 	public JButton getJbtnPublish() {
