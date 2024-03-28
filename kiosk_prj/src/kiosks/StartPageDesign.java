@@ -29,7 +29,7 @@ public class StartPageDesign extends JFrame{
 		takeOut = new JButton("포장");
 		
 		//logo 추가
-		logo = new JLabel(new ImageIcon(getClass().getResource("/kiosk_prj/image/login_logo.png")));
+		logo = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("login_logo.png")));
         
 		setLayout(null);
 		

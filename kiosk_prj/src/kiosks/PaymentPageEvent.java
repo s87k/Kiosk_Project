@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -221,11 +222,16 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 	 * 사용 쿠폰 내역 update
 	 */
 	public void updateUsedCoupon() {
-//		CouponHeldVO chVO = new CouponHeldVO();
-//		chVO.setStatusUse("1");  //"0": 사용가능, "1":사용완료, "2":만료됨
-//		chVO.setCoupPubCode(String 16자리쿠폰코드);
-//		CouponHeldDAO chDAO = CouponHeldDAO.getInstance();
-//		int cnt = chDAO.updateCoupHeld(chVO);
+		CouponHeldVO chVO = new CouponHeldVO();
+		chVO.setStatusUse("1");  //"0": 사용가능, "1":사용완료, "2":만료됨
+		chVO.setCoupPubCode(PaymentPageDesign.coupPubCode);
+		CouponHeldDAO chDAO = CouponHeldDAO.getInstance();
+		try {
+			int cnt = chDAO.updateCoupHeld(chVO);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(ppd, "쿠폰 사용 내역 업데이트에 실패했습니다");
+			e.printStackTrace();
+		} // catch
 	}// updateUsedCoupon
 
 	@Override
