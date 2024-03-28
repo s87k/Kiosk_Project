@@ -1,48 +1,54 @@
 package kiosk_prj.orderStatus;
 
-import java.sql.Date;
-
 public class OrderStatusVO {
-	private String waitingNumber;
-	private Date orderTime;
+	private String orderNumber	;
 	private String menuName;
-	private int price;
-	private String status;
+	private String orderTime;
+	private int amount;
+	private String prograss;
 	
 	/**
-	 * String waitingNumber, Date orderTime, String menuName, int price, String status
-	 * @param waitingNumber
-	 * @param orderTime
+	 * String orderNumber, String menuName, String orderTime, int amount, String prograss<br>
+	 * 주문번호, 메뉴이름, 주문시간, 가격, 진행상황
+	 * @param orderNumber
 	 * @param menuName
-	 * @param price
-	 * @param status
+	 * @param orderTime
+	 * @param amount
+	 * @param prograss
 	 */
-	public OrderStatusVO(String waitingNumber, Date orderTime, String menuName, int price, String status) {
-		this.waitingNumber = waitingNumber;
-		this.orderTime = orderTime;
+	public OrderStatusVO(String orderNumber, String menuName, String orderTime, int amount, String prograss) {
+		super();
+		this.orderNumber = orderNumber;
 		this.menuName = menuName;
-		this.price = price;
-		this.status = status;
+		this.orderTime = orderTime;
+		this.amount = amount;
+		this.prograss = prograss;
 	}
 
-	public String getWaitingNumber() {
-		return waitingNumber;
-	}
-
-	public Date getOrderTime() {
-		return orderTime;
+	public String getOrderNumber() {
+		return orderNumber;
 	}
 
 	public String getMenuName() {
 		return menuName;
 	}
 
-	public int getPrice() {
-		return price;
+	public String getOrderTime() {
+		return orderTime;
 	}
 
-	public String getStatus() {
-		return status;
+	public int getAmount() {
+		return amount;
+	}
+
+	public String getPrograss() {
+		return prograss;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderStatusVO [orderNumber=" + orderNumber + ", menuName=" + menuName + ", orderTime=" + orderTime
+				+ ", amount=" + amount + ", prograss=" + prograss + "]";
 	}
 	
 }

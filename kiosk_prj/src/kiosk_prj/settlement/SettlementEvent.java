@@ -2,18 +2,41 @@ package kiosk_prj.settlement;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
-public class SettlementEvent extends WindowAdapter implements ActionListener {
+public class SettlementEvent extends WindowAdapter implements ActionListener, KeyListener {
 	
 	private SettlementDesign smd;
+	private SettlementSetDaysDialog smsdDialog;
+	private SettlementShowDialog smswDialog;
 	
 	private static final int CAL_WIDTH = 7;
 	private final static int CAL_HEIGHT = 6;
@@ -27,13 +50,16 @@ public class SettlementEvent extends WindowAdapter implements ActionListener {
 	private int calDates[][];
 	private Calendar cal;
 	
-	private JTextArea[][] jtaDates; //일 부분
-	private JTextArea jtaMonthly; //월 매출 합산
+	private JTextPane[][] jtpDates; //일 부분
+	private JTextPane jtpMonthly; //월 매출 합산
 	private JButton jbLeftMonth; //달 감소버튼
 	private JButton jbRightMonth; //달 증가 버튼
 	private JButton jbSetPeriod; //기간설정버튼
 	private JButton jbExit;
 	private JLabel jlViewYearMonth; //달력의 현재 년,월 라벨
+	
+	private JTextField jtfSetStartDay, jtfSetEndDay;
+	private JButton jbOk, jbNo;
 	
 	public SettlementEvent(SettlementDesign smd) {
 		this.smd = smd;
@@ -44,26 +70,67 @@ public class SettlementEvent extends WindowAdapter implements ActionListener {
 		calLastDate = smd.getCalLastDate();
 		calDates = smd.getCalDates();
 		
-		jtaDates = smd.getJtaDates();
-		jtaMonthly = smd.getJtaMonthly();
+		jtpDates = smd.getJtpDates();
+		jtpMonthly = smd.getJtpMonthly();
 		jbLeftMonth = smd.getJbLeftMonth();
 		jbRightMonth = smd.getJbRightMonth();
 		jbSetPeriod = smd.getJbSetPeriod();
 		jbExit = smd.getJbExit();
 		jlViewYearMonth = smd.getJlViewYearMonth();
+	}//SettlementEvent
+	
+	public SettlementEvent(SettlementSetDaysDialog smsdDialog) {
+		this.smsdDialog = smsdDialog;
 		
+		jtfSetStartDay = smsdDialog.getJtfSetStartDay();
+		jtfSetEndDay = smsdDialog.getJtfSetEndDay();
+		
+		jbOk = smsdDialog.getJbOk();
+		jbNo = smsdDialog.getJbNo();
+	}//SettlementEvent
+	
+	public SettlementEvent(SettlementShowDialog smswDialog) {
+		this.smswDialog = smswDialog;
+		
+		try {
+			setResult();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
 	}//SettlementEvent
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == jbExit) {
-			smd.dispose();
+		if(smd != null) {
+			if(e.getSource() == jbExit) {
+				smd.dispose();
+			}//end if
+			if(e.getSource() == jbLeftMonth) {
+				moveMonth(-1);
+			}//end if
+			if(e.getSource() == jbRightMonth) {
+				moveMonth(1);
+			}//end if
+			if(e.getSource() == jbSetPeriod) {
+				new SettlementSetDaysDialog(smd);
+			}//end if
 		}//end if
-		if(e.getSource() == jbLeftMonth) {
-			moveMonth(-1);
+		
+		if(smsdDialog != null) {
+			if(e.getSource() == jbOk) {
+				verifyInputData();
+			}//end if
+			if(e.getSource() == jbNo) {
+				smsdDialog.dispose();
+			}//end if
 		}//end if
-		if(e.getSource() == jbRightMonth) {
-			moveMonth(1);
+		
+		if(smswDialog != null) {
+			if(e.getSource() == smswDialog.getJbExit()) {
+				smswDialog.dispose();
+			}//end if
 		}//end if
 	}//actionPerformed
 
@@ -71,6 +138,30 @@ public class SettlementEvent extends WindowAdapter implements ActionListener {
 	public void windowClosing(WindowEvent e) {
 		smd.dispose();
 	}//windowClosing
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getSource() == jtfSetStartDay) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				jtfSetEndDay.requestFocus();
+			}//end if
+		}//end if
+		if(e.getSource() == jtfSetEndDay) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				jtfSetStartDay.requestFocus();
+				verifyInputData();
+			}//end if
+		}//end if
+		
+	}//keyPressed
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
 	
 	/**
 	 * 현재달로 부터 n달 전후를 받아 달력 배열을 만드는 함수<br>
@@ -153,20 +244,207 @@ public class SettlementEvent extends WindowAdapter implements ActionListener {
 	 * 달력 일 버튼부분에 텍스트를 세팅해주는 method
 	 */
 	public void setDate() {
+		SettlementDAO stmDAO = SettlementDAO.getInstance();
+		StringBuilder sb = new StringBuilder();
+		DecimalFormat df = new DecimalFormat("#,###,###");
+		List<Integer> list = null;
+		String date = "";
+		int amount = 0;
+		int totalAmount = 0;
+		int count = 0;
+		int totalCount = 0;
+		
+		String fontColor = "";
+		
 		for(int i=0 ; i<CAL_HEIGHT ; i++) { //일 부분 버튼
 			for(int j=0 ; j<CAL_WIDTH ; j++) {
 				
-				jtaDates[i][j].setText(calDates[i][j] + "\n10,000");
-				jtaDates[i][j].removeAll();
-		
-				if (calDates[i][j] == 0) {
-					jtaDates[i][j].setVisible(false);
-				} else {
-					jtaDates[i][j].setVisible(true);
-				}//else
+				if(calMonth<9 && calDates[i][j]<10) {
+					date = calYear + "-0" + (calMonth+1) + "-0" + calDates[i][j];
+				}else if(calMonth<9) {
+					date = calYear + "-0" + (calMonth+1) + "-" + calDates[i][j];
+				}else if(calDates[i][j]<10) {
+					date = calYear + "-" + (calMonth+1) + "-0" + calDates[i][j];
+				}//end if
+				
+				try {
+					list = stmDAO.selectOneDaySettlement(date);
+					if(list!=null) { //해당일의 매출정보가 있다면..!
+						for(int k=0 ; k<list.size() ; k++) {
+							amount += list.get(k);
+							count++;
+							totalAmount += list.get(k);
+							totalCount++;
+							
+						}//end for
+					}//end if
+					
+					fontColor = "black";
+					if(j == 0) {
+						fontColor = "red";
+					}else if(j == 6) {
+						fontColor = "blue";
+					}//end else
+					
+					sb
+					.append("<BODY><b><font color=\"")
+					.append(fontColor)
+					.append("\" size=\"5\" face=\"맑은 고딕\">") 
+					.append(calDates[i][j])
+					.append("</font></b><br>")
+					.append("<font color=\"#1E1E1E\" size=\"4\" face=\"맑은 고딕\">")
+					.append(df.format(amount))
+					.append("<br>")
+					.append(" (" + count + ")")
+					.append("</font></BODY>");
+					jtpDates[i][j].setText(sb.toString());
+					jtpDates[i][j].removeAll();
+					sb.delete(0, sb.length()); //StringBuiler 초기화
+					
+					if (calDates[i][j] == 0) {
+						jtpDates[i][j].setVisible(false);
+					} else {
+						jtpDates[i][j].setVisible(true);
+					}//else
+					
+					amount = 0;
+					count = 0;
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}//end catch
+				
 			}//end for
 		}//end for
+		
+		sb
+		.append("<BODY><b><font color=\"#423857\" size=\"6\" face=\"맑은 고딕\">")
+		.append("월 매출 합산")
+		.append("</font></b><br>")
+		.append("<font color=\"#1E1E1E\" size=\"4\" face=\"맑은 고딕\">")
+		.append(df.format(totalAmount)).append("원<br>일평균 ")
+		.append(df.format(totalAmount/calLastDateOfMonth[calMonth]))
+		.append("원<br> ")//일평균
+		.append("(" + totalCount + ")");
+		jtpMonthly.setText(sb.toString());
+		sb.delete(0, sb.length());
 	}//setDate
-
 	
+	private void verifyInputData() {
+		String startDay = jtfSetStartDay.getText();
+		String endDay = jtfSetEndDay.getText();
+		
+		if( !( startDay.matches("(\\d{4})-(\\d{2})-(\\d{2})")
+				&& endDay.matches("(\\d{4})-(\\d{2})-(\\d{2})") ) ) {
+			JOptionPane.showMessageDialog(null, "\'YYYY-MM-DD\'의 형식으로 입력해주세요");
+			return;
+		}//end if
+		
+		try {
+			
+			SettlementDAO stmDAO = SettlementDAO.getInstance();
+			List<SettlementPeriodVO> list = stmDAO.selectSettlementPeriod(startDay, endDay);
+			
+			if(list.size()<1) {
+				JOptionPane.showMessageDialog(null, "입력일의 매출정보가 없거나, 종료일이 시작일보다 빠릅니다.");
+				return;
+			}//end if
+			
+			smsdDialog.dispose();
+			new SettlementShowDialog(smd, startDay, endDay);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+	}//selectSettlement
+	
+	public void setResult() throws ParseException, SQLException{
+		String startDay = smswDialog.getStartDay();
+		String endDay = smswDialog.getEndDay();
+		
+		SettlementDAO stmDAO = SettlementDAO.getInstance();
+		List<SettlementPeriodVO> list = stmDAO.selectSettlementPeriod(startDay, endDay);
+		
+		//시작일과 종료일의 날짜 차이를 구함.
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date d1 = format.parse(startDay);
+		Date d2 = format.parse(endDay);
+		long Day = ((d2.getTime()-d1.getTime())/1000)/(24*60*60) +1 ;
+		
+		SettlementPeriodVO smpVO = null;
+		Map<String, Integer> mapCountMenu = new HashMap<String, Integer>();
+		int totalAmount = 0;
+		int totalCount = 0;
+		for(int i=0 ; i<list.size() ; i++) {
+			smpVO = list.get(i);
+			//메뉴이름은 key로 넣었을때, value가 없으면 최초 value로 1을 입력. value는 잔수
+			if(mapCountMenu.get(smpVO.getMenuName())==null) {
+				mapCountMenu.put(smpVO.getMenuName(), 1); 
+			}else {
+				mapCountMenu.put(smpVO.getMenuName(), mapCountMenu.get(smpVO.getMenuName())+1); 
+			}//end else
+			totalAmount += smpVO.getMenuPrice();
+			totalCount++;
+		}//end for
+		
+		StringBuilder sb = new StringBuilder();
+		DecimalFormat df = new DecimalFormat("#,###,###");
+		
+		//판매 건수가 2건 이상이면 판매잔수를 비교해야함.
+		if(list.size()>1) {
+			List<Map.Entry<String, Integer>> tempList = new ArrayList<>(mapCountMenu.entrySet());
+			
+			Collections.sort(tempList, new Comparator<Map.Entry<String, Integer>>() {
+				@Override
+				public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+					if(o1.getValue() > o2.getValue()) {
+						return -1;
+					}else if(o1.getValue() < o2.getValue()){
+						return 1;
+					}
+					return o1.getKey().compareTo(o2.getKey());
+				}//compare
+			});
+			
+			sb
+			.append("설정기간 총 매출 금액 : ").append(df.format(totalAmount) + "원\n")
+			.append("일 평균 : ").append(df.format(totalAmount/(int)Day) + "원\n")
+			.append("설정기간 총 판매 잔 수 : ").append("(" + totalCount + ")\n\n");
+			
+			double percentage = 0;
+			Map<String, Integer> mapSorted = new LinkedHashMap<String, Integer>();
+			for(Iterator<Map.Entry<String, Integer>> iter = tempList.iterator(); iter.hasNext();) {
+				Map.Entry<String, Integer> entry = iter.next();
+				mapSorted.put(entry.getKey(), entry.getValue());
+				
+				percentage = (double)entry.getValue()/totalCount;
+				
+				sb
+				.append(entry.getKey())
+				.append(" (" + entry.getValue() + "건, " + String.format("%.1f", percentage*100) +"%)\n");
+			}//end for
+			smswDialog.getJtaResult().setText(sb.toString());
+			
+		}else{//판매건수가 1건일때는 비교 안해도 됨.
+			
+			smpVO = list.get(0);
+			String menuName = smpVO.getMenuName();
+			int menuAmount = smpVO.getMenuPrice();
+			
+			sb
+			.append("설정기간 총 매출 금액 : ").append(df.format(menuAmount) + "원\n")
+			.append("일 평균 : ").append(df.format(menuAmount) + "원\n")
+			.append("설정기간 총 판매 잔 수 : ").append("(1)\n\n")
+			.append(menuName + " (1건, 100%)");
+			
+			smswDialog.getJtaResult().setText(sb.toString());
+			
+		}//end else
+		
+	}//setResult
+	
+	public void setSmd(SettlementDesign smd) {
+		this.smd = smd;
+	}
+
 }//class

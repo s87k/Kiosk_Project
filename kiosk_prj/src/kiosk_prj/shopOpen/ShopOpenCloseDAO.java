@@ -118,7 +118,7 @@ public class ShopOpenCloseDAO {
 			.append(" select    m.type_name, b.menu_name, b.menu_price+(d.shot*500) price ")
 			.append(" from      detailed_order d, beverage_management b, menu_type m ")
 			.append(" where	    d.menu_code=b.menu_code and m.type_code=b.type_code and shop_open=? ")
-			.append(" order by	m.TYPE_CODE ");
+			.append(" order by	m.TYPE_CODE, b.MENU_NAME ");
 			
 			pstmt=con.prepareStatement(selectDailySettlemnet.toString());
 		// 4. 바인드 변수에 값 설정

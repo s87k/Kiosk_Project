@@ -19,6 +19,7 @@ import kiosk_prj.adminMain.AdminMainPageDesign;
 public class OrderStatusDesign extends JDialog {
 	
 	private AdminMainPageDesign ampd;
+	private JLabel jlOpenDate;
 	
 	private JLabel jlTotalOrder, jlTotalPrice;
 	private JButton jbMenuComplete, jbExit;
@@ -31,6 +32,7 @@ public class OrderStatusDesign extends JDialog {
 	public OrderStatusDesign(AdminMainPageDesign ampd) {
 		super(ampd, "주문 현황 목록", true);
 		this.ampd = ampd;
+		jlOpenDate = ampd.getJlOpenDate();
 		
 		//이미지
 		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/OrderStatus.png");
@@ -40,14 +42,23 @@ public class OrderStatusDesign extends JDialog {
 		JLabel lbBackground = new JLabel(imgBackground);
 		String[] coluumnName = {"번호","주문시간","상품명","결제금액","진행현황","완료"};
 		dtmOrderStatus = new DefaultTableModel(coluumnName,0);
-		jtOrderStatus = new JTable(dtmOrderStatus);
+		jtOrderStatus = new JTable(dtmOrderStatus){
+			//테이블 수정 불가설정
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if(column != 5) {
+					return false;
+				}
+				return true;
+			}
+		};
 		JScrollPane jspJtOrderStatus = new JScrollPane(jtOrderStatus);
 		jlTotalOrder = new JLabel("총 주문");
 		jlTotalPrice = new JLabel("0원");
 //		jbMenuComplete = new JButton(); //누르면 진행현황 바뀌는용도...
 		jbExit = new JButton(exit);
-		jtaTotalOrderInfo = new JTextArea("ㅁㄴㅇㄻㄴㅇㄹ1111");
-		jtaDetailOrderInfo = new JTextArea("asdfaasdfasd22222");
+		jtaTotalOrderInfo = new JTextArea();
+		jtaDetailOrderInfo = new JTextArea();
 
 		
 		JLabel line1 = new JLabel();
@@ -60,15 +71,17 @@ public class OrderStatusDesign extends JDialog {
 		//테이블 컬럼 넓이 변경
 		jtOrderStatus.getColumnModel().getColumn(0).setPreferredWidth(40);
 		jtOrderStatus.getColumnModel().getColumn(1).setPreferredWidth(100);
-		jtOrderStatus.getColumnModel().getColumn(2).setPreferredWidth(300);
+		jtOrderStatus.getColumnModel().getColumn(2).setPreferredWidth(280);
 		jtOrderStatus.getColumnModel().getColumn(3).setPreferredWidth(90);
-		jtOrderStatus.getColumnModel().getColumn(4).setPreferredWidth(80);
+		jtOrderStatus.getColumnModel().getColumn(4).setPreferredWidth(100);
 		jtOrderStatus.getColumnModel().getColumn(5).setPreferredWidth(40);
+		
+		jtOrderStatus.setRowHeight(28);
 		
 		//폰트
 		Font font = new Font("맑은 고딕", Font.BOLD, 21);
 		Font biggg = new Font("맑은 고딕", Font.BOLD, 30);
-		jtOrderStatus.setFont(font);
+		jtOrderStatus.setFont(new Font("맑은 고딕", Font.PLAIN, 21));
 		jtaTotalOrderInfo.setFont(font);
 		jtaDetailOrderInfo.setFont(font);
 		jlTotalOrder.setFont(biggg);
@@ -92,12 +105,12 @@ public class OrderStatusDesign extends JDialog {
 		jspJtOrderStatus.setBounds(20,80,650,550);
 		jlTotalOrder.setBounds(690,70,200,50);
 		jlTotalPrice.setBounds(685,645,305,85);
-		jtaTotalOrderInfo.setBounds(690,130,295,200);
-		jtaDetailOrderInfo.setBounds(690,350,295,250);
+		jtaTotalOrderInfo.setBounds(690,130,295,270);
+		jtaDetailOrderInfo.setBounds(690,420,295,198);
 		jbExit.setBounds(0,645,670,85);
 		line1.setBounds(685,120,305,1);
-		line2.setBounds(685,340,305,1);
-		line3.setBounds(685,610,305,1);
+		line2.setBounds(685,410,305,1);
+		line3.setBounds(685,628,305,1);
 		lbBackground.setBounds(0,0,1024,768); //제일 나중에
 		
 		//컴포넌트 등록
@@ -163,6 +176,10 @@ public class OrderStatusDesign extends JDialog {
 
 	public String getOpenDate() {
 		return openDate;
+	}
+
+	public JLabel getJlOpenDate() {
+		return jlOpenDate;
 	}
 	
 }//class
