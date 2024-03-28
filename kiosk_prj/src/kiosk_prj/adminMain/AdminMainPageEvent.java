@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import easterEgg.EasterEggDesign;
 import kiosk_prj.coupon.view.ManageCouponDesign;
+import kiosk_prj.manumanage.MenuManageDesign;
 import kiosk_prj.membership.MemberShipDesign;
 import kiosk_prj.orderStatus.OrderStatusDesign;
 import kiosk_prj.settlement.SettlementDesign;
@@ -99,6 +100,10 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if (e.getSource() == jbSales) {
 			new SettlementDesign(amod);
 		} // end if
+		
+		if (e.getSource() == jbMeniInfo) {
+			new MenuManageDesign();
+		}
 
 		if (e.getSource() == jbCoupon) {
 			new ManageCouponDesign(amod);
