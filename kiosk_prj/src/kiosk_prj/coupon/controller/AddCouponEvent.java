@@ -104,6 +104,7 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		boolean flagPublishable = acd.getJrbPublishableOk().isSelected() == true ? true : false;
 		
 		
+		/*아이디 받아와야함*/
 		ckVO = new CouponKindVO("김병년", coupKindName, discount, period, flagPublishable);
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		try {
