@@ -1,5 +1,9 @@
 package kiosk_prj.membership;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -18,7 +22,11 @@ public class ModifyMemberDesign extends JDialog{
 		super(MemberShipDesign, "회원수정", true);
 		this.phoneNum = phoneNum;
 		
-		//컴포넌트
+		//이미지
+		ImageIcon imgUpdate = new ImageIcon(getClass().getClassLoader().getResource("BTmemberUpdate.png"));
+		ImageIcon imgCancle = new ImageIcon(getClass().getClassLoader().getResource("BTaddCancle.png"));
+		ImageIcon imgDelete = new ImageIcon(getClass().getClassLoader().getResource("BTmemberDelete.png"));
+		
 		//콤보박스 아이템 설정
 		String[] grades = {"신규 회원", "귀하신 분", "VVIP"};
 		//텍스트 필드 설정
@@ -34,27 +42,41 @@ public class ModifyMemberDesign extends JDialog{
 		grade = new JComboBox<>(grades);
 		
 		//버튼 설정
-		modify = new JButton("수정");
-		exit = new JButton("취소");
-		delete = new JButton("회원 삭제");
+		modify = new JButton(imgUpdate);
+		exit = new JButton(imgCancle);
+		delete = new JButton(imgDelete);
+		
+		//폰트
+		Font font = new Font("맑은 고딕",Font.BOLD,25);
+		jlPhone.setFont(font);
+		jlName.setFont(font);
+		jlBirthDay.setFont(font);
+		jlGrade.setFont(font);
+		
+		jPhoneNum.setFont(font);
+		jPhoneNum.setFont(font);
+		birthDay.setFont(font);
+		grade.setFont(font);
 		
 		//배치 관리자 해제
 		setLayout(null);
+		
 		//컴포넌트 배치
 		//텍스트 필드
-		jlPhone.setBounds(100, 50, 50, 40);
-		jPhoneNum.setBounds(150, 50, 250, 50);
-		jlName.setBounds(100, 110, 50, 40);
-		jName.setBounds(150, 110, 250, 50);
-		jlBirthDay.setBounds(100, 170, 50, 40);
-		birthDay.setBounds(150, 170, 250, 50);
-		jlGrade.setBounds(100, 230, 50, 40);
-		grade.setBounds(150, 230, 250, 40);
+		jlPhone.setBounds(100, 50, 80, 40);
+		jlName.setBounds(100, 110, 80, 40);
+		jlBirthDay.setBounds(100, 170, 80, 40);
+		jlGrade.setBounds(100, 230, 80, 40);
+		
+		jPhoneNum.setBounds(180, 50, 250, 50);
+		jName.setBounds(180, 110, 250, 50);
+		birthDay.setBounds(180, 170, 250, 50);
+		grade.setBounds(180, 230, 250, 40);
 		
 		//버튼
-		modify.setBounds(100, 500, 100, 100);
-		exit.setBounds(220, 500, 100, 100);
-		delete.setBounds(340, 500, 100, 100);
+		modify.setBounds(80, 425, 100, 100);
+		exit.setBounds(230, 425, 100, 100);
+		delete.setBounds(380, 425, 100, 100);
 		
 	
 		add(jlPhone);
@@ -74,6 +96,8 @@ public class ModifyMemberDesign extends JDialog{
 		exit.addActionListener(mme);
 		modify.addActionListener(mme);
 		delete.addActionListener(mme);
+		
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setBounds(MemberShipDesign.getX()+350, MemberShipDesign.getY(), 574,648);
 		setVisible(true);
 	}

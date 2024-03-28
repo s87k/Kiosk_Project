@@ -1,9 +1,11 @@
 package kiosk_prj.trend;
 
-import java.awt.Component;
+import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -20,27 +22,35 @@ public class TrendDesign extends JDialog{
 		this.ampd = ampd;
 		
 		//컴포넌트
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("DialogTrend.png"));
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTexit2.png"));
+		JLabel lbBackground = new JLabel(imgBackground);	
 		trendArea = new JTextArea("전체 소비자 트렌드 분석");
 		trendArea.setEditable(false);
 		JScrollPane jsTrend = new JScrollPane(trendArea);
-		exit = new JButton("나가기");
+		exit = new JButton(imgExit);
 		
+		exit.setBorderPainted(false);
+		exit.setContentAreaFilled(false);
+		
+		//폰트
+		trendArea.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 		
 		setLayout(null);
 		
-		jsTrend.setBounds(50, 50, 400, 400);
-		exit.setBounds(200, 450, 100, 100);
+		jsTrend.setBounds(75, 100, 450, 320);
+		exit.setBounds(200, 445, 200, 90);
+		lbBackground.setBounds(0,0,600,600);
 		
 		add(jsTrend);
 		add(exit);
+		add(lbBackground);
 		
 		TrendEvent te = new TrendEvent(this);
-		
 		exit.addActionListener(te);	
 		
-		setBounds(getX(), getY(), 600, 600);
+		setBounds(ampd.getX()+220, ampd.getY()+80,600,600);
 		setVisible(true);
-		
 	}
 
 	public AdminMainPageDesign getAmpd() {

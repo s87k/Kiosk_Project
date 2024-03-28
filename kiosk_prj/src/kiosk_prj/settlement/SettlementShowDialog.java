@@ -27,8 +27,8 @@ public class SettlementShowDialog extends JDialog {
 		this.endDay = endDay;
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/DialogPeriodResult.png");
-		ImageIcon imgBTconfirm = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTconfirm.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("DialogPeriodResult.png"));
+		ImageIcon imgBTconfirm = new ImageIcon(getClass().getClassLoader().getResource("BTconfirm.png"));
 	
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

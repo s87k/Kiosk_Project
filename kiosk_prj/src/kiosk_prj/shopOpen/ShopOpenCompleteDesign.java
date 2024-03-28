@@ -17,8 +17,8 @@ public class ShopOpenCompleteDesign extends JDialog implements ActionListener {
 	public ShopOpenCompleteDesign(ShopOpenDesign sod, String openDate) {
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/DialogComplete.png");
-		ImageIcon BTexit2 = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTexit2.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("DialogComplete.png"));
+		ImageIcon BTexit2 = new ImageIcon(getClass().getClassLoader().getResource("BTexit2.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

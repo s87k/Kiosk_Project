@@ -30,9 +30,9 @@ public class ShopCloseDesign extends JDialog {
 		mainJlOpenDate = ampd.getJlOpenDate();
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/shopClose.png");
-		ImageIcon imgExit = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTexit.png");
-		ImageIcon imginsertClose = new ImageIcon("kiosk_prj/src/kiosk_prj/image/ShopCloseBt.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("shopClose.png"));
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTexit.png"));
+		ImageIcon imginsertClose = new ImageIcon(getClass().getClassLoader().getResource("ShopCloseBt.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

@@ -35,8 +35,8 @@ public class OrderStatusDesign extends JDialog {
 		jlOpenDate = ampd.getJlOpenDate();
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/OrderStatus.png");
-		ImageIcon exit = new ImageIcon("kiosk_prj/src/kiosk_prj/image/exit.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("OrderStatus.png"));
+		ImageIcon exit = new ImageIcon(getClass().getClassLoader().getResource("exit.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);

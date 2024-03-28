@@ -141,4 +141,44 @@ public class ShopOpenCloseDAO {
 		return list;
 	}//selectDailySettlemnet
 	
+	/**
+	 * 개점시마다 시퀀스를 삭제하고, 재생성해서 시퀀스를 초기화하는 method
+	 * @throws SQLException 
+	 */
+	public void updateSequence() throws SQLException {
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		// 1.
+		Connection con = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		
+		try {
+		// 2.
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+		// 3. 쿼리문 생성객체 얻기
+			//삭제
+			String deleteSequence = 
+				" drop sequence seq_order_number ";
+			pstmt1=con.prepareStatement(deleteSequence.toString());
+			pstmt1.execute();
+			
+			//생성
+			String createSequence = 
+				" create sequence seq_order_number increment by 1 start with 1 maxvalue 99999 ";
+			pstmt2=con.prepareStatement(createSequence.toString());
+			pstmt2.execute();
+			
+			
+		}finally {
+		// 6. 연결끊기
+			if(con != null) { con.close(); };
+			if(pstmt1 != null) { pstmt1.close(); };
+			if(pstmt2 != null) { pstmt2.close(); };
+		}//end finally
+		
+	}//updateSequence
+	
 }//class

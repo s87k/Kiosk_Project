@@ -52,13 +52,13 @@ public class ShopOpenDesign extends JDialog {
 		mainJlOpenDate = ampd.getJlOpenDate();
 		
 		//이미지
-		ImageIcon imgBackground = new ImageIcon("kiosk_prj/src/kiosk_prj/image/shopOpen.png");
-		ImageIcon imgL = new ImageIcon("kiosk_prj/src/kiosk_prj/image/L.png");
-		ImageIcon imgLL = new ImageIcon("kiosk_prj/src/kiosk_prj/image/LL.png");
-		ImageIcon imgR = new ImageIcon("kiosk_prj/src/kiosk_prj/image/R.png");
-		ImageIcon imgRR = new ImageIcon("kiosk_prj/src/kiosk_prj/image/RR.png");
-		ImageIcon imgOpenBt = new ImageIcon("kiosk_prj/src/kiosk_prj/image/ShopOpenBt.png");
-		ImageIcon imgExit = new ImageIcon("kiosk_prj/src/kiosk_prj/image/BTexit.png");
+		ImageIcon imgBackground = new ImageIcon(getClass().getClassLoader().getResource("shopOpen.png"));
+		ImageIcon imgL = new ImageIcon(getClass().getClassLoader().getResource("L.png"));
+		ImageIcon imgLL = new ImageIcon(getClass().getClassLoader().getResource("LL.png"));
+		ImageIcon imgR = new ImageIcon(getClass().getClassLoader().getResource("R.png"));
+		ImageIcon imgRR = new ImageIcon(getClass().getClassLoader().getResource("RR.png"));
+		ImageIcon imgOpenBt = new ImageIcon(getClass().getClassLoader().getResource("ShopOpenBt.png"));
+		ImageIcon imgExit = new ImageIcon(getClass().getClassLoader().getResource("BTexit.png"));
 		
 		//컴포넌트
 		JLabel lbBackground = new JLabel(imgBackground);
