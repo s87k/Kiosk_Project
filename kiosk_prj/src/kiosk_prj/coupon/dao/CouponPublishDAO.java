@@ -212,6 +212,28 @@ public class CouponPublishDAO {
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
 			StringBuilder selectShouldPublishCoup = new StringBuilder();
 			selectShouldPublishCoup
+			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, cpct.CONDITION_TYPE_NO, ck.COUP_KIND_NO	")
+			.append("	from	(select	CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO	")
+			.append("			from	(select	cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO, ch.should_publish, cp.FLAG_DISABLE	")
+			.append("					from	COUPON_PUBLISH cp,	")
+			.append("							(select	CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO, '0' should_publish	")
+			.append("							from	coupon_held	")
+			.append("							where	PHONE_NUMBER=?	")
+			.append("							group by (CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO)) ch	")
+			.append("					where	(ch.CONDITION_PRICE(+)=cp.condition_price and ch.CONDITION_TYPE_NO(+)=cp.CONDITION_TYPE_NO and ch.COUP_KIND_NO(+)=cp.COUP_KIND_NO)	")
+			.append("					)	")
+			.append("			where	should_publish is null and CONDITION_TYPE_NO='1' and FLAG_DISABLE='1' and CONDITION_PRICE <	")
+			.append("					(select	sum(amount)	")
+			.append("					from	SUMMARY_ORDER	")
+			.append("					where 	PHONE_NUMBER=?)	")
+			.append("			) csh, coupon_kind ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
+			.append("	where	(csh.COUP_KIND_NO=ck.COUP_KIND_NO and csh.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO)	")
+			.append("	union all	")
+			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', cp.CONDITION_PRICE) condition_msg, cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO	")
+			.append("	from	coupon_publish cp, COUPON_KIND ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
+			.append("	where	(cp.COUP_KIND_NO=ck.COUP_KIND_NO and cp.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO) and	")
+			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	");
+			/*
 			.append("	select 	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, csh.CONDITION_TYPE_NO, csh.COUP_KIND_NO	")
 			.append("	from	COUPON_KIND ck,	")
 			.append("			(select	CONDITION_PRICE,CONDITION_TYPE_NO,COUP_KIND_NO	")
@@ -221,7 +243,7 @@ public class CouponPublishDAO {
 			.append("					where	(ch.CONDITION_PRICE(+)=cp.condition_price and ch.CONDITION_TYPE_NO(+)=cp.CONDITION_TYPE_NO and ch.COUP_KIND_NO(+)=cp.COUP_KIND_NO) and	")
 			.append("							(ch.phone_number is null or ch.PHONE_NUMBER not like ?)	")
 			.append("					)	")
-			.append("			where	CONDITION_TYPE_NO=1 and  flag_disable=1 and CONDITION_PRICE <	")
+			.append("			where	CONDITION_TYPE_NO=1 and  flag_disable='1' and CONDITION_PRICE <	")
 			.append("					(select	sum(amount)	")
 			.append("					from	SUMMARY_ORDER	")
 			.append("					where 	PHONE_NUMBER=?)) csh	")
@@ -232,6 +254,7 @@ public class CouponPublishDAO {
 			.append("	from	coupon_publish cp, COUPON_KIND ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
 			.append("	where	(cp.COUP_KIND_NO=ck.COUP_KIND_NO and cp.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO) and	")
 			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	");
+			*/
 			pstmt = con.prepareStatement(selectShouldPublishCoup.toString());
 			
 			// 4. 바인드 변수에 값 설정

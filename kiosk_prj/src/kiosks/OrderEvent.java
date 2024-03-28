@@ -261,6 +261,7 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 		// 결제창에 주문금액 & 결제금액 보내기
 		ppd.getOrderPrice().setText(od.getJtfOrderPrice().getText());
 		ppd.getTotalPrice().setText(od.getJtfOrderPrice().getText());
+		PaymentPageDesign.amount = Integer.parseInt(ppd.getTotalPrice().getText());
 		od.dispose();
 	}// sendData
 

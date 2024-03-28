@@ -87,9 +87,9 @@ public class PublishCouponDesign extends JDialog {
 		jtfPubConditonVal.setDocument(new UnsignedIntegerDocument(8, 1, 99999999));
 		jtfPubConditonVal.setFont(font);
 		
-		ImageIcon iiGoBack = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_go_back.png");
-		ImageIcon iiPublish = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_pub.png");
-		ImageIcon iiCancel = new ImageIcon("kiosk_prj/src/kiosk_prj/image/coupon/btn_cancel.png");
+		ImageIcon iiGoBack = new ImageIcon(getClass().getClassLoader().getResource("btn_go_back.png"));
+		ImageIcon iiPublish = new ImageIcon(getClass().getClassLoader().getResource("btn_pub.png"));
+		ImageIcon iiCancel = new ImageIcon(getClass().getClassLoader().getResource("btn_cancel.png"));
 		
 		jbtnGoBack = new JButton(iiGoBack);
 		jbtnPublish = new JButton(iiPublish);

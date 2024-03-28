@@ -95,7 +95,7 @@ public class PhoneNumEvent extends WindowAdapter implements ActionListener {
 			List<SearchMemberShipVO> list = smsDAO.selectPhoneNum(phoneNumber);
 			//회원일 경우
 			if(!list.isEmpty()) {
-				
+				PaymentPageDesign.strPhoneNum = phoneNumber;
 				pnd.dispose();
 				new UsingCouponDesign(ppd, phoneNumber);
 			} else {
