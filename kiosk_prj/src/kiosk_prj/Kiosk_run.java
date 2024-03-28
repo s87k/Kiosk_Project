@@ -10,5 +10,4 @@ public class Kiosk_run {
 //		new LoginDesign();
 		new AdminMainPageDesign("김병년");
 	}//main
-
 }//class
