@@ -105,7 +105,7 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		
 		
 		/*아이디 받아와야함*/
-		ckVO = new CouponKindVO("김병년", coupKindName, discount, period, flagPublishable);
+		ckVO = new CouponKindVO(acd.getMcd().getAmpd().getAdminId(), coupKindName, discount, period, flagPublishable);
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		try {
 			ckDAO.insertCoupKind(ckVO);
