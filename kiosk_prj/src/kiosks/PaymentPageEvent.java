@@ -141,16 +141,17 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 		soVO.setOrderForm(orderForm);
 
 		// 전화번호 phoneNumber
-		phoneNum = ppd.getPhoneNum();
+		phoneNum = PaymentPageDesign.strPhoneNum;
 		soVO.setPhoneNumber(phoneNum);
 
 		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
 		try {
 			omDAO.insertSummaryOrder(soVO);
-			System.out.println("주문 insert 완료");
+//			System.out.println("주문 insert 완료");
+//			System.out.println("soVO: " + soVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("주문 insert 실패");
+//			System.out.println("주문 insert 실패");
 		}
 	}// insertSummaryOrder
 

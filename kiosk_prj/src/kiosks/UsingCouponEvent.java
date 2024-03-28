@@ -65,6 +65,7 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 			Font font = ppd.getUsedCoup().getFont();
 			ppd.getUsedCoup().setFont(font.deriveFont(Font.BOLD, 15));
 			ppd.getUsedCoup().setBounds(210, 125, 200, 30);
+			PaymentPageDesign.coupPubCode = ucd.getDtmCouponList().getValueAt(ucd.getCouponList().getSelectedRow(), 3).toString();
 			//쿠폰 선택창 종료
 			ucd.dispose();
 		} else {
@@ -94,6 +95,7 @@ public class UsingCouponEvent extends WindowAdapter implements ActionListener, M
 			String resultStr = String.valueOf(result);
 			// 할인된 금액을 총 결제 금액으로 설정
 			ppd.getTotalPrice().setText(resultStr);
+			PaymentPageDesign.amount = result;	
 			// 쿠폰을 사용한 회원의 전화번호로 재설정
 			ppd.setPhoneNum(phoneNum);
 			

@@ -7,7 +7,12 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import kiosk_prj.adminMain.AdminMainPageDesign;
+import kiosk_prj.coupon.dao.CouponHeldDAO;
+import kiosk_prj.coupon.dao.CouponPublishDAO;
+import kiosk_prj.coupon.vo.CouponAutoPubVO;
 import kiosks.CompletePayPageDesign;
 import kiosks.StartPageDesign;
 import kiosks.dao.SelectCouponDAO;
@@ -21,17 +26,48 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 	public CompletePayPageEvent(CompletePayPageDesign cppd) {
 		this.cppd = cppd;
 		phoneNum = cppd.getPhoneNum();
-		//결제완료 후 보유 쿠폰 개수
-		heldCoup(phoneNum);
-		//발급된 쿠폰 보여주기
-		newPublishCoup();
+		if(PaymentPageDesign.strPhoneNum != null && !PaymentPageDesign.strPhoneNum.equals("")) {
+			//발급된 쿠폰 보여주기
+			newPublishCoup();
+			//결제완료 후 보유 쿠폰 개수
+			heldCoup(phoneNum);
+		} // end if
+			
+		
+		PaymentPageDesign.amount = 0;
+		PaymentPageDesign.coupPubCode = "";
+		PaymentPageDesign.strPhoneNum = "";
 	}//CompletePayPageEvent
 	
 	/**
 	 * 결제 후 발급된 쿠폰 이름 보여주기
 	 */
 	private void newPublishCoup() {
-		
+		CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
+		CouponHeldDAO chDAO  = CouponHeldDAO.getInstance();
+		try {
+			List<CouponAutoPubVO> listCapVO = cpDAO.selectShouldPublishCoup(PaymentPageDesign.strPhoneNum, PaymentPageDesign.amount);
+			System.out.println("PaymentPageDesign.strPhoneNum: " + PaymentPageDesign.strPhoneNum);
+			System.out.println("PaymentPageDesign.amount: " + PaymentPageDesign.amount);
+			System.out.println("listCapVO.size(): " + listCapVO.size());
+			for (CouponAutoPubVO capVO : listCapVO) {
+				System.out.println(capVO);
+			}
+			chDAO.insertCoupHeld(listCapVO);
+			if(listCapVO != null && listCapVO.size() != 0) {
+				StringBuilder sb = new StringBuilder();
+				CouponAutoPubVO capVO = null;
+				for (int i = 0; i < listCapVO.size(); i++) {
+					capVO = listCapVO.get(i);
+					sb.append("\"").append(capVO.getCoupKindName()).append("\" 쿠폰 (").append(capVO.getDiscount()).append("원 할인)\n");
+				} // end for
+				
+				JOptionPane.showMessageDialog(cppd, sb.toString(), "쿠폰 발급 완료", JOptionPane.INFORMATION_MESSAGE);
+			} // end if
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(cppd, "쿠폰 발급에 문제가 생겼습니다");
+			e.printStackTrace();
+		} // end catch
 	}//orderUpdate
 	
 	/**

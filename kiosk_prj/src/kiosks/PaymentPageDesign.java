@@ -16,6 +16,8 @@ public class PaymentPageDesign extends JFrame {
 	private Font font;
 	private String phoneNum;
 	public static String coupPubCode;
+	public static int amount;
+	public static String strPhoneNum;
 
 	public PaymentPageDesign() {
 		// 수동 배치
