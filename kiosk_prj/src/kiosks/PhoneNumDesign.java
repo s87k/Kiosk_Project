@@ -37,7 +37,7 @@ public class PhoneNumDesign extends JDialog {
 		jlAmount.setFont(font.deriveFont(Font.PLAIN, 15));
 		jlAmount.setBounds(100, 30, 70, 30);
 
-		orderAmount = new JLabel("");
+		orderAmount = new JLabel(ppd.getTotalPrice().getText()+" 원");
 		font = orderAmount.getFont();
 		orderAmount.setFont(font.deriveFont(Font.PLAIN, 20));
 		orderAmount.setBounds(200, 30, 100, 30);

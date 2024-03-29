@@ -15,14 +15,15 @@ public class StartPageDesign extends JFrame{
 
 	private JButton store, takeOut;
 	private JLabel logo;
+	public static String shopOpen;
 	
 	public StartPageDesign() {
+		shopOpen = "2024-03-29";
 		design();
 	}//StartPageDesign
 	public StartPageDesign(AdminMainPageDesign ampd) {
+		shopOpen = ampd.getJlOpenDate().getText();
 		design();
-		SummaryOrderVO soVO = new SummaryOrderVO();
-		soVO.setShopOpen(ampd.getJlOpenDate().getText());
 	}//StartPageDesign
 	
 	private void design() {

@@ -31,12 +31,10 @@ import kiosks.vo.SummaryOrderVO;
 public class PaymentPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 
 	private PaymentPageDesign ppd;
-
 	private JTable orderMenuList;
 	private DefaultTableModel dtmOrderMemuList;
 
 	private String phoneNum;
-
 	public PaymentPageEvent(PaymentPageDesign ppd) {
 		this.ppd = ppd;
 
@@ -101,8 +99,8 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 
 		// 주문 번호 설정
 		soVO.setOrderNumber(orderNum);
-		// 개점일 shopOpen 나중에 수정
-		soVO.setShopOpen("2024-03-18");
+		// 개점일 shopOpen
+		soVO.setShopOpen(StartPageDesign.shopOpen);
 
 		// 주문시간 orderTime
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -111,6 +109,7 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 			//개점날짜를 가져와서 문자열로 변환. 
 			//문자열을 날짜로 파싱해서 date객체로 변환.
 			date = dateFormat.parse(soVO.getShopOpen());
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -147,11 +146,8 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 		OrderMenuDAO omDAO = OrderMenuDAO.getInstance();
 		try {
 			omDAO.insertSummaryOrder(soVO);
-//			System.out.println("주문 insert 완료");
-//			System.out.println("soVO: " + soVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
-//			System.out.println("주문 insert 실패");
 		}
 	}// insertSummaryOrder
 
@@ -164,8 +160,8 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 			DetailedOrderVO doVO = new DetailedOrderVO();
 			// 주문 번호 설정
 			doVO.setOrderNumber(orderNum);
-			// 개점일 shopOpen 나중에 수정
-			doVO.setShopOpen("2024-03-18");
+			// 개점일 shopOpen
+			doVO.setShopOpen(StartPageDesign.shopOpen);
 			// 옵션 열 가져오기
 			String optionColumn = ppd.getDtmOrderMemuList().getValueAt(row, 1).toString();
 			// ,로 분할
@@ -209,11 +205,9 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 
 					// 상세 주문 insert
 					omDAO.insertDetailedOrder(doVO);
-					System.out.println("상세 주문 insert 완료");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("상세 주문 insert 실패");
 			} // end catch
 
 		} // end for

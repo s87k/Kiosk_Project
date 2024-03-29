@@ -158,13 +158,13 @@ public class JoinMembershipDesign extends JDialog {
 
 	}// JoinMembershipDesign
 
-//	public static void main(String[] args) {
-//		new JoinMembershipDesign();
-//	}// main
 
 	private static String[] getMonthArray() {
 		String[] months = new String[12];
-		for(int i = 0; i < months.length; i++) {
+		for(int i = 0; i < 9; i++) {
+			months[i] = "0" + (i+1);
+		}
+		for(int i = 9; i < 12; i++) {
 			months[i] = Integer.toString(i+1);
 		}
 		return months;
@@ -172,7 +172,10 @@ public class JoinMembershipDesign extends JDialog {
 
 	private static String[] getDayArray() {
 		String[] days = new String[31];
-		for(int i = 0; i < days.length; i++) {
+		for(int i = 0; i < 9; i++) {
+			days[i] = "0" + (i+1);
+		}
+		for(int i = 9; i < 31; i++) {
 			days[i] = Integer.toString(i+1);
 		}
 		return days;

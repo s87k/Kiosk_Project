@@ -93,36 +93,5 @@ public class SelectCouponDAO {
 		}
 		return list;
 	}// searchDiscount
-
-	public void updateUsedCoup(SelectCouponVO scVO) throws SQLException {
-		DbConnection dbCon = DbConnection.getInstance();
-
-		// 1. 드라이버 로딩
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			// 2. 커넥션 얻기
-			String id = "kiosk";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
-			
-			// 3. 쿼리문 생성객체 얻기
-			String updateCoup = "";
-
-			pstmt = con.prepareStatement(updateCoup);
-			
-			// 4. 바인드변수에 값 설정
-			pstmt.setString(1, scVO.getCouponName());
-			pstmt.setString(2, scVO.getPublishDate());
-
-			// 5. 쿼리문 수행 후 결과 얻기
-			pstmt.executeUpdate();
-		} finally {
-			// 6. 연결 끊기
-			dbCon.dbClose(null, pstmt, con);
-		} // end finally
-	}//updateUsedCoup
-
 }
 // class

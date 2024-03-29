@@ -14,7 +14,7 @@ import kiosks.OrderDetailEvent;
 
 public class CompletePayPageDesign extends JFrame {
 
-	private JLabel orderNum, memberCoup, issuedGuide;
+	private JLabel memberCoup, issuedGuide;
 	private JButton toStart;
 	private Font font;
 	private String phoneNum;
@@ -29,13 +29,7 @@ public class CompletePayPageDesign extends JFrame {
 		orderFinGuide.setFont(font.deriveFont(Font.BOLD, 20));
 		orderFinGuide.setBounds(150, 50, 300, 50);
 
-		orderNum = new JLabel("n번째 주문");
-		font = orderNum.getFont();
-		orderNum.setFont(font.deriveFont(Font.BOLD, 20));
-		orderNum.setBounds(190, 150, 200, 50);
-
 		add(orderFinGuide);
-		add(orderNum);
 
 		// 쿠폰 사용
 		issuedGuide = new JLabel("<html>주문해주셔서 감사합니다.<br>곧 음료가 준비됩니다.</html>");
@@ -69,14 +63,6 @@ public class CompletePayPageDesign extends JFrame {
 		setVisible(true);
 
 	}// CompletePayPageDesign
-
-//	public static void main(String[] args) {
-//		new CompletePayPageDesign();
-//	}// main
-
-	public JLabel getOrderNum() {
-		return orderNum;
-	}
 
 	public JLabel getMemberCoup() {
 		return memberCoup;

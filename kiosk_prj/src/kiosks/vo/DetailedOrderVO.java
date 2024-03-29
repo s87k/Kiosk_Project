@@ -29,6 +29,11 @@ public class DetailedOrderVO {
 		this.typeCode = typeCode;
 	}
 
+	public DetailedOrderVO(int waitingNumber) {
+		super();
+		this.waitingNumber = waitingNumber;
+	}
+
 	public String getOrderNumber() {
 		return orderNumber;
 	}
