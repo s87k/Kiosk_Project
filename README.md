@@ -5,6 +5,7 @@
 
 ## 사용 언어
 <code><img height="60" src =https://github.com/github/explore/blob/main/topics/java/java.png></code>
+<code><img height="60" src =https://github.com/github/explore/blob/main/topics/oracle-database/oracle-database.png></code>
 
 ## 개발기간
 - 2024.03.08(금) ~ 2024.03.29(금)
