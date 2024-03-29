@@ -40,6 +40,7 @@ public class LoginEvent extends WindowAdapter implements ActionListener {
 			login();
 		}//end if
 		
+		//db에서 아이디 비밀번호 비교해서 로그인했어야했는데!
 		if (ae.getSource() == ld.getiD() || ae.getSource() == ld.getPassword()) {
 			String id = ld.getiD().getText();
 			String pw = String.valueOf(ld.getPassword().getPassword());

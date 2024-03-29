@@ -1,6 +1,6 @@
-package kiosk_prj.settlement;
+package kiosk_prj.orderStatus;
 
-public class SettlementOrderInfoVO {
+public class DetailOrderVO {
 	
 	private String orderNum;
 	private String orderTime;
@@ -17,7 +17,7 @@ public class SettlementOrderInfoVO {
 	 * @param phoneNum
 	 * @param amount
 	 */
-	public SettlementOrderInfoVO(String orderNum, String orderTime, String orderForm, String phoneNum, int amount) {
+	public DetailOrderVO(String orderNum, String orderTime, String orderForm, String phoneNum, int amount) {
 		super();
 		this.orderNum = orderNum;
 		this.orderTime = orderTime;

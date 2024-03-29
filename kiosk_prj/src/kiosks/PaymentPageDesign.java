@@ -1,5 +1,6 @@
 package kiosks;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.*;
@@ -122,6 +123,7 @@ public class PaymentPageDesign extends JFrame {
 
 		addWindowListener(ppe);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(600, 800);
 		setLocationRelativeTo(null);
 		setResizable(false);

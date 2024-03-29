@@ -138,15 +138,16 @@ public class OrderDesign extends JFrame {
 
 		addWindowListener(oe);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setVisible(true);
 		setResizable(false);
 		setSize(600, 800);
 		setLocationRelativeTo(null);
 	}// OrderDesign
 
-	public static void main(String[] args) {
-		new OrderDesign();
-	}// main
+//	public static void main(String[] args) {
+//		new OrderDesign();
+//	}// main
 
 	public JPanel getMenueBarPanel() {
 		return menueBarPanel;

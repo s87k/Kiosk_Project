@@ -23,6 +23,7 @@ import kiosk_prj.settlement.SettlementDesign;
 import kiosk_prj.shopClose.ShopCloseDesign;
 import kiosk_prj.shopOpen.ShopOpenDesign;
 import kiosk_prj.trend.TrendDesign;
+import kiosks.StartPageDesign;
 
 public class AdminMainPageEvent extends WindowAdapter implements ActionListener, MouseListener {
 
@@ -59,6 +60,24 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == jbOpen) {
+			openDate = amod.getJlOpenDate().getText();
+			dateOnly = openDate.substring(9);
+			
+			new ShopOpenDesign(amod);
+			currentOrderStatus(dateOnly);
+			sumAmount(dateOnly);
+		} // end if
+		
+		//////////////////////////////////////
+		// 개점 이외의 기능은 무조건 개점일이 필요함!!!//
+		//////////////////////////////////////
+		if (jlOpenDate.getText().length() > 17) {
+			JOptionPane.showMessageDialog(null, "개점설정이 필요합니다!");
+			return;
+		} // end if
+		//////////////////////////////////////
+		
 		if (e.getSource() == jbCoffee) {
 			coffeeOrderStatus(dateOnly);
 		} // end if
@@ -77,43 +96,30 @@ public class AdminMainPageEvent extends WindowAdapter implements ActionListener,
 		if (e.getSource() == jbOrderStatus) {
 			OrderStatusDialog();
 		} // end if
-		if (e.getSource() == jbOpen) {
-			openDate = amod.getJlOpenDate().getText();
-			dateOnly = openDate.substring(9);
-			
-			new ShopOpenDesign(amod);
-			currentOrderStatus(dateOnly);
-			sumAmount(dateOnly);
-			
-		} // end if
 		if (e.getSource() == jbUserManagement) {
 			new MemberShipDesign(amod, null, openDate);
 		} // end if
+		if (e.getSource() == jbOperate) {
+			new StartPageDesign();
+		} // end if
 		if (e.getSource() == jbClosd) {
-			int openDate = jlOpenDate.getText().length();
-			if (openDate > 17) {
-				JOptionPane.showMessageDialog(null, "마감은 개점설정 이전에 사용할 수 없습니다.");
-				return;
-			} // end if
 			new ShopCloseDesign(amod);
 		} // end if
 		if (e.getSource() == jbSales) {
 			new SettlementDesign(amod);
 		} // end if
-		
 		if (e.getSource() == jbMeniInfo) {
 			new MenuManageDesign();
-		}
-
+		} // end if
 		if (e.getSource() == jbCoupon) {
 			new ManageCouponDesign(amod);
 		} // end if
 		if (e.getSource() == jbTrends) {
 			new TrendDesign(amod, null);
-		}
+		} // end if
 		if(e.getSource() == amod.getJbEasterEgg()) {
 			new EasterEggDesign(amod, "");
-		}
+		} // end if
 	}// actionPerformed
 
 	public void currentOrderStatus(String dateOnly) {
