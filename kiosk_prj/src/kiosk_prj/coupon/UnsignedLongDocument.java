@@ -31,7 +31,7 @@ public class UnsignedLongDocument extends PlainDocument{
 	 * @param maxVal 최대값
 	 */
 	public UnsignedLongDocument(int digit, int minVal, long maxVal) {
-		System.out.println(digit + " " + minVal + " " + maxVal);
+//		System.out.println(digit + " " + minVal + " " + maxVal);
 		if(digit > 19) {
 			digit = 19;
 			flagParamChanged = true;
@@ -50,7 +50,7 @@ public class UnsignedLongDocument extends PlainDocument{
 			flagParamChanged = true;
 		} // end if
 				
-		System.out.println(digit + " " + minVal + " " + maxVal);
+//		System.out.println(digit + " " + minVal + " " + maxVal);
 		
 		this.digit = digit;
 		this.minVal = minVal;

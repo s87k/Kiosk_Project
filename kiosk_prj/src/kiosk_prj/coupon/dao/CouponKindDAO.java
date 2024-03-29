@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiosk_prj.coupon.vo.CouponKindVO;
-import oracle.security.o3logon.a;
 
 public class CouponKindDAO {
 	private static CouponKindDAO ckDAO;

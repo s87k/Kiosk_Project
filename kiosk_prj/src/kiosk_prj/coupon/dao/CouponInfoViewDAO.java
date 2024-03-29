@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiosk_prj.coupon.vo.CouponAddedInfoVO;
-import kiosk_prj.coupon.vo.CouponKindVO;
 import kiosk_prj.coupon.vo.CouponPubInfoVO;
 import kiosk_prj.coupon.vo.StatusUse;
 

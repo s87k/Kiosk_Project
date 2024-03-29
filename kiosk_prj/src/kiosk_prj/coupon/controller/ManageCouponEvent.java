@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import kiosk_prj.coupon.UpdateIconImpl;
 import kiosk_prj.coupon.view.AddCouponDesign;
 import kiosk_prj.coupon.view.ManageCouponDesign;
-import kiosk_prj.coupon.view.ModifyCouponDesign;
 import kiosk_prj.coupon.view.PublishCouponDesign;
 import kiosk_prj.coupon.vo.ManageButton;
 
