@@ -15,14 +15,16 @@ import kiosk_prj.coupon.dao.CouponPublishDAO;
 import kiosk_prj.coupon.vo.CouponAutoPubVO;
 import kiosks.CompletePayPageDesign;
 import kiosks.StartPageDesign;
+import kiosks.dao.OrderMenuDAO;
 import kiosks.dao.SelectCouponDAO;
+import kiosks.vo.DetailedOrderVO;
 import kiosks.vo.SelectCouponVO;
 
 public class CompletePayPageEvent extends WindowAdapter implements ActionListener{
 
 	private CompletePayPageDesign cppd;
 	private String phoneNum;
-	
+
 	public CompletePayPageEvent(CompletePayPageDesign cppd) {
 		this.cppd = cppd;
 		phoneNum = cppd.getPhoneNum();
@@ -47,11 +49,7 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 		CouponHeldDAO chDAO  = CouponHeldDAO.getInstance();
 		try {
 			List<CouponAutoPubVO> listCapVO = cpDAO.selectShouldPublishCoup(PaymentPageDesign.strPhoneNum, PaymentPageDesign.amount);
-			System.out.println("PaymentPageDesign.strPhoneNum: " + PaymentPageDesign.strPhoneNum);
-			System.out.println("PaymentPageDesign.amount: " + PaymentPageDesign.amount);
-			System.out.println("listCapVO.size(): " + listCapVO.size());
 			for (CouponAutoPubVO capVO : listCapVO) {
-				System.out.println(capVO);
 			}
 			chDAO.insertCoupHeld(listCapVO);
 			if(listCapVO != null && listCapVO.size() != 0) {
@@ -86,6 +84,8 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 			e.printStackTrace();
 		}
 	}//heldCoup
+	
+	
 	
 	
 	@Override

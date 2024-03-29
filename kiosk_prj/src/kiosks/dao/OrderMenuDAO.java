@@ -306,4 +306,52 @@ public class OrderMenuDAO {
 		return list;
 	}// selectMenuDetail
 	
+	/**
+	 * 대기 번호 가져오기
+	 * @param orderNumber
+	 * @param shopOpen
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DetailedOrderVO> selectWaitingNum(String orderNumber, String shopOpen) throws SQLException {
+		List<DetailedOrderVO> list = new ArrayList<DetailedOrderVO>();
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		// 1. 드라이버 로딩
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// 2. 커넥션 얻기
+			String id = "kiosk";
+			String pass = "4";
+			con = dbCon.getConnection(id, pass);
+			
+			// 3. 쿼리문 생성객체 얻기
+			String selectAllMenu = " select waiting_number from DETAILED_ORDER where ORDER_NUMBER=? and SHOP_OPEN=? order by waiting_number desc ";
+			
+			pstmt = con.prepareStatement(selectAllMenu);
+			
+			// 4. 바인드 변수에 값넣기
+			pstmt.setString(1, orderNumber);
+			pstmt.setString(2, shopOpen);
+			
+			// 5. 쿼리문 수행 후 결과 얻기
+			rs = pstmt.executeQuery();
+			
+			DetailedOrderVO doVO = null;
+			while (rs.next()) {
+				doVO = new DetailedOrderVO(rs.getInt("waiting_number"));
+				list.add(doVO);
+			} // end while
+		} finally {
+			dbCon.dbClose(rs, pstmt, con);
+		} // end finally
+		return list;
+	}// selectMenuDetail
+	
+	
+	
 }// class

@@ -42,7 +42,6 @@ public class JoinMembershipEvent extends WindowAdapter implements ActionListener
 		.append(jmd.getComMonth().getSelectedItem().toString())
 		.append(jmd.getComDay().getSelectedItem().toString());
 		String birth = births.toString();
-		System.out.println("phoneNum " + phoneNum + "name " + name + "birth " + birth);
 
 		if (!(phoneNum.length() < 10 || birth.length() != 8 || name.length() > 15)) {
 
