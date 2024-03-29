@@ -195,7 +195,6 @@ public class OrderEvent extends WindowAdapter implements ActionListener, MouseLi
 
 				// 이미지 경로 변경
 				ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(menuImg));
-//				ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/drink/" + menuImg));
 				Image image = icon.getImage();
 				Image scaledImage = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 				ImageIcon scaledIcon = new ImageIcon(scaledImage);

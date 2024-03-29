@@ -1,5 +1,6 @@
 package kiosks;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 
@@ -85,6 +86,7 @@ public class UsingCouponDesign extends JDialog {
 
 		addWindowListener(uce);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);

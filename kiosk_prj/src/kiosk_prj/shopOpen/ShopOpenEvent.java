@@ -1,6 +1,5 @@
 package kiosk_prj.shopOpen;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -9,9 +8,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -112,7 +109,15 @@ public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 		if(socd != null) {
 			if(e.getSource() == socd.getJbOk()) {
 				openDate = jlSelectedDate.getText();
-				insertOpenDate(openDate);
+				
+				try {
+					insertOpenDate(openDate);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "이미 개점되었던 영업일은 설정할 수 없습니다.");
+					return;
+				}
+				
 				new ShopOpenCompleteDesign(sod, openDate);
 				socd.dispose();
 				sod.dispose();
@@ -229,18 +234,15 @@ public class ShopOpenEvent extends WindowAdapter implements ActionListener {
 	
 	/**
 	 * 개점일을 insert하고, 시퀀스를 삭제했다가 추가해서 초기화시키는 method
+	 * @throws SQLException 
 	 */
-	private void insertOpenDate(String openData) {
+	private void insertOpenDate(String openData) throws SQLException {
 		
 		sod.getMainJlOpenDate().setText("영업일자 : " + openData);
 		
 		ShopOpenCloseDAO soDAO = ShopOpenCloseDAO.getInstance();
-		try {
-			soDAO.insertOpenDate(openDate);
-			soDAO.updateSequence();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}//end catch
+		soDAO.insertOpenDate(openDate);
+		soDAO.updateSequence();
 		
 	}//insertOpenDate
 

@@ -1,5 +1,6 @@
 package kiosks;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -95,6 +96,7 @@ public class PhoneNumDesign extends JDialog {
 		add(jtfPhoneNum);
 		add(jpPhoneNum);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);

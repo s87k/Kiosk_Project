@@ -35,7 +35,7 @@ public class JoinMembershipDesign extends JDialog {
 		setLayout(null);
 
 		// 회원가입 로고 추가
-		ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/login_logo.png"));
+		ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("login_logo.png"));
 		Image image = icon.getImage();
 		Image scaledImage = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
@@ -150,6 +150,7 @@ public class JoinMembershipDesign extends JDialog {
 
 		addWindowListener(jme);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(600, 800);
 		setLocationRelativeTo(null);
 		setResizable(false);

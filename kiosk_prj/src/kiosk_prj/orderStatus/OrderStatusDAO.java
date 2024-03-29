@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiosk_prj.DAO.DbConnection;
-import kiosk_prj.settlement.SettlementOrderInfoVO;
 
 public class OrderStatusDAO {
 	
@@ -112,8 +111,8 @@ public class OrderStatusDAO {
 		return list;
 	}//selectDetailOrder
 	
-	public SettlementOrderInfoVO selectOrderInfo(String orderNum) throws SQLException{
-		SettlementOrderInfoVO stoVO = null;
+	public DetailOrderVO selectOrderInfo(String orderNum) throws SQLException{
+		DetailOrderVO stoVO = null;
 		
 		DbConnection dbCon = DbConnection.getInstance();
 		// 1.
@@ -140,7 +139,7 @@ public class OrderStatusDAO {
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {//조회된 결과에서 다음 레코드가 존재?
-				stoVO = new SettlementOrderInfoVO(rs.getString("order_number"), rs.getString("order_time"),
+				stoVO = new DetailOrderVO(rs.getString("order_number"), rs.getString("order_time"),
 						rs.getString("order_form"), rs.getString("phone_number"),
 						rs.getInt("amount"));
 			}//end while

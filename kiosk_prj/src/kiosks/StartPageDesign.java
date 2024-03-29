@@ -1,12 +1,13 @@
 package kiosks;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import kiosk_prj.adminMain.AdminMainPageDesign;
-import kiosks.StartPageEvent;
 import kiosks.vo.SummaryOrderVO;
 
 @SuppressWarnings("serial")
@@ -47,15 +48,16 @@ public class StartPageDesign extends JFrame{
 		
 		addWindowListener(spe);
 		
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(600,800);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(false);
 	}//design
 
-	public static void main(String[] args) {
-		new StartPageDesign();
-	}//main
+//	public static void main(String[] args) {
+//		new StartPageDesign();
+//	}//main
 
 	public JButton getStore() {
 		return store;

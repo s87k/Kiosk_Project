@@ -34,8 +34,6 @@ public class OrderDetailDesgin extends JDialog{
 		
 		// 메뉴 정보
 		// 메뉴 이미지 넣기
-//		ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/image/login_logo.png"));
-//		ImageIcon icon = new ImageIcon(getClass().getResource("/kiosk_prj/manumanage/images/"));
 		ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("americano.jpg"));
 		
 		Image image = icon.getImage();
@@ -148,6 +146,7 @@ public class OrderDetailDesgin extends JDialog{
 		
 		addWindowListener(ode);
 		
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(500,600);
 		setLocationRelativeTo(null);
 		setResizable(false);

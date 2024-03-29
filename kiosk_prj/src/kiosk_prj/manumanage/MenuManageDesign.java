@@ -187,9 +187,5 @@ public class MenuManageDesign extends JFrame {
 	public DefaultTableModel getDtmMenuList() {
 		return dtmMenuList;
 	}
-
-	public static void main(String[] args) {
-		new MenuManageDesign();
-	}//main
 	
 }//class

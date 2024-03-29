@@ -1,5 +1,6 @@
 package kiosks;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
@@ -61,6 +62,7 @@ public class CompletePayPageDesign extends JFrame {
 
 		addWindowListener(cppe);
 
+		getContentPane().setBackground(new Color(0xECEDFA));
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);

@@ -16,8 +16,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import kiosk_prj.settlement.SettlementOrderInfoVO;
-
 public class OrderStatusEvent extends WindowAdapter implements ActionListener, MouseListener {
 	
 	private OrderStatusDesign osd;
@@ -153,7 +151,7 @@ public class OrderStatusEvent extends WindowAdapter implements ActionListener, M
 		OrderStatusDAO osDAO = OrderStatusDAO.getInstance();
 		DecimalFormat df = new DecimalFormat("#,###,###");
 		try {
-			SettlementOrderInfoVO stoVO = osDAO.selectOrderInfo(orderNum);
+			DetailOrderVO stoVO = osDAO.selectOrderInfo(orderNum);
 			
 			StringBuilder sb = new StringBuilder();
 			sb
