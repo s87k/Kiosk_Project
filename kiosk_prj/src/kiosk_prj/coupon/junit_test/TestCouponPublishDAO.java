@@ -132,7 +132,7 @@ class TestCouponPublishDAO {
 		List<CouponAutoPubVO> list = new ArrayList<CouponAutoPubVO>();
 		
 		// when
-		list = cpDAO.selectShouldPublishCoup("01056567878", 15000);
+		list = cpDAO.selectShouldPublishCoup("01012121212", 15000, "18", "2024-03-18");
 		
 		// then
 		assertNotNull(list);

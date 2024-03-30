@@ -39,6 +39,7 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 		PaymentPageDesign.amount = 0;
 		PaymentPageDesign.coupPubCode = "";
 		PaymentPageDesign.strPhoneNum = "";
+		PaymentPageDesign.orderNum = "";
 	}//CompletePayPageEvent
 	
 	/**
@@ -48,7 +49,7 @@ public class CompletePayPageEvent extends WindowAdapter implements ActionListene
 		CouponPublishDAO cpDAO = CouponPublishDAO.getInstance();
 		CouponHeldDAO chDAO  = CouponHeldDAO.getInstance();
 		try {
-			List<CouponAutoPubVO> listCapVO = cpDAO.selectShouldPublishCoup(PaymentPageDesign.strPhoneNum, PaymentPageDesign.amount);
+			List<CouponAutoPubVO> listCapVO = cpDAO.selectShouldPublishCoup(PaymentPageDesign.strPhoneNum, PaymentPageDesign.amount, PaymentPageDesign.orderNum, StartPageDesign.shopOpen);
 			for (CouponAutoPubVO capVO : listCapVO) {
 			}
 			chDAO.insertCoupHeld(listCapVO);

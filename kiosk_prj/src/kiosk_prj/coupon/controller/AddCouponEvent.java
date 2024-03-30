@@ -1,13 +1,24 @@
 package kiosk_prj.coupon.controller;
 
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import kiosk_prj.coupon.UpdateIconImpl;
@@ -22,6 +33,7 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 	
 	private AddCouponDesign acd;
 	private int periodMonth;
+	private String img;
 	
 	public AddCouponEvent(AddCouponDesign acd) {
 		this.acd = acd;
@@ -51,6 +63,9 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		if(ae.getSource() == acd.getJbtnCancel()) {			// 취소 버튼
 			closeDialog();
 		} // end if
+		if(ae.getSource() == acd.getJbtnImgLoad()) { 		// 이미지 열기 버튼
+			img = loadImg(acd.getJlblImg());
+		}
 		if(ae.getSource() == acd.getArrJbtnPeriod()[ExpirePeriod.MONTH1.ordinal()]) {			// 이용기간 - 기본 설정 - 1개월 JButton
 			changeBtnIcon(ExpirePeriod.MONTH1.ordinal());
 			acd.getJcbPeriodDetail().setSelectedIndex(acd.getDcbmPeriodDetail().getIndexOf("1개월"));
@@ -103,9 +118,7 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		} // end if
 		boolean flagPublishable = acd.getJrbPublishableOk().isSelected() == true ? true : false;
 		
-		
-		/*아이디 받아와야함*/
-		ckVO = new CouponKindVO(acd.getMcd().getAmpd().getAdminId(), coupKindName, discount, period, flagPublishable);
+		ckVO = new CouponKindVO(acd.getMcd().getAmpd().getAdminId(), coupKindName, discount, period, flagPublishable, img);
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		try {
 			ckDAO.insertCoupKind(ckVO);
@@ -117,6 +130,70 @@ public class AddCouponEvent extends WindowAdapter implements ActionListener, Upd
 		JOptionPane.showMessageDialog(acd, "쿠폰이 정상적으로 등록되었습니다");
 		
 	} // publishCoupon
+	
+	public String loadImg(JLabel jlblImg) {
+		String strImg = null;
+		
+		FileDialog fd = new FileDialog(acd, "파일 열기", FileDialog.LOAD);
+		fd.setFile("*.jpg;*.jpeg;*.png;");
+		fd.setVisible(true);
+		String path = fd.getDirectory();
+		String name = fd.getFile();
+		if(path != null) {
+			strImg = path.concat(name);
+			ImageIcon iiImgCoupon = new ImageIcon(strImg);
+			jlblImg.setIcon(iiImgCoupon);
+		} // end if
+		return strImg;
+	} // loadImg
+	
+//	public void saveImg2Loal() {
+//		FileInputStream fis = null;
+//		FileOutputStream fos = null;
+//		File file = null;
+//		
+//		byte[] data = new byte[512];
+//		int dataSize = 0;
+//
+//		try {
+//			file = new File(getClass().getClassLoader().getResource("kiosk_prj/image/coupon/").toURI());
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		file = new File(file.toString().replace("\\", "/").concat("/").concat(imgName));
+//		if(file.exists()) {
+//			JOptionPane.showMessageDialog(acd, "동일한 파일명을 가진 이미지가 있어 수정되어야 합니다");
+//			return;
+//		} // end if
+//		
+//		try {
+//			 fis = new FileInputStream(imgPath.concat(imgName));
+//			 fos = new FileOutputStream(file);
+//			 while((dataSize = fis.read(data)) != -1) {
+//				 fos.write(data);
+//				 fos.flush();
+//			 } // end while
+//			 fos.flush();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//			JOptionPane.showMessageDialog(acd, "지정된 파일을 찾을 수 없습니다");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if(fis != null) {
+//				try {
+//					fis.close();
+//					fos.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				} // end catch
+//			} // end if
+//		} // end finally
+//		
+//	} // saveImg2Local
+	
 	
 	public void closeDialog() {
 		acd.getMcd().getMce().changeBtnIcon(-1);

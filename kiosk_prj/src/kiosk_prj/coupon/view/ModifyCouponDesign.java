@@ -13,11 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import static java.lang.String.valueOf;
 
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Insets;
 
 import kiosk_prj.coupon.UnsignedIntegerDocument;
 import kiosk_prj.coupon.controller.ModifyCouponEvent;
@@ -30,8 +34,11 @@ public class ModifyCouponDesign extends JDialog {
 	
 	private ManageCouponDesign mcd;
 	private CouponPublishVO cpVO;
+	private CouponKindVO ckVO;
 	
 	private JTextField jtfCouponKindName;
+	private JLabel jlblImg;
+	private JButton jbtnImgLoad;
 	private JTextField jtfCouponKindNo, jtfDiscount, jtfPeriod;
 	private JComboBox<String> jcbPubCondition;
 	private DefaultComboBoxModel<String> dcmPubCondition;
@@ -48,6 +55,15 @@ public class ModifyCouponDesign extends JDialog {
 		
 		this.mcd = mcd;
 		this.cpVO = cpVO;
+		
+		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
+		try {
+			 ckVO = ckDAO.selectOneCoupKind(cpVO.getCoupKindNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(mcd, "선택된 쿠폰 조회에 실패했습니다");
+			return;
+		} // end catch
 		
 		Font font = new Font("맑은 고딕", Font.BOLD, 20);
 		
@@ -121,16 +137,6 @@ public class ModifyCouponDesign extends JDialog {
 		jbtnCancel.addActionListener(mce);
 		jbtnOk.addActionListener(mce);
 		
-		CouponKindVO ckVO = null;
-		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
-		try {
-			 ckVO = ckDAO.selectOneCoupKind(cpVO.getCoupKindNo());
-		} catch (SQLException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(mcd, "선택된 쿠폰 조회에 실패했습니다");
-			return;
-		} // end catch
-		
 		jtfCouponKindNo.setText(valueOf(ckVO.getCoupKindNo()));
 		jtfDiscount.setText(valueOf(ckVO.getDiscount()).concat("원"));
 		jtfPeriod.setText(valueOf(ckVO.getExpiresPeriod()).concat("개월"));
@@ -147,11 +153,26 @@ public class ModifyCouponDesign extends JDialog {
 			} else {
 				jrbPublishableNo.setSelected(true);
 			} // end else
+			
 			ImageIcon iiDeleteCoup = new ImageIcon(getClass().getClassLoader().getResource("btn_delete.png"));
 			jbtnDeleteCoup = new JButton(iiDeleteCoup);
+			jlblImg = new JLabel(new ImageIcon(ckVO.getImg()));
+			jlblImg.setBorder(new TitledBorder(""));
+			jbtnImgLoad = new JButton("파일 열기");
+			
 			jbtnDeleteCoup.addActionListener(mce);
-			jbtnDeleteCoup.setBounds(175, 500, 120, 80);	
+			jbtnImgLoad.addActionListener(mce);
+			
+			jbtnDeleteCoup.setBounds(175, 500, 120, 80);
+			jlblImg.setBounds(560, 10, 165, 140);
+			jbtnImgLoad.setBounds(560, 155, 100, 30);
+			jtfCouponKindName.setBounds(175, 10, 360, 60);
+			jtfCouponKindNo.setBounds(175, 80, 360, 60);
+			jtfDiscount.setBounds(175, 150, 360, 60);
+			
 			add(jbtnDeleteCoup);
+			add(jlblImg);
+			add(jbtnImgLoad);
 		} else {
 			try {
 				mce.searchAllCoupPubConditionType();
@@ -165,6 +186,10 @@ public class ModifyCouponDesign extends JDialog {
 				} else {
 					jrbPublishableNo.setSelected(true);
 				} // end else
+				
+				jtfCouponKindName.setBounds(175, 10, 540, 60);
+				jtfCouponKindNo.setBounds(175, 80, 540, 60);
+				jtfDiscount.setBounds(175, 150, 540, 60);
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(mcd, "쿠폰 발급 조건 조회에 실패했습니다");
 				e.printStackTrace();
@@ -175,11 +200,8 @@ public class ModifyCouponDesign extends JDialog {
 		setLayout(null);
 		
 		jlblRowCouponKindName.setBounds(30, 10, 140, 60);
-		jtfCouponKindName.setBounds(175, 10, 540, 60);
 		jlblRowCouponKindNo.setBounds(30, 80, 140, 60);
-		jtfCouponKindNo.setBounds(175, 80, 540, 60);
 		jlblRowDiscount.setBounds(30, 150, 140, 60);
-		jtfDiscount.setBounds(175, 150, 540, 60);
 		jlblRowPeriod.setBounds(25, 220, 140, 60);
 		jtfPeriod.setBounds(175, 220, 540, 60);
 		jpPubCondition.setBounds(30, 290, 690, 120);
@@ -268,6 +290,18 @@ public class ModifyCouponDesign extends JDialog {
 
 	public JButton getJbtnGoMain() {
 		return jbtnGoMain;
+	}
+
+	public JLabel getJlblImg() {
+		return jlblImg;
+	}
+
+	public JButton getJbtnImgLoad() {
+		return jbtnImgLoad;
+	}
+
+	public CouponKindVO getCkVO() {
+		return ckVO;
 	}
 	
 } // class

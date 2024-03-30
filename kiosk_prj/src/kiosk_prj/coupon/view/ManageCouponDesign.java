@@ -122,9 +122,9 @@ public class ManageCouponDesign extends JDialog {
 		return mce;
 	}
 
-//	public static void main(String[] args) {
-//		// 테스트용 
-//		new ManageCouponDesign(new AdminMainPageDesign("김병년"));
-//	} // main
+	public static void main(String[] args) {
+		// 테스트용 
+		new ManageCouponDesign(new AdminMainPageDesign("김병년"));
+	} // main
 	
 } // class

@@ -22,7 +22,7 @@ import java.awt.Font;
 public class SearchCouponDesign extends JPanel {
 	
 	private ManageCouponDesign mcd;
-	
+	private SearchCouponEvent sce;
 	private JTabbedPane jtbpCoupSearch;
 	private JTable jtabCoupKind, jtabCoupIssue, jtabCoupPub, jtabCoupPubUsable, jtabCoupPubUnusable;
 	private DefaultTableModel dtmCoupKind, dtmCoupIssue, dtmCoupPub, dtmCoupPubUsable, dtmCoupPubUnUsable;
@@ -42,25 +42,42 @@ public class SearchCouponDesign extends JPanel {
 		jtbpCoupSearch = new JTabbedPane();
 		jtbpCoupSearch.setFont(font);
 		
-		String[] columnName = {"번호", "쿠폰 번호", "쿠폰 이름", "할인액", "이름", "연락처", "상태", "발급일", "사용일", "만료일"};
-		SearchCouponEvent sce = new SearchCouponEvent(this);
+		String[] columnNamePub = {"번호", "쿠폰 번호", "쿠폰 이름", "할인액", "이름", "연락처", "상태", "발급일", "사용일", "만료일"};
+		sce = new SearchCouponEvent(this);
 		CouponInfoViewDAO civDAO = CouponInfoViewDAO.getInstance();
 		
 		JPanel jpCoupKind = new JPanel();
 		JPanel jpCoupIssue = new JPanel();
 		
-		dtmCoupKind = new DefaultTableModel(null, new String[] {"번호", "등록번호", "쿠폰 이름", "이용 가능 기간", "할인액", "발급가능"}) {
+		String [] columnNameKind = {"번호", "등록번호", "쿠폰 이름", "이용 가능 기간", "할인액", "발급가능", "이미지"};
+		dtmCoupKind = new DefaultTableModel(null, columnNameKind) {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
 		    }
 		};
-		jtabCoupKind = new JTable(dtmCoupKind);
+		jtabCoupKind = new JTable(dtmCoupKind) {
+
+			@Override
+			public Class<?> getColumnClass(int column) {
+				// TODO Auto-generated method stub
+				return getValueAt(0, column).getClass();
+			}
+			
+		};
 		jtabCoupKind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtabCoupKind.setRowHeight(125);
+		jtabCoupKind.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		jtabCoupKind.getColumn(columnNameKind[0]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnNameKind[1]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnNameKind[2]).setPreferredWidth(150);
+		jtabCoupKind.getColumn(columnNameKind[3]).setPreferredWidth(5);
+		jtabCoupKind.getColumn(columnNameKind[4]).setPreferredWidth(10);
+		jtabCoupKind.getColumn(columnNameKind[5]).setPreferredWidth(5);
 		DefaultTableCellRenderer dtcrCenter = new DefaultTableCellRenderer();
 		DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
 		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER); 
-		dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT); 
+		dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT);
 		TableColumnModel tcmCoupKind = jtabCoupKind.getColumnModel();
 		
 		tcmCoupKind.getColumn(0).setCellRenderer(dtcrRight);
@@ -120,19 +137,19 @@ public class SearchCouponDesign extends JPanel {
 			JPanel jpCoupUsable = new JPanel();
 			JPanel jpCoupUnusable = new JPanel();
 			
-			dtmCoupPub = new DefaultTableModel(null, columnName) {
+			dtmCoupPub = new DefaultTableModel(null, columnNamePub) {
 				@Override
 			    public boolean isCellEditable(int row, int column) {
 			       return false;
 			    }
 			};
-			dtmCoupPubUsable = new DefaultTableModel(null, columnName) {
+			dtmCoupPubUsable = new DefaultTableModel(null, columnNamePub) {
 				@Override
 			    public boolean isCellEditable(int row, int column) {
 			       return false;
 			    }
 			};
-			dtmCoupPubUnUsable = new DefaultTableModel(null, columnName) {
+			dtmCoupPubUnUsable = new DefaultTableModel(null, columnNamePub) {
 				@Override
 			    public boolean isCellEditable(int row, int column) {
 			       return false;
@@ -155,13 +172,13 @@ public class SearchCouponDesign extends JPanel {
 				tcm.getColumn(0).setCellRenderer(dtcrRight);
 				tcm.getColumn(3).setCellRenderer(dtcrRight);
 				tcm.getColumn(6).setCellRenderer(dtcrCenter);
-				arrJtab[i].getColumn(columnName[0]).setPreferredWidth(1);
-				arrJtab[i].getColumn(columnName[1]).setPreferredWidth(80);
-				arrJtab[i].getColumn(columnName[3]).setPreferredWidth(5);
-				arrJtab[i].getColumn(columnName[4]).setPreferredWidth(10);
-				arrJtab[i].getColumn(columnName[5]).setPreferredWidth(50);
-				arrJtab[i].getColumn(columnName[6]).setPreferredWidth(25);
-				arrJtab[i].getColumn(columnName[9]).setPreferredWidth(25);
+				arrJtab[i].getColumn(columnNamePub[0]).setPreferredWidth(1);
+				arrJtab[i].getColumn(columnNamePub[1]).setPreferredWidth(80);
+				arrJtab[i].getColumn(columnNamePub[3]).setPreferredWidth(5);
+				arrJtab[i].getColumn(columnNamePub[4]).setPreferredWidth(10);
+				arrJtab[i].getColumn(columnNamePub[5]).setPreferredWidth(50);
+				arrJtab[i].getColumn(columnNamePub[6]).setPreferredWidth(25);
+				arrJtab[i].getColumn(columnNamePub[9]).setPreferredWidth(25);
 			} // end for
 			
 			jtabCoupPub.addMouseListener(null);
@@ -264,4 +281,9 @@ public class SearchCouponDesign extends JPanel {
 	public DefaultTableModel getDtmCoupIssue() {
 		return dtmCoupIssue;
 	}
+
+	public SearchCouponEvent getSce() {
+		return sce;
+	}
+	
 }

@@ -41,7 +41,7 @@ public class CoupConditionTypeDAO {
 			// 3. 쿼리문 생성 객체 얻기
 			// 		값이 들어가는 위치는 바인드 변수 `?`를 사용한다
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
-			String selectCoupKind = "select CONDITION_TYPE_NO, CONDITION_TYPE_NAME from COUPON_PUBLISH_CONDITION_TYPE";
+			String selectCoupKind = "select CONDITION_TYPE_NO, CONDITION_TYPE_NAME from COUPON_PUBLISH_CONDITION_TYPE order by CONDITION_TYPE_NO";
 			pstmt = con.prepareStatement(selectCoupKind);
 			
 			// 4. 바인드 변수에 값 설정

@@ -44,7 +44,8 @@ public class ManageCouponEvent extends WindowAdapter implements ActionListener, 
 	private void searchCoupon() {
 		mcd.setLastClickedButton(ManageButton.SEARCH.ordinal());
 		setSCDsVisible(true, false);
-		changeBtnIcon(ManageButton.SEARCH.ordinal());	
+		changeBtnIcon(ManageButton.SEARCH.ordinal());
+		mcd.getScdSearch().getSce().renewAllTable();
 	} // searchCoupon
 
 	private void modifyCoupon() {

@@ -2,10 +2,14 @@ package kiosk_prj.coupon.view;
 
 import static java.lang.String.valueOf;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,6 +38,8 @@ public class AddCouponDesign extends JDialog{
 	private JRadioButton jrbPublishableOk, jrbPublishableNo;
 	private JButton jbtnGoMain, jbtnAddCoupon, jbtnCancel;
 	private ImageIcon[] arrIiBtnPeriod, arrIiBtnPeriodClick;
+	private JLabel jlblImg;
+	private JButton jbtnImgLoad;
 	
 	public AddCouponDesign(ManageCouponDesign mcd) {
 		super(mcd, "쿠폰 등록", true);
@@ -55,6 +61,10 @@ public class AddCouponDesign extends JDialog{
 		jtfDiscount.setDocument(new UnsignedIntegerDocument(5, 1, 99999));
 		jtfDiscount.setFont(font);
 		jtfDiscount.setHorizontalAlignment(JTextField.RIGHT);
+		
+		jlblImg = new JLabel();
+		jlblImg.setBorder(new TitledBorder(""));
+		jbtnImgLoad = new JButton("파일 찾기");
 		
 		arrIiBtnPeriod = new ImageIcon[ExpirePeriod.values().length];
 		arrIiBtnPeriodClick = new ImageIcon[ExpirePeriod.values().length];
@@ -125,6 +135,7 @@ public class AddCouponDesign extends JDialog{
 		jbtnGoMain.addActionListener(ace);
 		jbtnAddCoupon.addActionListener(ace);
 		jbtnCancel.addActionListener(ace);
+		jbtnImgLoad.addActionListener(ace);
 		addWindowListener(ace);
 		
 		setLayout(null);
@@ -149,8 +160,10 @@ public class AddCouponDesign extends JDialog{
 		
 		jlblCouponKindName.setBounds(30, 10, 1000, 60);
 		jlblDiscount.setBounds(30, 70, 100, 80);
-		jtfCouponKindName.setBounds(125, 10, 600, 60);
-		jtfDiscount.setBounds(125, 80, 600, 60);
+		jtfCouponKindName.setBounds(125, 10, 430, 60);
+		jtfDiscount.setBounds(125, 80, 430, 60);
+		jlblImg.setBounds(560, 10, 165, 120);
+		jbtnImgLoad.setBounds(560, 135, 100, 30);
 		jpPeriod.setBounds(25, 160, 700, 250);
 		jlblPublishable.setBounds(30, 410, 100, 80);
 		jrbPublishableOk.setBounds(140, 410, 100, 80);
@@ -163,6 +176,8 @@ public class AddCouponDesign extends JDialog{
 		add(jlblDiscount);
 		add(jtfCouponKindName);
 		add(jtfDiscount);
+		add(jlblImg);
+		add(jbtnImgLoad);
 		add(jpPeriod);
 		add(jlblPublishable);
 		add(jrbPublishableOk);
@@ -234,6 +249,14 @@ public class AddCouponDesign extends JDialog{
 
 	public JButton getJbtnCancel() {
 		return jbtnCancel;
+	}
+
+	public JLabel getJlblImg() {
+		return jlblImg;
+	}
+
+	public JButton getJbtnImgLoad() {
+		return jbtnImgLoad;
 	}
 	
 } // class

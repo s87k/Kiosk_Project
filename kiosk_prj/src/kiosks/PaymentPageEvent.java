@@ -63,6 +63,7 @@ public class PaymentPageEvent extends WindowAdapter implements ActionListener, M
 		}
 		if (e.getSource() == ppd.getCreditCard()) {
 			String orderNum=searchOrderNum();
+			PaymentPageDesign.orderNum = orderNum;
 			// 주문 내역 insert
 			insertSummaryOrder("카드", orderNum);
 			// 상세 주문 내역 insert

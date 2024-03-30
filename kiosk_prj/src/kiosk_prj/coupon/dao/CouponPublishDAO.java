@@ -193,7 +193,7 @@ public class CouponPublishDAO {
 		return list;
 	} // selectAllCoupPub
 	
-	public List<CouponAutoPubVO> selectShouldPublishCoup(String phoneNumber, int amount) throws SQLException {
+	public List<CouponAutoPubVO> selectShouldPublishCoup(String phoneNumber, int amount, String orderNumber, String shopOpen) throws SQLException {
 		List<CouponAutoPubVO> listCapVO = new ArrayList<CouponAutoPubVO>();
 		
 		// 1. 드라이버 로딩
@@ -212,6 +212,27 @@ public class CouponPublishDAO {
 			// 		바인드 변수에는 `'` 를 사용하지 않는다
 			StringBuilder selectShouldPublishCoup = new StringBuilder();
 			selectShouldPublishCoup
+			.append("	with cdk as(	")
+			.append("			select	(trunc(	")
+			.append("					(select	count(num)	")
+			.append("					from 	detailed_order deo, summary_order so	")
+			.append("					where	(deo.ORDER_NUMBER=so.order_number and so.SHOP_OPEN=deo.SHOP_OPEN)	")
+			.append("							and (so.phone_number=?))	")
+			.append("					/ condition_price)	")
+			.append("					-	")
+			.append("					trunc(	")
+			.append("					(select	count(num)	")
+			.append("					from 	detailed_order deo, summary_order so	")
+			.append("					where	(deo.ORDER_NUMBER=so.order_number and so.SHOP_OPEN=deo.SHOP_OPEN)	")
+			.append("							and (so.phone_number=? and not ((so.order_number = ?) and so.shop_open=?)))	")
+			.append("					/ condition_price)) cnt	")
+			.append("					, CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO	")
+			.append("			from	(	")
+			.append("					select	CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO	")
+			.append("					from	COUPON_PUBLISH	")
+			.append("					where	CONDITION_TYPE_NO=3 and flag_disable='1'	")
+			.append("					)	")
+			.append("	)	")
 			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, cpct.CONDITION_TYPE_NO, ck.COUP_KIND_NO	")
 			.append("	from	(select	CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO	")
 			.append("			from	(select	cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO, ch.should_publish, cp.FLAG_DISABLE	")
@@ -228,41 +249,40 @@ public class CouponPublishDAO {
 			.append("					where 	PHONE_NUMBER=?)	")
 			.append("			) csh, coupon_kind ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
 			.append("	where	(csh.COUP_KIND_NO=ck.COUP_KIND_NO and csh.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO)	")
+			
 			.append("	union all	")
+			
 			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', cp.CONDITION_PRICE) condition_msg, cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO	")
 			.append("	from	coupon_publish cp, COUPON_KIND ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
 			.append("	where	(cp.COUP_KIND_NO=ck.COUP_KIND_NO and cp.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO) and	")
-			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	");
-			/*
-			.append("	select 	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, csh.CONDITION_TYPE_NO, csh.COUP_KIND_NO	")
-			.append("	from	COUPON_KIND ck,	")
-			.append("			(select	CONDITION_PRICE,CONDITION_TYPE_NO,COUP_KIND_NO	")
-			.append("			from	(	")
-			.append("					select	cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO, cp.FLAG_DISABLE	")
-			.append("					from	coupon_publish cp, coupon_held ch	")
-			.append("					where	(ch.CONDITION_PRICE(+)=cp.condition_price and ch.CONDITION_TYPE_NO(+)=cp.CONDITION_TYPE_NO and ch.COUP_KIND_NO(+)=cp.COUP_KIND_NO) and	")
-			.append("							(ch.phone_number is null or ch.PHONE_NUMBER not like ?)	")
-			.append("					)	")
-			.append("			where	CONDITION_TYPE_NO=1 and  flag_disable='1' and CONDITION_PRICE <	")
-			.append("					(select	sum(amount)	")
-			.append("					from	SUMMARY_ORDER	")
-			.append("					where 	PHONE_NUMBER=?)) csh	")
-			.append("					, COUPON_PUBLISH_CONDITION_TYPE cpct	")
-			.append("	where	csh.COUP_KIND_NO=ck.COUP_KIND_NO and csh.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO	")
+			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	")
+
 			.append("	union all	")
-			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', cp.CONDITION_PRICE) condition_msg, cp.CONDITION_PRICE, cp.CONDITION_TYPE_NO, cp.COUP_KIND_NO	")
-			.append("	from	coupon_publish cp, COUPON_KIND ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
-			.append("	where	(cp.COUP_KIND_NO=ck.COUP_KIND_NO and cp.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO) and	")
-			.append("			(cp.CONDITION_TYPE_NO=2 and cp.flag_disable=1 and cp.CONDITION_PRICE <= ?)	");
-			*/
+			
+			.append("	select	? PHONE_NUMBER, ck.COUP_KIND_NAME, ck.discount, ck.EXPIRES_PERIOD, replace(cpct.CONDITION_TYPE_NAME, '{}', csh.CONDITION_PRICE) condition_msg, csh.CONDITION_PRICE, cpct.CONDITION_TYPE_NO, ck.COUP_KIND_NO	")
+			.append("	from 	(	")
+			.append("			select	cdk.cnt, l.no, CONDITION_PRICE, CONDITION_TYPE_NO, COUP_KIND_NO	")
+			.append("			from	cdk, (select level no from dual connect by level <= (select max(cdk.cnt) from cdk)) l	")
+			.append("			where	l.no between 1 and cdk.cnt	")
+			.append("			order by cdk.cnt, l.no	")
+			.append("			) csh, coupon_kind ck, COUPON_PUBLISH_CONDITION_TYPE cpct	")
+			.append("	where	(csh.COUP_KIND_NO=ck.COUP_KIND_NO and csh.CONDITION_TYPE_NO=cpct.CONDITION_TYPE_NO);	");
+			
 			pstmt = con.prepareStatement(selectShouldPublishCoup.toString());
 			
 			// 4. 바인드 변수에 값 설정
 			pstmt.setString(1, phoneNumber);
 			pstmt.setString(2, phoneNumber);
-			pstmt.setString(3, phoneNumber);
-			pstmt.setString(4, phoneNumber);
-			pstmt.setInt(5, amount);
+			pstmt.setString(3, orderNumber);
+			pstmt.setString(4, shopOpen);
+			
+			pstmt.setString(5, phoneNumber);
+			pstmt.setString(6, phoneNumber);
+			pstmt.setString(7, phoneNumber);
+			pstmt.setString(8, phoneNumber);
+			pstmt.setInt(9, amount);
+			
+			pstmt.setString(10, phoneNumber);
 						
 			// 5. 쿼리문 수행 후 결과 얻기
 			//		부모(Statement)의 executeXxx(sql)메소드는 절대로 사용하지 않는다 

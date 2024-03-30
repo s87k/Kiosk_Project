@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -94,7 +96,8 @@ public class SearchCouponEvent implements MouseListener, ChangeListener{
 		dtm.setRowCount(0);
 		for (int i = 0; i < ckList.size(); i++) {
 			ckVO = ckList.get(i);
-			dtm.addRow(new String[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"});
+			dtm.addRow(new Object[] {valueOf(i + 1), valueOf(ckVO.getCoupKindNo()), ckVO.getCoupKindName(), valueOf(ckVO.getExpiresPeriod()).concat("개월"), valueOf(ckVO.getDiscount()).concat("원"), ckVO.isFlagPublishable() == true ? "O" : "X"
+				, new ImageIcon(ckVO.getImg())});
 		} // end for
 	} // searchPublishableCouponType
 	

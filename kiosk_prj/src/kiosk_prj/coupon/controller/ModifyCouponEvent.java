@@ -21,13 +21,18 @@ import kiosk_prj.coupon.vo.CouponPublishVO;
 public class ModifyCouponEvent extends WindowAdapter implements ActionListener, UpdateDefaultModelImpl {
 
 	private ModifyCouponDesign mcd;
+	private String img;
 	
 	public ModifyCouponEvent(ModifyCouponDesign mcd) {
 		this.mcd = mcd;
+		this.img = mcd.getCkVO().getImg();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource() == mcd.getJbtnImgLoad()) {
+			img = new AddCouponEvent(null).loadImg(mcd.getJlblImg());
+		} // end if
 		if(ae.getSource() == mcd.getJbtnCancel()) {
 			closeDialog();
 		} // end if 
@@ -88,7 +93,8 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 	public void modifyCoupon() throws SQLException {
 		CouponKindDAO ckDAO = CouponKindDAO.getInstance();
 		CouponPublishVO cpVOOld = mcd.getCpVO();
-		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVOOld.getCoupKindNo());
+		CouponKindVO ckVO = mcd.getCkVO();
+//		CouponKindVO ckVO = ckDAO.selectOneCoupKind(cpVOOld.getCoupKindNo());
 		
 		String coupKindName = mcd.getJtfCouponKindName().getText().trim();
 		boolean flagPublishable = mcd.getJrbPublishableOk().isSelected();
@@ -96,9 +102,10 @@ public class ModifyCouponEvent extends WindowAdapter implements ActionListener, 
 		
 		int cnt = 0;
 		
-		if( ! ckVO.getCoupKindName().equals(coupKindName) || ckVO.isFlagPublishable() != flagPublishable) {
+		if( ! ckVO.getCoupKindName().equals(coupKindName) || ckVO.isFlagPublishable() != flagPublishable || ckVO.getImg() != img) {
 			ckVO.setCoupKindName(coupKindName);
 			ckVO.setFlagPublishable(flagPublishable);
+			ckVO.setImg(img);
 			
 			cnt = ckDAO.updateCoupKind(ckVO);
 			if(cnt != 1) {

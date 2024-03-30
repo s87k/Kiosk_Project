@@ -9,12 +9,12 @@ import java.sql.Statement;
 
 public class DbConnection {
 	
-//	static final String ID = "prj1kiosk";
-//	static final String PASS = "tiger";
-//	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-	static final String ID = "Kiosk";
-	static final String PASS = "4";
-	static final String URL = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
+	static final String ID = "prj1kiosk";
+	static final String PASS = "tiger";
+	static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+//	static final String ID = "Kiosk";
+//	static final String PASS = "4";
+//	static final String URL = "jdbc:oracle:thin:@192.168.10.220:1521:orcl";
 	
 	private static DbConnection dbCon;
 	
